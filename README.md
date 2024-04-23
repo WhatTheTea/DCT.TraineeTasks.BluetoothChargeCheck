@@ -24,10 +24,9 @@ I prefer WPF because of community support.
 
 \* [WPF UI by Lepo](https://wpfui.lepo.co/)
 ### Performance
-![21-2-winui-data-grid-startup-performance](https://community.devexpress.com/blogs/wpf/20222401-WinUI-Performance-Boost/21-2-winui-data-grid-startup-performance.png)
-![21-2-winui-data-grid-scrolling-performance-fps](https://community.devexpress.com/blogs/wpf/20222401-WinUI-Performance-Boost/21-2-winui-data-grid-scrolling-performance-fps.png)
+WinUI 3 is doing interop, which is slower by definition .-.
+https://github.com/microsoft/microsoft-ui-xaml/issues/4597
 
 ### Sources
-- https://community.devexpress.com/blogs/wpf/archive/2022/01/24/winui-3-performance-boost.aspx
 - Reddit (r/csharp, r/dotnet)
 - https://visualstudiomagazine.com/Articles/2024/02/13/desktop-dev.aspx
