@@ -1,0 +1,1 @@
+# DCT.TraineeTasks.BluetoothChargeCheck
