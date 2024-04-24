@@ -1,7 +1,6 @@
-﻿<Application x:Class="BluetoothChargeCheck.UI.App"
+﻿<Application x:Class="DCT.TraineeTasks.BluetoothChargeCheck.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BluetoothChargeCheck.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

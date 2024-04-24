@@ -1,8 +1,6 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
-namespace BluetoothChargeCheck.UI;
+namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 
 /// <summary>
 /// Interaction logic for App.xaml
