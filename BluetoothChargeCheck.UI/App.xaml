@@ -9,7 +9,7 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
 
-                <ResourceDictionary Source="/Views/TrayIconResource.xaml"/>
+                <ResourceDictionary Source="/Resources/TrayIconResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
