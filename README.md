@@ -24,8 +24,7 @@ I prefer WPF because of community support.
 
 \* [WPF UI by Lepo](https://wpfui.lepo.co/)
 ### Performance
-WinUI 3 is doing interop, which is slower by definition .-.
-https://github.com/microsoft/microsoft-ui-xaml/issues/4597
+https://github.com/microsoft/microsoft-ui-xaml/discussions/8595
 
 ### Sources
 - Reddit (r/csharp, r/dotnet)
