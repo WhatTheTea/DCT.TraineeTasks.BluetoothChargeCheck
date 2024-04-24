@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 
@@ -7,5 +8,18 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 /// </summary>
 public partial class App : Application
 {
+    private TaskbarIcon trayIcon;
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+        this.trayIcon = this.FindResource("TrayIconResource") as TaskbarIcon
+            ?? throw new InvalidOperationException("Can't find resource");
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        this.trayIcon.Dispose();
+        base.OnExit(e);
+    }
 }
 

@@ -1,21 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <RootNamespace>DCT.TraineeTasks.BluetoothChargeCheck.UI</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>DCT.TraineeTasks.BluetoothChargeCheck.UI</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="WPF-UI" Version="3.0.4" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
+		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0"/>
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77"/>
+		<PackageReference Include="WPF-UI" Version="3.0.4"/>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\Images\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="Views\TrayIconResource.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<XamlRuntime>Wpf</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Resources\" />
+		<Folder Include="Resources\Images"/>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Images\battery-almost-full-32.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\battery-empty-32.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\full-battery-32.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\half-battery-32.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
 
 </Project>
