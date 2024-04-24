@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.Windows;
+using System.Windows.Media;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
