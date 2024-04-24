@@ -16,13 +16,38 @@ public partial class TrayIconViewModel : ObservableObject
     [RelayCommand]
     private void ExitApplication() =>
         Application.Current.Shutdown();
+    /// <summary>
+    /// TODO: Remove
+    /// </summary>
+    [RelayCommand]
+    private void AddCharge()
+    {
+        var nextCharge = this.Charge + 10;
+        if (nextCharge >= 0 && nextCharge <= 100)
+        {
+            this.Charge = nextCharge;
+        }
+        this.OnPropertyChanged(nameof(this.IconSource));
+    }
+    /// <summary>
+    /// TODO: Remove
+    /// </summary>
+    [RelayCommand]
+    private void DecreaseCharge()
+    {
+        var nextCharge = this.Charge - 10;
+        if (nextCharge >= 0 && nextCharge <= 100)
+        {
+            this.Charge = nextCharge;
+        }
+        this.OnPropertyChanged(nameof(this.IconSource));
+    }
 
-    [ObservableProperty] private ImageSource iconSource;
+    public ImageSource IconSource => this.ChargeToIcon(this.Charge);
     [ObservableProperty] private int charge = 0;
 
     public TrayIconViewModel()
     {
-        this.iconSource = this.ChargeToIcon(this.charge);
     }
 
     private ImageSource FindIcon(int iconNumber)
