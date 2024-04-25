@@ -25,7 +25,7 @@ public partial class TrayIconViewModel : ObservableObject
     {
         var testDevice = new TestBluetoothDevice();
         this.BluetoothDevice = testDevice;
-        Application.Current.Dispatcher.BeginInvoke(testDevice.ChargeCyclingAsync, DispatcherPriority.Render, CancellationToken.None);
+        Task.Run(() => testDevice.ChargeCyclingAsync(CancellationToken.None));
         this.BluetoothDevice.PropertyChanged += (_, args) =>
         {
             if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
