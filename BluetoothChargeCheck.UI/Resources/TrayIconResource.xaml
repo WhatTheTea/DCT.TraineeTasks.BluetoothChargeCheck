@@ -8,9 +8,6 @@
     <ContextMenu x:Shared="false"
                  x:Key="SysTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-        <MenuItem Header="Add" Command="{Binding AddChargeCommand}"/>
-        <MenuItem Header="Decrease" Command="{Binding DecreaseChargeCommand}"/>
-        <Separator />
         <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>
 
