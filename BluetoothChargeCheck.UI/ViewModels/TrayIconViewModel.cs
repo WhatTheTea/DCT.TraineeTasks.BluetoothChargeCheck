@@ -5,8 +5,10 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using Wpf.Ui.Appearance;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
@@ -16,37 +18,21 @@ public partial class TrayIconViewModel : ObservableObject
     [RelayCommand]
     private void ExitApplication() =>
         Application.Current.Shutdown();
-    /// <summary>
-    /// TODO: Remove
-    /// </summary>
-    [RelayCommand]
-    private void AddCharge() => this.Charge += 10;
 
-    /// <summary>
-    /// TODO: Remove
-    /// </summary>
-    [RelayCommand]
-    private void DecreaseCharge() => this.Charge -= 10;
-
-    public ImageSource IconSource => this.ChargeToIcon(this.Charge);
-
-    public int Charge
-    {
-        get => this.charge;
-        set
-        {
-            if (value >= 0 && value <= 100)
-            {
-                this.SetProperty(ref this.charge, value);
-                this.OnPropertyChanged(nameof(this.IconSource));
-            }
-        }
-    }
-
-    private int charge = 0;
-
+    public ImageSource IconSource => this.ChargeToIcon(this.BluetoothDevice.Charge);
+    public IBluetoothDevice BluetoothDevice;
     public TrayIconViewModel()
     {
+        var testDevice = new TestBluetoothDevice();
+        this.BluetoothDevice = testDevice;
+        Application.Current.Dispatcher.BeginInvoke(testDevice.ChargeCyclingAsync, DispatcherPriority.Render, CancellationToken.None);
+        this.BluetoothDevice.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
+            {
+                this.OnPropertyChanged(nameof(this.IconSource));
+            }
+        };
     }
 
     private ImageSource FindIcon(int iconNumber)
@@ -61,5 +47,5 @@ public partial class TrayIconViewModel : ObservableObject
         throw new ArgumentOutOfRangeException(nameof(iconNumber));
     }
 
-    private ImageSource ChargeToIcon(int charge) => this.FindIcon(charge / 10);
+    private ImageSource ChargeToIcon(double charge) => this.FindIcon((int)(charge / 10));
 }

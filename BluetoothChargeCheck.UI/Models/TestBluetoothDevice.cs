@@ -16,7 +16,7 @@ internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
     {
         while (!token.IsCancellationRequested)
         {
-            if (this.Charge <= 100)
+            if (this.Charge < 100)
             {
                 this.Charge += 10;
             }
@@ -25,7 +25,7 @@ internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
                 this.Charge = 0;
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(2), token);
+            await Task.Delay(TimeSpan.FromSeconds(0.5), token);
         }
     }
 }
