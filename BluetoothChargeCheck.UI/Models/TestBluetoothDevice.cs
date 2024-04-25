@@ -8,7 +8,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
 {
-    [ObservableProperty] private string name = string.Empty;
+    [ObservableProperty] private string name = "Bluetooth Device";
     [ObservableProperty] private double charge;
     [ObservableProperty] private bool connected;
 
