@@ -28,8 +28,9 @@ public partial class TrayIconViewModel : ObservableObject
     
     public IBluetoothDevice BluetoothDevice;
 
-    [ObservableProperty] private Brush? accent = new BrushConverter().ConvertFrom("White") as Brush;
+    [ObservableProperty] private Brush? accent = new BrushConverter().ConvertFrom("Red") as Brush;
     [ObservableProperty] private string glyph;
+    [ObservableProperty] private Guid name = Guid.NewGuid();
 
     public TrayIconViewModel()
     {

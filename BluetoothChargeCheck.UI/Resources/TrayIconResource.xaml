@@ -5,29 +5,9 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     mc:Ignorable="d">
-    <ContextMenu x:Shared="false"
+    <ContextMenu x:Shared="False"
                  x:Key="SysTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
         <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>
-
-    <tb:TaskbarIcon
-        x:Shared="False"
-        x:Key="TrayIconResource"
-        Visibility="Visible"
-        ContextMenu="{StaticResource SysTrayMenu}"
-        d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-
-        <tb:TaskbarIcon.IconSource>
-            <!-- idk why, but 96 it is xD -->
-            <tb:GeneratedIconSource Foreground="{Binding Accent}"
-                                    FontFamily="Segoe Fluent Icons"
-                                    FontSize="96"
-                                    Text="{Binding Glyph}"/>
-        </tb:TaskbarIcon.IconSource>
-
-        <tb:TaskbarIcon.DataContext>
-            <vm:TrayIconViewModel/>
-        </tb:TaskbarIcon.DataContext>
-    </tb:TaskbarIcon>
 </ResourceDictionary>

@@ -25,7 +25,7 @@ internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
                 this.Charge = 0;
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(0.5), token);
+            await Task.Delay(TimeSpan.FromSeconds(0.5), token).ConfigureAwait(false);
         }
     }
 }

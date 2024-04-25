@@ -2,6 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.Collections.ObjectModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,14 +14,13 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     public IBluetoothService BluetoothService { get; init; } = new TestBluetoothService();
-    private List<TaskbarIcon> iconInstances = [];
+
+    [ObservableProperty]
+    private ObservableCollection<TrayIconViewModel> trayIconViewModels = [];
 
     [RelayCommand]
     private void AddTaskbarIcon()
     {
-        var app = Application.Current;
-        var taskbarIcon = (TaskbarIcon)app.FindResource("TrayIconResource")!;
-        taskbarIcon.ForceCreate(false);
-        this.iconInstances.Add(taskbarIcon);
+        this.TrayIconViewModels.Add(new TrayIconViewModel());
     }
 }
