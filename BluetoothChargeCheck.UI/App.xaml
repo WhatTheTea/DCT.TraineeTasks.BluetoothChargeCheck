@@ -8,6 +8,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
+
+                <ResourceDictionary>
+                    <FontFamily x:Key="SegoeFluentIcons">pack://application:,,,/BluetoothChargeCheck.UI;component/Fonts/FluentSystemIcons-Regular.ttf</FontFamily>
+                </ResourceDictionary>
+
+                <ResourceDictionary Source="/Resources/TrayIconResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
