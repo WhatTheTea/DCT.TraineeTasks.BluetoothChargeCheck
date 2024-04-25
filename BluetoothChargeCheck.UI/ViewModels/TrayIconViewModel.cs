@@ -20,31 +20,30 @@ public partial class TrayIconViewModel : ObservableObject
     /// TODO: Remove
     /// </summary>
     [RelayCommand]
-    private void AddCharge()
-    {
-        var nextCharge = this.Charge + 10;
-        if (nextCharge >= 0 && nextCharge <= 100)
-        {
-            this.Charge = nextCharge;
-        }
-        this.OnPropertyChanged(nameof(this.IconSource));
-    }
+    private void AddCharge() => this.Charge += 10;
+
     /// <summary>
     /// TODO: Remove
     /// </summary>
     [RelayCommand]
-    private void DecreaseCharge()
-    {
-        var nextCharge = this.Charge - 10;
-        if (nextCharge >= 0 && nextCharge <= 100)
-        {
-            this.Charge = nextCharge;
-        }
-        this.OnPropertyChanged(nameof(this.IconSource));
-    }
+    private void DecreaseCharge() => this.Charge -= 10;
 
     public ImageSource IconSource => this.ChargeToIcon(this.Charge);
-    [ObservableProperty] private int charge = 0;
+
+    public int Charge
+    {
+        get => this.charge;
+        set
+        {
+            if (value >= 0 && value <= 100)
+            {
+                this.SetProperty(ref this.charge, value);
+                this.OnPropertyChanged(nameof(this.IconSource));
+            }
+        }
+    }
+
+    private int charge = 0;
 
     public TrayIconViewModel()
     {
