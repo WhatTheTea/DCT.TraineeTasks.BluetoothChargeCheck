@@ -32,59 +32,33 @@
         <StackPanel>
             <Label Content="Bluetooth devices:"/>
         </StackPanel>
-        <ListBox
-            d:ItemsSource="{d:SampleData}"
+        <DataGrid
             Grid.Row="1"
-            ItemsSource="{Binding BluetoothService.Devices}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Button Background="{ui:ThemeResource}"
-                            BorderBrush="{ui:ThemeResource}"
-                            Command="{Binding Source={StaticResource MainVM}, Path=AddTaskbarIconCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Name}"/>
-                            <CheckBox Margin="100,0,0,0"
-                                      IsEnabled="False"
-                                      IsChecked="{Binding Connected}"/>
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ItemsControl
-            x:Name="TaskbarIconsControl"
-            Grid.Row="2"
-            ItemsSource="{Binding TrayIconViewModels}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <tb:TaskbarIcon
-                        Visibility="Visible"
-                        ContextMenu="{StaticResource SysTrayMenu}"
-                        DataContext="{Binding}"
-                        Id="{Binding Name}"
-                        d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-
-                        <tb:TaskbarIcon.IconSource>
-                            <!-- idk why, but 96 it is xD -->
-                            <tb:GeneratedIconSource Foreground="{Binding Accent}"
-                                                    FontFamily="Segoe Fluent Icons"
-                                                    FontSize="96"
-                                                    Text="{Binding Glyph}"/>
-                        </tb:TaskbarIcon.IconSource>
-                        <!-- Disposal of icons -->
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger
-                                SourceObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                EventName="Closing">
-                                <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=tb:TaskbarIcon}}"
-                                                    MethodName="Dispose"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </tb:TaskbarIcon>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-
+            ItemsSource="{Binding BluetoothService.Devices}"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}"
+                                    IsReadOnly="True"
+                                    Header="Device name"/>
+                <DataGridTextColumn Binding="{Binding Charge}"
+                                    IsReadOnly="True"
+                                    Header="Charge %"/>
+                <DataGridCheckBoxColumn Binding="{Binding Connected}"
+                                        IsReadOnly="True"
+                                        Header="Is connected"/>
+                <DataGridTemplateColumn Header="Taskbar">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                            <CheckBox
+                                IsChecked="{Binding IsInTray, Mode=OneWay}"
+                                Command="{Binding Source={StaticResource MainVM}, Path=TaskbarIconCommand}"
+                                CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -4,10 +4,38 @@
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="SysTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
         <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>
+
+    <DataTemplate x:Key="TaskbarIcon">
+        <tb:TaskbarIcon
+        Visibility="Visible"
+        ContextMenu="{StaticResource SysTrayMenu}"
+        Id="{Binding Name}"
+        d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
+
+            <tb:TaskbarIcon.IconSource>
+                <!-- idk why, but 96 it is xD -->
+                <tb:GeneratedIconSource Foreground="{Binding Accent}"
+                                    FontFamily="Segoe Fluent Icons"
+                                    FontSize="96"
+                                    Size="128"
+                                    Text="{Binding Glyph}"/>
+            </tb:TaskbarIcon.IconSource>
+            <!-- Disposal of icons -->
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding}"
+                               Value="null"
+                               >
+                    <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=tb:TaskbarIcon}}"
+                                        MethodName="Dispose"/>
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+        </tb:TaskbarIcon>
+    </DataTemplate>
 </ResourceDictionary>

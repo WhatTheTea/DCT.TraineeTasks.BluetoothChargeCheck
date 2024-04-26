@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿// <copyright file = "App.xaml.cs" company = "Digital Cloud Technologies">
+// Copyright (c) Digital Cloud Technologies.All rights reserved.
+// </copyright>
+
 using System.Windows;
-using System.Windows.Media;
 
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
@@ -10,6 +12,6 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 /// </summary>
 public partial class App : Application
 {
-    
+
 }
 

@@ -11,4 +11,5 @@ public interface IBluetoothDevice : INotifyPropertyChanged
     string Name { get; }
     double Charge { get; }
     bool Connected { get; }
+    bool IsInTray { get; set; }
 }

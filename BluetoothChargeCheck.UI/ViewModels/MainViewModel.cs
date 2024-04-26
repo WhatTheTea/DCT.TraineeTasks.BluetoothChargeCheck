@@ -1,14 +1,12 @@
-﻿// <copyright file = "MainWindowViewModel.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "MainViewModel.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
-using H.NotifyIcon;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
@@ -20,8 +18,20 @@ public partial class MainViewModel : ObservableObject
     private ObservableCollection<TrayIconViewModel> trayIconViewModels = [];
 
     [RelayCommand]
-    private void AddTaskbarIcon()
+    private void TaskbarIcon(IBluetoothDevice device)
     {
-        this.TrayIconViewModels.Add(new TrayIconViewModel());
+        if (device.IsInTray)
+        {
+            var viewModel = this.TrayIconViewModels.First(x => x.BluetoothDevice == device);
+            this.TrayIconViewModels.Remove(viewModel);
+            viewModel.Dispose();
+            device.IsInTray = false;
+        }
+        else
+        {
+            this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
+            // feels dumb
+            device.IsInTray = true;
+        }
     }
 }

@@ -2,48 +2,72 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Converters;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
-using Wpf.Ui.Appearance;
-using Wpf.Ui.Markup;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
-public partial class TrayIconViewModel : ObservableObject
+public partial class TrayIconViewModel : ObservableObject, IDisposable
 {
-    private string[] chargeStrings = [
-        "\uEBA0", "\uEBA1","\uEBA2","\uEBA3","\uEBA4","\uEBA5",
-        "\uEBA6","\uEBA7","\uEBA8","\uEBA9","\uEBAA"];
+    protected readonly string[] chargeStrings =
+    [
+        "\uEBA0", "\uEBA1", "\uEBA2", "\uEBA3", "\uEBA4", "\uEBA5",
+        "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
+    ];
+
+    private readonly TaskbarIcon trayIcon;
+
+    [ObservableProperty] private Brush? accent;
+
+    [ObservableProperty] private IBluetoothDevice bluetoothDevice;
+
+    [ObservableProperty] private string glyph;
+    [ObservableProperty] private Guid name = Guid.NewGuid();
+
+    public TrayIconViewModel(IBluetoothDevice device, string color = "#BDBDBD")
+    {
+        // Init VM
+        this.Glyph = this.chargeStrings[0];
+        this.Accent = new BrushConverter().ConvertFrom(color) as Brush;
+        this.BluetoothDevice = device;
+        // Init View
+        var template = Application.Current.Resources["TaskbarIcon"] as DataTemplate;
+        this.trayIcon = template.LoadContent() as TaskbarIcon;
+        this.trayIcon.DataContext = this;
+        this.trayIcon.ForceCreate();
+        // Subscribe to charge updates
+        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     [RelayCommand]
     private void ExitApplication() =>
         Application.Current.Shutdown();
-    
-    public IBluetoothDevice BluetoothDevice;
 
-    [ObservableProperty] private Brush? accent = new BrushConverter().ConvertFrom("Red") as Brush;
-    [ObservableProperty] private string glyph;
-    [ObservableProperty] private Guid name = Guid.NewGuid();
-
-    public TrayIconViewModel()
+    private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
-        this.Glyph = this.chargeStrings[0];
-        var testDevice = new TestBluetoothDevice();
-        this.BluetoothDevice = testDevice;
-        Task.Run(() => testDevice.ChargeCyclingAsync(CancellationToken.None));
-        this.BluetoothDevice.PropertyChanged += (_, args) =>
+        if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
         {
-            if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
-            {
-                this.Glyph = this.chargeStrings[(int)(this.BluetoothDevice.Charge / 10)];
-            }
-        };
+            this.Glyph = this.chargeStrings[(int)(this.BluetoothDevice.Charge / 10)];
+        }
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
+            this.trayIcon.Dispose();
+        }
     }
 }
