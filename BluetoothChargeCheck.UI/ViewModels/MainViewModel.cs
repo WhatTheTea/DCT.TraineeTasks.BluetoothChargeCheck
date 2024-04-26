@@ -4,6 +4,7 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
         xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
         mc:Ignorable="d"
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
@@ -51,6 +52,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <ItemsControl
+            x:Name="TaskbarIconsControl"
             Grid.Row="2"
             ItemsSource="{Binding TrayIconViewModels}">
             <ItemsControl.ItemTemplate>
@@ -69,6 +71,15 @@
                                                     FontSize="96"
                                                     Text="{Binding Glyph}"/>
                         </tb:TaskbarIcon.IconSource>
+                        <!-- Disposal of icons -->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger
+                                SourceObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                EventName="Closing">
+                                <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=tb:TaskbarIcon}}"
+                                                    MethodName="Dispose"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </tb:TaskbarIcon>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
