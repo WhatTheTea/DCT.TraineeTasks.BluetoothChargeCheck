@@ -22,18 +22,18 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
 
     private readonly TaskbarIcon trayIcon;
 
-    [ObservableProperty] private Brush? accent;
+    [ObservableProperty] private Color? accent;
 
     [ObservableProperty] private IBluetoothDevice bluetoothDevice;
 
     [ObservableProperty] private string glyph;
     [ObservableProperty] private Guid name = Guid.NewGuid();
 
-    public TrayIconViewModel(IBluetoothDevice device, string color = "#BDBDBD")
+    public TrayIconViewModel(IBluetoothDevice device, string color = "#BDBDBD") // TODO: Refactor
     {
         // Init VM
         this.Glyph = this.chargeStrings[0];
-        this.Accent = new BrushConverter().ConvertFrom(color) as Brush;
+        this.Accent = Color.FromRgb(255, 0, 0);
         this.BluetoothDevice = device;
         // Init View
         var template = Application.Current.Resources["TaskbarIcon"] as DataTemplate;
