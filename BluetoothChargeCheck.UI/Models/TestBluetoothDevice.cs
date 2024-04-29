@@ -11,13 +11,12 @@ internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
     [ObservableProperty] private string name = "Bluetooth Device";
     [ObservableProperty] private double charge;
     [ObservableProperty] private bool connected;
-    [ObservableProperty] private bool isInTray;
 
     public async Task ChargeCyclingAsync(CancellationToken token)
     {
         while (!token.IsCancellationRequested)
         {
-            NextCharge();
+            this.NextCharge();
 
             await Task.Delay(TimeSpan.FromSeconds(1), token);
         }

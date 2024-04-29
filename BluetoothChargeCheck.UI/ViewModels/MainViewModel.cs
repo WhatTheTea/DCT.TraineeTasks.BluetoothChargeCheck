@@ -18,20 +18,24 @@ public partial class MainViewModel : ObservableObject
     private ObservableCollection<TrayIconViewModel> trayIconViewModels = [];
 
     [RelayCommand]
-    private void TaskbarIcon(IBluetoothDevice device)
+    private void ToggleTaskbarIcon(IBluetoothDevice device)
     {
-        if (device.IsInTray)
+        var viewModel = this.TrayIconViewModels
+            .FirstOrDefault(x => x.BluetoothDevice == device);
+
+        if (viewModel is not null)
         {
-            var viewModel = this.TrayIconViewModels.First(x => x.BluetoothDevice == device);
-            this.TrayIconViewModels.Remove(viewModel);
-            viewModel.Dispose();
-            device.IsInTray = false;
+            this.RemoveDevice(viewModel);
         }
         else
         {
             this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
-            // feels dumb
-            device.IsInTray = true;
         }
+    }
+
+    private void RemoveDevice(TrayIconViewModel viewModel)
+    {
+        this.TrayIconViewModels.Remove(viewModel);
+        viewModel.Dispose();
     }
 }
