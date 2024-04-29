@@ -4,7 +4,7 @@
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="SysTrayMenu"
@@ -16,16 +16,21 @@
         <tb:TaskbarIcon
         Visibility="Visible"
         ContextMenu="{StaticResource SysTrayMenu}"
+        PopupActivation="LeftClick"
         Id="{Binding Name}"
         d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
 
             <tb:TaskbarIcon.IconSource>
                 <!-- idk why, but 96 it is xD -->
-                <tb:GeneratedIconSource Foreground="{Binding Accent}"
+                <tb:GeneratedIconSource
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
                                     Size="128"
-                                    Text="{Binding Glyph}"/>
+                                    Text="{Binding Glyph}">
+                    <tb:GeneratedIconSource.Foreground>
+                        <SolidColorBrush Color="{Binding Accent}"/>
+                    </tb:GeneratedIconSource.Foreground>
+                </tb:GeneratedIconSource>
             </tb:TaskbarIcon.IconSource>
             <!-- Disposal of icons -->
             <i:Interaction.Triggers>
@@ -36,6 +41,11 @@
                                         MethodName="Dispose"/>
                 </i:DataTrigger>
             </i:Interaction.Triggers>
+
+            <tb:TaskbarIcon.TrayPopup>
+                <views:DeviceInfoView DataContext="{Binding}"/>
+            </tb:TaskbarIcon.TrayPopup>
+
         </tb:TaskbarIcon>
     </DataTemplate>
 </ResourceDictionary>
