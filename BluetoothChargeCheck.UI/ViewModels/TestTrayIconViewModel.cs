@@ -2,6 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.Windows.Media;
 using System.Windows.Threading;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
@@ -10,7 +11,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 public class TestTrayIconViewModel : TrayIconViewModel
 {
     private readonly CancellationTokenSource source = new();
-    public TestTrayIconViewModel(IBluetoothDevice device) : base(device, "Red")
+    public TestTrayIconViewModel(IBluetoothDevice device) : base(device)
     {
         Task.Run(async () => await (device as TestBluetoothDevice).ChargeCyclingAsync(this.source.Token));
     }

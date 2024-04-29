@@ -9,7 +9,7 @@
     <ContextMenu x:Shared="False"
                  x:Key="SysTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-        <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+        <MenuItem Header="Exit" Command="{Binding RemoveIconCommand}" />
     </ContextMenu>
 
     <DataTemplate x:Key="TaskbarIcon">

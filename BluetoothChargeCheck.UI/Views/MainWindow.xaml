@@ -52,7 +52,7 @@
                             <StackPanel>
                             <CheckBox
                                 IsChecked="{Binding IsInTray, Mode=OneWay}"
-                                Command="{Binding Source={StaticResource MainVM}, Path=TaskbarIconCommand}"
+                                Command="{Binding Source={StaticResource MainVM}, Path=ToggleTaskbarIconCommand}"
                                 CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>

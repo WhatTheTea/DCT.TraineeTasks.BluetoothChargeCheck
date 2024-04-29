@@ -3,18 +3,19 @@
 // </copyright>
 
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
+using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
 public partial class TrayIconViewModel : ObservableObject, IDisposable
 {
-    protected readonly string[] chargeStrings =
+    protected readonly string[] ChargeStrings =
     [
         "\uEBA0", "\uEBA1", "\uEBA2", "\uEBA3", "\uEBA4", "\uEBA5",
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
@@ -22,44 +23,53 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
 
     private readonly TaskbarIcon trayIcon;
 
+    [ObservableProperty] private Guid id = Guid.NewGuid();
+
     [ObservableProperty] private Color? accent;
+    [ObservableProperty] private string glyph;
 
     [ObservableProperty] private IBluetoothDevice bluetoothDevice;
 
-    [ObservableProperty] private string glyph;
-    [ObservableProperty] private Guid name = Guid.NewGuid();
-
-    public TrayIconViewModel(IBluetoothDevice device, string color = "#BDBDBD") // TODO: Refactor
+    public TrayIconViewModel(IBluetoothDevice device, Color color = default) 
     {
-        // Init VM
-        this.Glyph = this.chargeStrings[0];
-        this.Accent = Color.FromRgb(255, 0, 0);
         this.BluetoothDevice = device;
-        // Init View
-        var template = Application.Current.Resources["TaskbarIcon"] as DataTemplate;
-        this.trayIcon = template.LoadContent() as TaskbarIcon;
-        this.trayIcon.DataContext = this;
-        this.trayIcon.ForceCreate();
+        this.Glyph = this.ChargeStrings[0];
+        this.Accent = color == default ? Wpf.Ui.Appearance.ApplicationAccentColorManager.PrimaryAccent
+                                       : color;
+        this.trayIcon = this.CreateTrayIcon();
         // Subscribe to charge updates
         this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
 
-    public void Dispose()
+    private TaskbarIcon CreateTrayIcon()
     {
-        this.Dispose(true);
-        GC.SuppressFinalize(this);
+        var template = Application.Current.Resources["TaskbarIcon"] as DataTemplate;
+        TaskbarIcon taskbarIcon = template?.LoadContent() as TaskbarIcon ??
+                          throw new ResourceReferenceKeyNotFoundException();
+        taskbarIcon.DataContext = this;
+        taskbarIcon.ForceCreate();
+        return taskbarIcon;
     }
 
+
     [RelayCommand]
-    private void ExitApplication() =>
+    private void RemoveIcon() =>
         Application.Current.Shutdown();
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
         if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
         {
-            this.Glyph = this.chargeStrings[(int)(this.BluetoothDevice.Charge / 10)];
+            this.Glyph = this.ChargeStrings[(int)(this.BluetoothDevice.Charge / 10)];
         }
+    }
+
+    // IDisposable
+
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
