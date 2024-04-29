@@ -3,10 +3,11 @@
 // </copyright>
 
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
 using Color = System.Windows.Media.Color;
@@ -54,7 +55,7 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
 
     [RelayCommand]
     private void RemoveIcon() =>
-        Application.Current.Shutdown();
+        WeakReferenceMessenger.Default.Send(new RemoveTrayIconMessage(this));
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {

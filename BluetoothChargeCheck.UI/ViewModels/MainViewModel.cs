@@ -5,6 +5,8 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 
@@ -31,6 +33,12 @@ public partial class MainViewModel : ObservableObject
         {
             this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
         }
+    }
+
+    public MainViewModel()
+    {
+        WeakReferenceMessenger.Default.Register<RemoveTrayIconMessage>(this,
+            (r,m) => this.RemoveDevice(m.Value));
     }
 
     private void RemoveDevice(TrayIconViewModel viewModel)

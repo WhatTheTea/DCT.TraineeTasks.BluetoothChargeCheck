@@ -24,7 +24,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -51,7 +50,6 @@
                         <DataTemplate>
                             <StackPanel>
                             <CheckBox
-                                IsChecked="{Binding IsInTray, Mode=OneWay}"
                                 Command="{Binding Source={StaticResource MainVM}, Path=ToggleTaskbarIconCommand}"
                                 CommandParameter="{Binding}"/>
                             </StackPanel>

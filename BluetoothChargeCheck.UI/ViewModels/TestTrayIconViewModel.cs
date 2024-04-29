@@ -2,8 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Windows.Media;
-using System.Windows.Threading;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
