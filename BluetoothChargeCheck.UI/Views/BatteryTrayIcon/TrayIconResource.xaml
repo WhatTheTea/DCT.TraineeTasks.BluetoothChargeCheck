@@ -27,7 +27,7 @@
         Visibility="Visible"
         ContextMenu="{StaticResource BatteryTrayMenu}"
         PopupActivation="LeftClick"
-        Id="{Binding Name}"
+        Id="{Binding Id}"
         d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
 
             <tb:TaskbarIcon.IconSource>

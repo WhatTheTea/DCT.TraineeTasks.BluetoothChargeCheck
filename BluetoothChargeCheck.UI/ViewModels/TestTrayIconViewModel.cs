@@ -16,11 +16,11 @@ public class TestTrayIconViewModel : TrayIconViewModel
 
     protected override void Dispose(bool disposing)
     {
-        base.Dispose(disposing);
         if (disposing)
         {
             this.source.Cancel();
             this.source.Dispose();
         }
+        base.Dispose(disposing);
     }
 }

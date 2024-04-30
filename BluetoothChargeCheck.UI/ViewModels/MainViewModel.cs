@@ -3,12 +3,15 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
+using H.NotifyIcon;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
@@ -33,6 +36,20 @@ public partial class MainViewModel : ObservableObject
         {
             this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
         }
+    }
+
+    [RelayCommand]
+    private void Hide() =>
+        Application.Current.MainWindow?.Hide(true);
+
+    [RelayCommand]
+    private void Show()
+    {
+        Application.Current.MainWindow = new MainWindow
+        {
+            DataContext = this
+        };
+        Application.Current.MainWindow?.Show(true);
     }
 
     public MainViewModel()

@@ -3,6 +3,8 @@
 // </copyright>
 
 using System.Windows;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
 using H.NotifyIcon;
 using Wpf.Ui.Controls;
 
@@ -23,7 +25,14 @@ public partial class App : Application
         Wpf.Ui.Appearance.SystemThemeWatcher.Watch(this.MainWindow,
             WindowBackdropType.Auto);
 
+        this.CreateAppTrayIcon();
+        (this.appTrayIcon.DataContext as MainViewModel)!.ShowCommand.Execute(null);
+    }
+
+    private void CreateAppTrayIcon()
+    {
         this.appTrayIcon = (this.FindResource("AppTrayIcon") as TaskbarIcon)!;
+        this.appTrayIcon.DataContext = new MainViewModel();
         this.appTrayIcon.ForceCreate();
     }
 

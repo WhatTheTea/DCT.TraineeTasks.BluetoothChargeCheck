@@ -5,11 +5,19 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
-                    mc:Ignorable="d">
+                    xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
+                    mc:Ignorable="d"
+                    d:DataContext="{d:DesignInstance vm:MainViewModel}">
     <ContextMenu x:Shared="False"
                  x:Key="AppTrayMenu">
-        <MenuItem Header="Show"/>
+        <MenuItem Header="Show">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction
+                        Command="{Binding ShowCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </MenuItem>
         <Separator/>
         <MenuItem Header="Exit">
             <i:Interaction.Triggers>
@@ -24,6 +32,7 @@
 
     <tb:TaskbarIcon x:Key="AppTrayIcon"
                     Visibility="Visible"
+                    Id="AC515764-A0CB-43BB-BF0A-DA7D516DBB69"
                     ContextMenu="{StaticResource AppTrayMenu}">
 
         <tb:TaskbarIcon.IconSource>
