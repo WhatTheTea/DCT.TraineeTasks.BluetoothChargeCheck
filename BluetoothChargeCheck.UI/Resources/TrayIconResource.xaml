@@ -9,7 +9,17 @@
     <ContextMenu x:Shared="False"
                  x:Key="SysTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-        <MenuItem Header="Exit" Command="{Binding RemoveIconCommand}" />
+        <MenuItem Header="Hide" Command="{Binding RemoveIconCommand}" />
+        <Separator/>
+        <MenuItem Header="Exit">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction
+                        TargetObject="{Binding Source={x:Static Application.Current}}"
+                        MethodName="Shutdown"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </MenuItem>
     </ContextMenu>
 
     <DataTemplate x:Key="TaskbarIcon">
