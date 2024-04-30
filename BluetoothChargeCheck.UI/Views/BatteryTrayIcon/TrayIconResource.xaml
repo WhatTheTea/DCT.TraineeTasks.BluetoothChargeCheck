@@ -7,7 +7,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
-                 x:Key="SysTrayMenu"
+                 x:Key="BatteryTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
         <MenuItem Header="Hide" Command="{Binding RemoveIconCommand}" />
         <Separator/>
@@ -22,10 +22,10 @@
         </MenuItem>
     </ContextMenu>
 
-    <DataTemplate x:Key="TaskbarIcon">
+    <DataTemplate x:Key="BatteryTrayIcon">
         <tb:TaskbarIcon
         Visibility="Visible"
-        ContextMenu="{StaticResource SysTrayMenu}"
+        ContextMenu="{StaticResource BatteryTrayMenu}"
         PopupActivation="LeftClick"
         Id="{Binding Name}"
         d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">

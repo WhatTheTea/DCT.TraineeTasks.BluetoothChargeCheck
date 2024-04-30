@@ -13,9 +13,6 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
-
-        this.Loaded += (_, _) => Wpf.Ui.Appearance.SystemThemeWatcher.Watch(this,
-                                                                            WindowBackdropType.Auto);
     }
 
 

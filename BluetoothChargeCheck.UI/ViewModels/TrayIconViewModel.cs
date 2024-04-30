@@ -44,7 +44,7 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
 
     private TaskbarIcon CreateTrayIcon()
     {
-        var template = Application.Current.Resources["TaskbarIcon"] as DataTemplate;
+        var template = Application.Current.Resources["BatteryTrayIcon"] as DataTemplate;
         TaskbarIcon taskbarIcon = template?.LoadContent() as TaskbarIcon ??
                           throw new ResourceReferenceKeyNotFoundException();
         taskbarIcon.DataContext = this;
