@@ -54,8 +54,11 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
 
 
     [RelayCommand]
-    private void RemoveIcon() =>
+    private void RemoveIcon()
+    {
         WeakReferenceMessenger.Default.Send(new RemoveTrayIconMessage(this));
+        this.Dispose();
+    }
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
