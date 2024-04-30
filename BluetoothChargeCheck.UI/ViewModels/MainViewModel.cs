@@ -31,18 +31,29 @@ public partial class MainViewModel : ObservableObject
         if (viewModel is not null)
         {
             this.RemoveDevice(viewModel);
+            viewModel.Dispose();
         }
         else
         {
             this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
         }
     }
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(this.HideCommand))]
+    private bool canExecuteHideCommand = true;
 
-    [RelayCommand]
-    private void Hide() =>
+    [RelayCommand(CanExecute = nameof(this.CanExecuteHideCommand))]
+    private void Hide()
+    {
         Application.Current.MainWindow?.Hide(true);
+        this.CanExecuteHideCommand = false;
+        this.CanExecuteShowCommand = true;
+    }
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(this.ShowCommand))]
+    private bool canExecuteShowCommand = true;
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(this.CanExecuteShowCommand))]
     private void Show()
     {
         Application.Current.MainWindow = new MainWindow
@@ -50,6 +61,8 @@ public partial class MainViewModel : ObservableObject
             DataContext = this
         };
         Application.Current.MainWindow?.Show(true);
+        this.CanExecuteHideCommand = true;
+        this.CanExecuteShowCommand = false;
     }
 
     public MainViewModel()
@@ -61,6 +74,5 @@ public partial class MainViewModel : ObservableObject
     private void RemoveDevice(TrayIconViewModel viewModel)
     {
         this.TrayIconViewModels.Remove(viewModel);
-        viewModel.Dispose();
     }
 }
