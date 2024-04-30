@@ -14,7 +14,7 @@
                     <FontFamily x:Key="SegoeFluentIcons">pack://application:,,,/BluetoothChargeCheck.UI;component/Fonts/FluentSystemIcons-Regular.ttf</FontFamily>
                 </ResourceDictionary>
 
-                <ResourceDictionary Source="/Resources/TrayIconResource.xaml"/>
+                <ResourceDictionary Source="/Views/BatteryTrayIcon/TrayIconResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
