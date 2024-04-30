@@ -22,10 +22,9 @@
     </Window.DataContext>
 
     <i:Interaction.Triggers>
-        <i:DataTrigger Binding="{Binding ElementName=Root, Path=WindowState}"
-                       Value="1">
+        <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding HideCommand}"/>
-        </i:DataTrigger>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <Grid>
