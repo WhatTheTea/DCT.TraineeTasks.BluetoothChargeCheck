@@ -12,59 +12,77 @@ using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
 using Color = System.Windows.Media.Color;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
+namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
-public partial class TrayIconViewModel : ObservableObject, IDisposable
+public partial class DeviceViewModel : ObservableObject, IDisposable
 {
-    protected readonly string[] ChargeStrings =
+    // TrayIcon
+    private static string[] ChargeLevelGlyphs =>
     [
         "\uEBA0", "\uEBA1", "\uEBA2", "\uEBA3", "\uEBA4", "\uEBA5",
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
     ];
+    private TaskbarIcon? trayIcon;
 
-    private readonly TaskbarIcon trayIcon;
+    private bool isTrayIconVisible = false;
+    public bool IsTrayIconVisible
+    {
+        get => this.isTrayIconVisible;
+        set
+        {
+            this.OnPropertyChanging();
+            if (value)
+            {
+                this.CreateTrayIcon();
+            }
+            else
+            {
+                this.RemoveTrayIcon();
+            }
+
+            this.isTrayIconVisible = value;
+            this.OnPropertyChanged();
+        }
+    }
 
     [ObservableProperty] private Guid id = Guid.NewGuid();
-
     [ObservableProperty] private Color? accent;
     [ObservableProperty] private string glyph;
-
+    // Actual device
     [ObservableProperty] private IBluetoothDevice bluetoothDevice;
 
-    public TrayIconViewModel(IBluetoothDevice device, Color color = default) 
+    public DeviceViewModel(IBluetoothDevice device) 
     {
         this.BluetoothDevice = device;
-        this.Glyph = this.ChargeStrings[0];
-        this.Accent = color == default ? Wpf.Ui.Appearance.ApplicationAccentColorManager.PrimaryAccent
-                                       : color;
-        this.trayIcon = this.CreateTrayIcon();
+        this.Glyph = ChargeLevelGlyphs[0];
+        this.Accent = Wpf.Ui.Appearance.ApplicationAccentColorManager.PrimaryAccent;
         // Subscribe to charge updates
         this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
 
-    private TaskbarIcon CreateTrayIcon()
+    [RelayCommand]
+    private void CreateTrayIcon()
     {
         var template = Application.Current.Resources["BatteryTrayIcon"] as DataTemplate;
-        TaskbarIcon taskbarIcon = template?.LoadContent() as TaskbarIcon ??
-                          throw new ResourceReferenceKeyNotFoundException();
-        taskbarIcon.DataContext = this;
-        taskbarIcon.ForceCreate();
-        return taskbarIcon;
+        this.trayIcon = template?.LoadContent() as TaskbarIcon ??
+                          throw new InvalidOperationException("Can't load tray icon from template");
+        this.trayIcon.DataContext = this;
+        this.trayIcon.ForceCreate();
     }
 
 
     [RelayCommand]
-    private void RemoveIcon()
+    private void RemoveTrayIcon()
     {
-        WeakReferenceMessenger.Default.Send(new RemoveTrayIconMessage(this));
-        this.Dispose();
+        this.trayIcon?.Dispose();
+        this.trayIcon = null;
     }
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
-        if (args.PropertyName == nameof(this.BluetoothDevice.Charge))
+        if (args.PropertyName == nameof(IBluetoothDevice.Charge))
         {
-            this.Glyph = this.ChargeStrings[(int)(this.BluetoothDevice.Charge / 10)];
+            this.Glyph = ChargeLevelGlyphs[(int)(this.BluetoothDevice.Charge / 10)];
         }
     }
 
@@ -81,7 +99,7 @@ public partial class TrayIconViewModel : ObservableObject, IDisposable
         if (disposing)
         {
             this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
-            this.trayIcon.Dispose();
+            this.trayIcon?.Dispose();
         }
     }
 }

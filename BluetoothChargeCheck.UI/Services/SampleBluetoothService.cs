@@ -8,19 +8,20 @@ using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 
-internal class TestBluetoothService : ObservableObject, IBluetoothService
+internal class SampleBluetoothService : ObservableObject, IBluetoothService
 {
     private readonly ObservableCollection<IBluetoothDevice> devices = [];
 
-    public ReadOnlyObservableCollection<IBluetoothDevice> Devices { get; init; }
-    public ReadOnlyObservableCollection<IBluetoothDevice> Connected { get; init; }
+    public ObservableCollection<IBluetoothDevice> Devices { get; init; }
+    public ObservableCollection<IBluetoothDevice> Connected { get; init; }
 
-    public TestBluetoothService()
+    public SampleBluetoothService()
     {
         for (int i = 0; i < 5; i++)
         {
             this.devices.Add(new TestBluetoothDevice());
         }
-        this.Devices = new(this.devices);
+        this.Devices = this.devices;
+        this.Connected = this.Devices;
     }
 }

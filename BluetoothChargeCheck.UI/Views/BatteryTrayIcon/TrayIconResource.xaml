@@ -9,7 +9,7 @@
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
-        <MenuItem Header="Hide" Command="{Binding RemoveIconCommand}" />
+        <MenuItem Header="Hide" Command="{Binding RemoveTrayIconCommand}" />
         <Separator/>
         <MenuItem Header="Exit">
             <i:Interaction.Triggers>

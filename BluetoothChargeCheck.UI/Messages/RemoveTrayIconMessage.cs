@@ -4,6 +4,7 @@
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
+using DeviceViewModel = DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device.DeviceViewModel;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
-internal class RemoveTrayIconMessage(TrayIconViewModel value) : ValueChangedMessage<TrayIconViewModel>(value);
+internal class RemoveTrayIconMessage(DeviceViewModel value) : ValueChangedMessage<DeviceViewModel>(value);

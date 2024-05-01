@@ -2,7 +2,10 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,6 +13,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
 using H.NotifyIcon;
 
@@ -17,27 +21,29 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    public IBluetoothService BluetoothService { get; init; } = new TestBluetoothService();
+    public IBluetoothService BluetoothService { get; init; } = new SampleBluetoothService();
 
     [ObservableProperty]
-    private ObservableCollection<TrayIconViewModel> trayIconViewModels = [];
+    private ImmutableArray<DeviceViewModel> trayIconViewModels = [];
 
-    [RelayCommand]
-    private void ToggleTaskbarIcon(IBluetoothDevice device)
+    public MainViewModel()
     {
-        var viewModel = this.TrayIconViewModels
-            .FirstOrDefault(x => x.BluetoothDevice == device);
+        var viewModels = this.BluetoothService.Connected.Select(x => new SampleDeviceViewModel(x));
+        this.TrayIconViewModels = viewModels.Cast<DeviceViewModel>()
+                                            .ToImmutableArray();
 
-        if (viewModel is not null)
+        this.BluetoothService.Connected.CollectionChanged += (_, args) =>
         {
-            this.RemoveDevice(viewModel);
-            viewModel.Dispose();
-        }
-        else
-        {
-            this.TrayIconViewModels.Add(new TestTrayIconViewModel(device));
-        }
+            var newItems = args.NewItems;
+            if (newItems is not null)
+            {
+                this.TrayIconViewModels = newItems.Cast<DeviceViewModel>().ToImmutableArray();
+            }
+        };
     }
+
+    // Main tray icon
+
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(this.HideCommand))]
     private bool canExecuteHideCommand = true;
@@ -63,16 +69,5 @@ public partial class MainViewModel : ObservableObject
         Application.Current.MainWindow?.Show(true);
         this.CanExecuteHideCommand = true;
         this.CanExecuteShowCommand = false;
-    }
-
-    public MainViewModel()
-    {
-        WeakReferenceMessenger.Default.Register<RemoveTrayIconMessage>(this,
-            (r,m) => this.RemoveDevice(m.Value));
-    }
-
-    private void RemoveDevice(TrayIconViewModel viewModel)
-    {
-        this.TrayIconViewModels.Remove(viewModel);
     }
 }

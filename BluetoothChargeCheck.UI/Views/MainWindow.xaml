@@ -13,14 +13,6 @@
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel}">
-    <Window.Resources>
-        <vm:MainViewModel x:Key="MainVM"/>
-    </Window.Resources>
-
-    <Window.DataContext>
-        <StaticResource ResourceKey="MainVM"/>
-    </Window.DataContext>
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding HideCommand}"/>
@@ -40,26 +32,22 @@
         </StackPanel>
         <DataGrid
             Grid.Row="1"
-            ItemsSource="{Binding BluetoothService.Devices}"
+            ItemsSource="{Binding TrayIconViewModels}"
             AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}"
+                <DataGridTextColumn Binding="{Binding BluetoothDevice.Name}"
                                     IsReadOnly="True"
                                     Header="Device name"/>
-                <DataGridTextColumn Binding="{Binding Charge}"
+                <DataGridTextColumn Binding="{Binding BluetoothDevice.Charge}"
                                     IsReadOnly="True"
                                     Header="Charge %"/>
-                <DataGridCheckBoxColumn Binding="{Binding Connected}"
+                <DataGridCheckBoxColumn Binding="{Binding BluetoothDevice.Connected}"
                                         IsReadOnly="True"
                                         Header="Is connected"/>
                 <DataGridTemplateColumn Header="Taskbar">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                            <CheckBox
-                                Command="{Binding Source={StaticResource MainVM}, Path=ToggleTaskbarIconCommand}"
-                                CommandParameter="{Binding}"/>
-                            </StackPanel>
+                            <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
