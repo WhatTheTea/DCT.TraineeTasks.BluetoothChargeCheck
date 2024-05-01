@@ -22,7 +22,7 @@ internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
         }
     }
 
-    internal void NextCharge()
+    private void NextCharge()
     {
         if (this.Charge < 100)
         {

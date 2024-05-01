@@ -17,12 +17,13 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 public partial class App : Application
 {
     private TaskbarIcon appTrayIcon;
-    private MainViewModel mainViewModel = new();
+    private MainViewModel mainViewModel;
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
+        this.mainViewModel = new();
         this.mainViewModel.ShowCommand.Execute(null);
         this.CreateAppTrayIcon();
     }

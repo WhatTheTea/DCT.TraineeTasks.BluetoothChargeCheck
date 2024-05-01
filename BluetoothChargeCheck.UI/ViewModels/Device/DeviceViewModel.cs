@@ -3,13 +3,16 @@
 // </copyright>
 
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
+
 using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
@@ -31,6 +34,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         set
         {
             this.OnPropertyChanging();
+
             if (value)
             {
                 this.CreateTrayIcon();
@@ -39,9 +43,6 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
             {
                 this.RemoveTrayIcon();
             }
-
-            this.isTrayIconVisible = value;
-            this.OnPropertyChanged();
         }
     }
 
@@ -68,20 +69,27 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
                           throw new InvalidOperationException("Can't load tray icon from template");
         this.trayIcon.DataContext = this;
         this.trayIcon.ForceCreate();
+
+        this.isTrayIconVisible = true;
+        this.OnPropertyChanged(nameof(this.IsTrayIconVisible));
     }
 
 
     [RelayCommand]
     private void RemoveTrayIcon()
     {
-        this.trayIcon?.Dispose();
+        this.trayIcon!.Dispose();
         this.trayIcon = null;
+
+        this.isTrayIconVisible = false;
+        this.OnPropertyChanged(nameof(this.IsTrayIconVisible));
     }
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
-        if (args.PropertyName == nameof(IBluetoothDevice.Charge))
+        if (args.PropertyName == nameof(IBluetoothDevice.Charge) && this.IsTrayIconVisible)
         {
+            Debug.Assert(this.trayIcon is not null);
             this.Glyph = ChargeLevelGlyphs[(int)(this.BluetoothDevice.Charge / 10)];
         }
     }

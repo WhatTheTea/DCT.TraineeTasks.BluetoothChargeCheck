@@ -4,19 +4,21 @@
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
+                    xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
                  d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
         <MenuItem Header="Hide" Command="{Binding RemoveTrayIconCommand}" />
-        <Separator/>
+        <Separator />
         <MenuItem Header="Exit">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:CallMethodAction
                         TargetObject="{Binding Source={x:Static Application.Current}}"
-                        MethodName="Shutdown"/>
+                        MethodName="Shutdown" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </MenuItem>
@@ -24,11 +26,11 @@
 
     <DataTemplate x:Key="BatteryTrayIcon">
         <tb:TaskbarIcon
-        Visibility="Visible"
-        ContextMenu="{StaticResource BatteryTrayMenu}"
-        PopupActivation="LeftClick"
-        Id="{Binding Id}"
-        d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
+            Visibility="Visible"
+            ContextMenu="{StaticResource BatteryTrayMenu}"
+            PopupActivation="LeftClick"
+            Id="{Binding Id}"
+            d:DataContext="{d:DesignInstance device:DeviceViewModel}">
 
             <tb:TaskbarIcon.IconSource>
                 <!-- idk why, but 96 it is xD -->
@@ -36,21 +38,12 @@
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
                                     Size="128"
-                                    Text="{Binding Glyph}">
+                                    Text="{Binding Glyph, Mode=OneWay, Delay=500}">
                     <tb:GeneratedIconSource.Foreground>
-                        <SolidColorBrush Color="{Binding Accent}"/>
+                        <SolidColorBrush Color="{Binding Accent, Mode=OneWay, Delay=500}"/>
                     </tb:GeneratedIconSource.Foreground>
                 </tb:GeneratedIconSource>
             </tb:TaskbarIcon.IconSource>
-            <!-- Disposal of icons -->
-            <i:Interaction.Triggers>
-                <i:DataTrigger Binding="{Binding}"
-                               Value="null"
-                               >
-                    <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=tb:TaskbarIcon}}"
-                                        MethodName="Dispose"/>
-                </i:DataTrigger>
-            </i:Interaction.Triggers>
 
             <tb:TaskbarIcon.TrayPopup>
                 <views:DeviceInfoView DataContext="{Binding}"/>
