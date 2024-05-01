@@ -27,24 +27,6 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     ];
     private TaskbarIcon? trayIcon;
 
-    private bool isTrayIconVisible = false;
-    public bool IsTrayIconVisible
-    {
-        get => this.isTrayIconVisible;
-        set
-        {
-            this.OnPropertyChanging();
-
-            if (value)
-            {
-                this.CreateTrayIcon();
-            }
-            else
-            {
-                this.RemoveTrayIcon();
-            }
-        }
-    }
 
     [ObservableProperty] private Guid id = Guid.NewGuid();
     [ObservableProperty] private Color? accent;
@@ -61,9 +43,27 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
 
+    private bool isTrayIconVisible = false;
+    public bool IsTrayIconVisible
+    {
+        get => this.isTrayIconVisible;
+        set
+        {
+            if (value)
+            {
+                this.CreateTrayIcon();
+            }
+            else
+            {
+                this.RemoveTrayIcon();
+            }
+        }
+    }
+
     [RelayCommand]
     private void CreateTrayIcon()
     {
+        this.OnPropertyChanging(nameof(this.IsTrayIconVisible));
         var template = Application.Current.Resources["BatteryTrayIcon"] as DataTemplate;
         this.trayIcon = template?.LoadContent() as TaskbarIcon ??
                           throw new InvalidOperationException("Can't load tray icon from template");
@@ -78,6 +78,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private void RemoveTrayIcon()
     {
+        this.OnPropertyChanging(nameof(this.IsTrayIconVisible));
         this.trayIcon!.Dispose();
         this.trayIcon = null;
 
