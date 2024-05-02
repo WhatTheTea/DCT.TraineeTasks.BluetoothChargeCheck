@@ -6,19 +6,11 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
-                    mc:Ignorable="d"
-                    d:DataContext="{d:DesignInstance vm:MainViewModel}">
+                    xmlns:v="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon"
+                    mc:Ignorable="d">
+
     <ContextMenu x:Shared="False"
                  x:Key="AppTrayMenu">
-        <MenuItem Header="Show">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <i:InvokeCommandAction
-                        Command="{Binding ShowCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </MenuItem>
-        <Separator/>
         <MenuItem Header="Exit">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
@@ -31,9 +23,15 @@
     </ContextMenu>
 
     <tb:TaskbarIcon x:Key="AppTrayIcon"
+                    d:DataContext="{d:DesignInstance vm:MainViewModel}"
                     Visibility="Visible"
                     Id="AC515764-A0CB-43BB-BF0A-DA7D516DBB69"
-                    ContextMenu="{StaticResource AppTrayMenu}">
+                    ContextMenu="{StaticResource AppTrayMenu}"
+                    PopupActivation="LeftOrDoubleClick">
+
+        <tb:TaskbarIcon.DataContext>
+            <vm:MainViewModel/>
+        </tb:TaskbarIcon.DataContext>
 
         <tb:TaskbarIcon.IconSource>
             <!-- idk why, but 96 it is xD -->
@@ -42,9 +40,12 @@
                                     FontSize="96"
                                     Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
                                     Size="128"
-                                    Text="&#xEC6C;">
-            </tb:GeneratedIconSource>
+                                    Text="&#xEC6C;" />
         </tb:TaskbarIcon.IconSource>
+
+        <tb:TaskbarIcon.TrayPopup>
+            <v:MainPopup DataContext="{Binding}"/>
+        </tb:TaskbarIcon.TrayPopup>
 
     </tb:TaskbarIcon>
 </ResourceDictionary>

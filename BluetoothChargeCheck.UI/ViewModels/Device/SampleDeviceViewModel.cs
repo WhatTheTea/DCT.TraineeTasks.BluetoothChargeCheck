@@ -1,4 +1,4 @@
-﻿// <copyright file = "TestTrayIconViewModel.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "SampleDeviceViewModel.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
@@ -7,11 +7,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Threading;
-using CommunityToolkit.Mvvm.Input;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;

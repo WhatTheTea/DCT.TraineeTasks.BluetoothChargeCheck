@@ -1,15 +1,12 @@
-﻿// <copyright file = "TrayIconViewModel.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "DeviceViewModel.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using H.NotifyIcon;
 
