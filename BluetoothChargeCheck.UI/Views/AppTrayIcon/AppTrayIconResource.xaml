@@ -7,8 +7,8 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:v="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon"
-                    mc:Ignorable="d"
-                    d:DataContext="{d:DesignInstance vm:MainViewModel}">
+                    mc:Ignorable="d">
+
     <ContextMenu x:Shared="False"
                  x:Key="AppTrayMenu">
         <MenuItem Header="Exit">
@@ -23,6 +23,7 @@
     </ContextMenu>
 
     <tb:TaskbarIcon x:Key="AppTrayIcon"
+                    d:DataContext="{d:DesignInstance vm:MainViewModel}"
                     Visibility="Visible"
                     Id="AC515764-A0CB-43BB-BF0A-DA7D516DBB69"
                     ContextMenu="{StaticResource AppTrayMenu}"
@@ -39,8 +40,7 @@
                                     FontSize="96"
                                     Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
                                     Size="128"
-                                    Text="&#xEC6C;">
-            </tb:GeneratedIconSource>
+                                    Text="&#xEC6C;" />
         </tb:TaskbarIcon.IconSource>
 
         <tb:TaskbarIcon.TrayPopup>

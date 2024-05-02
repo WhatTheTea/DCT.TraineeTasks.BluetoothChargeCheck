@@ -1,17 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
-                    xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
                     xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
-                    xmlns:batteryTrayIcon="using:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon"
+                    xmlns:batteryTrayIcon="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
-                 d:DataContext="{d:DesignInstance vm:TrayIconViewModel}">
+                 d:DataContext="{d:DesignInstance device:DeviceViewModel}">
         <MenuItem Header="Hide" Command="{Binding RemoveTrayIconCommand}" />
         <Separator />
         <MenuItem Header="Exit">
@@ -47,7 +45,7 @@
             </tb:TaskbarIcon.IconSource>
 
             <tb:TaskbarIcon.TrayPopup>
-                <batteryTrayIcon:DeviceInfoView DataContext="{Binding}"/>
+                <batteryTrayIcon:DeviceInfoPopup DataContext="{Binding}"/>
             </tb:TaskbarIcon.TrayPopup>
 
         </tb:TaskbarIcon>
