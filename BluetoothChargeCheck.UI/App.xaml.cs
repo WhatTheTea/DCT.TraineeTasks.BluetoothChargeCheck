@@ -4,8 +4,8 @@
 
 using System.Windows;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
 using H.NotifyIcon;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 
@@ -23,8 +23,8 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        SystemThemeWatcher.Watch(null, WindowBackdropType.Auto);
         this.mainViewModel = new();
-        this.mainViewModel.ShowCommand.Execute(null);
         this.CreateAppTrayIcon();
     }
 
