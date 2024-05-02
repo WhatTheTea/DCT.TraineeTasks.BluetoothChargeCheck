@@ -1,4 +1,4 @@
-﻿// <copyright file = "TrayIconViewModel.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "DeviceViewModel.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 

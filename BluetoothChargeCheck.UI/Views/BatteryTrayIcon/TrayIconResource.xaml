@@ -7,6 +7,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
                     xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
+                    xmlns:batteryTrayIcon="using:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
@@ -46,7 +47,7 @@
             </tb:TaskbarIcon.IconSource>
 
             <tb:TaskbarIcon.TrayPopup>
-                <views:DeviceInfoView DataContext="{Binding}"/>
+                <batteryTrayIcon:DeviceInfoView DataContext="{Binding}"/>
             </tb:TaskbarIcon.TrayPopup>
 
         </tb:TaskbarIcon>
