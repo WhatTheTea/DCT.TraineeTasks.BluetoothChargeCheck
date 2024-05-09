@@ -23,7 +23,7 @@
         </StackPanel>
         <DataGrid
             Grid.Row="1"
-            ItemsSource="{Binding TrayIconViewModels}"
+            ItemsSource="{Binding DeviceViewModels}"
             AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding BluetoothDevice.Name}"
@@ -39,7 +39,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible,
-                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=800}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

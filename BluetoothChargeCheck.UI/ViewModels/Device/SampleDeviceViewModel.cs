@@ -39,14 +39,4 @@ public class SampleDeviceViewModel : DeviceViewModel
     public SampleDeviceViewModel() : this(new TestBluetoothDevice())
     {
     }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            this.source.Cancel();
-            this.source.Dispose();
-        }
-        base.Dispose(disposing);
-    }
 }

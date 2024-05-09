@@ -37,9 +37,9 @@
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
                                     Size="128"
-                                    Text="{Binding Glyph, Mode=OneWay, Delay=500}">
+                                    Text="{Binding Glyph, Mode=OneWay, Delay=800}">
                     <tb:GeneratedIconSource.Foreground>
-                        <SolidColorBrush Color="{Binding Accent, Mode=OneWay, Delay=500}"/>
+                        <SolidColorBrush Color="{Binding Accent, Mode=OneWay, Delay=800}"/>
                     </tb:GeneratedIconSource.Foreground>
                 </tb:GeneratedIconSource>
             </tb:TaskbarIcon.IconSource>
