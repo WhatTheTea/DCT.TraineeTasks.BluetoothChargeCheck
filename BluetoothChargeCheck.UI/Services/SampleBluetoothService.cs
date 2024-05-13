@@ -19,7 +19,7 @@ internal class SampleBluetoothService : ObservableObject, IBluetoothService
     {
         for (int i = 0; i < 5; i++)
         {
-            this.devices.Add(new TestBluetoothDevice());
+            this.devices.Add(new SampleBluetoothDevice());
         }
         this.Devices = this.devices;
         this.Connected = this.Devices;

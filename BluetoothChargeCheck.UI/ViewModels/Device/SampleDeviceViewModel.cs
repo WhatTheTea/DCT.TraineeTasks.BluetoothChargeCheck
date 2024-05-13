@@ -28,7 +28,7 @@ public class SampleDeviceViewModel : DeviceViewModel
                 {
                     this.source = new();
                     Task.Run(
-                        () => (this.BluetoothDevice as TestBluetoothDevice)!.ChargeCyclingAsync(this.source.Token),
+                        () => (this.BluetoothDevice as SampleBluetoothDevice)!.ChargeCyclingAsync(this.source.Token),
                         this.source.Token);
                 }
             }
@@ -36,7 +36,7 @@ public class SampleDeviceViewModel : DeviceViewModel
 
     }
 
-    public SampleDeviceViewModel() : this(new TestBluetoothDevice())
+    public SampleDeviceViewModel() : this(new SampleBluetoothDevice())
     {
     }
 }

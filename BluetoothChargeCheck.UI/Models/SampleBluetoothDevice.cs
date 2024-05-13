@@ -1,4 +1,4 @@
-﻿// <copyright file = "TestBluetoothDevice.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "SampleBluetoothDevice.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
-internal partial class TestBluetoothDevice : ObservableObject, IBluetoothDevice
+internal partial class SampleBluetoothDevice : ObservableObject, IBluetoothDevice
 {
     [ObservableProperty] private string name = "Bluetooth Device";
     [ObservableProperty] private double charge;
