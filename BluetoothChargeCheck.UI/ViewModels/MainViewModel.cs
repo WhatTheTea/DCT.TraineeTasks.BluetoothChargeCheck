@@ -2,8 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Collections;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -17,7 +15,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    public IBluetoothService BluetoothService { get; } = new SampleBluetoothService();
+    public IBluetoothService BluetoothService { get; set; }
 
     [ObservableProperty]
     private ObservableCollection<DeviceViewModel> deviceViewModels = [];
@@ -26,8 +24,13 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        var viewModels = this.BluetoothService.Connected.Select(x => new SampleDeviceViewModel(x));
-        this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
+        this.BluetoothService = new BluetoothService();
+
+        this.BluetoothService.PropertyChanged += (sender, args) =>
+        {
+            var viewModels = this.BluetoothService.Connected.Select(x => new DeviceViewModel(x));
+            this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
+        };
 
         WeakReferenceMessenger.Default.Register<TrayIconVisibilityChanged>(this, (r, m) =>
         {
