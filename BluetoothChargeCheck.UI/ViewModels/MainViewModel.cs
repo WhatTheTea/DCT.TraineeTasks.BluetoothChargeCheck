@@ -28,7 +28,7 @@ public partial class MainViewModel : ObservableObject
 
         this.BluetoothService.PropertyChanged += (sender, args) =>
         {
-            var viewModels = this.BluetoothService.Connected.Select(x => new DeviceViewModel(x));
+            var viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
             this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
         };
 

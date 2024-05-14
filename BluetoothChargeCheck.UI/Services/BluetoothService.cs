@@ -14,8 +14,6 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
 {
     [ObservableProperty]
     private ObservableCollection<IBluetoothDevice> devices = [];
-    [ObservableProperty]
-    private ObservableCollection<IBluetoothDevice> connected = [];
 
     public BluetoothService()
     {
@@ -31,13 +29,11 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             {
                 this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
                     new BluetoothDevice(x.Name, 0, x.IsPaired)));
-                this.Connected = this.Devices;
             }
         }
         else
         {
             this.Devices = [];
-            this.Connected = this.Devices;
         }
     }
 
