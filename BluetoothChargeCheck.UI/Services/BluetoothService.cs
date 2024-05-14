@@ -19,14 +19,34 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
 
     public BluetoothService()
     {
-        this.ScanDevices();
+        this.StartDeviceScanning();
     }
 
-    private void ScanDevices() => App.Current.Dispatcher.BeginInvoke(async () =>
+    private async Task ScanDevices()
     {
-        var devices = await Bluetooth.GetPairedDevicesAsync();
-        this.Devices = new ObservableCollection<IBluetoothDevice>(devices.Select(x =>
-            new BluetoothDevice(x.Name, 0, x.IsPaired)));
-        this.Connected = this.Devices;
+        if (await Bluetooth.GetAvailabilityAsync())
+        {
+            var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
+            if (pairedDevices.Count != this.Devices.Count)
+            {
+                this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
+                    new BluetoothDevice(x.Name, 0, x.IsPaired)));
+                this.Connected = this.Devices;
+            }
+        }
+        else
+        {
+            this.Devices = [];
+            this.Connected = this.Devices;
+        }
+    }
+
+    private void StartDeviceScanning() => Task.Run(async () =>
+    {
+        while (true)
+        {
+            await this.ScanDevices();
+            await Task.Delay(TimeSpan.FromSeconds(5));
+        }
     });
 }
