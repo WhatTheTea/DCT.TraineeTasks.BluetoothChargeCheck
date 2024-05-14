@@ -35,17 +35,21 @@ public partial class MainViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register<TrayIconVisibilityChanged>(this, (r, m) =>
         {
             var viewModel = m.Value;
-            if (viewModel.IsTrayIconVisible)
-            {
-                this.taskbarIcons[viewModel.Id] = this.CreateTaskbarIcon(viewModel);
-            }
-            else
-            {
-                this.taskbarIcons[viewModel.Id]!.Dispose();
-                this.taskbarIcons.Remove(viewModel.Id);
-                
-            }
+            this.ToggleTaskbarIconFor(viewModel);
         });
+    }
+
+    private void ToggleTaskbarIconFor(DeviceViewModel viewModel)
+    {
+        if (viewModel.IsTrayIconVisible)
+        {
+            this.taskbarIcons[viewModel.Id] = this.CreateTaskbarIcon(viewModel);
+        }
+        else
+        {
+            this.taskbarIcons[viewModel.Id]!.Dispose();
+            this.taskbarIcons.Remove(viewModel.Id);
+        }
     }
 
     private readonly DataTemplate iconDataTemplate = (Application.Current.Resources["BatteryTrayIcon"] as DataTemplate)!;
