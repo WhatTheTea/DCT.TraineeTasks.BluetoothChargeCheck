@@ -10,29 +10,39 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 public partial class BluetoothDevice : ObservableObject, IBluetoothDevice
 {
     [ObservableProperty]
-    private string name;
+    private string name = string.Empty;
     [ObservableProperty]
     private double charge;
     [ObservableProperty]
     private bool connected;
 
-    private InTheHand.Bluetooth.BluetoothDevice device;
+    private readonly InTheHand.Bluetooth.BluetoothDevice device;
 
     public BluetoothDevice(InTheHand.Bluetooth.BluetoothDevice device)
     {
-        Task.Run(async () =>
+        this.device = device;
+        Task.Run(this.Initialize);
+    }
+
+    private async Task Initialize()
+    {
+        this.Name = this.device.Name;
+        this.Connected = this.device.Gatt.IsConnected;
+        var gatt = this.device.Gatt;
+
+        gatt.Device.GattServerDisconnected += (_, _)
+            => this.Connected = false;
+
+        await gatt.ConnectAsync();
+        var batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
+        if (batteryService is not null)
         {
-            this.Name = device.Name;
-            this.Connected = device.Gatt.IsConnected;
-            var gatt = device.Gatt;
-            await gatt.ConnectAsync();
+            var battery = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
 
-            var batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
+            battery.CharacteristicValueChanged += (_, args)
+                => this.Charge = args.Value?[0] ?? 0;
 
-            var battery = await batteryService?.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
-
-            this.Charge = battery?.Value[0] ?? 0;
-
-        });
+            this.Charge = battery.Value[0];
+        }
     }
 }
