@@ -52,7 +52,7 @@ public partial class DeviceViewModel : ObservableObject
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
-        if (args.PropertyName == nameof(IBluetoothDevice.Charge) && this.IsTrayIconVisible)
+        if (args.PropertyName == nameof(IBluetoothDevice.Charge))
         {
             // Debug.Assert(this.trayIcon is not null);
             this.Glyph = ChargeLevelGlyphs[(int)(this.BluetoothDevice.Charge / 10)];
