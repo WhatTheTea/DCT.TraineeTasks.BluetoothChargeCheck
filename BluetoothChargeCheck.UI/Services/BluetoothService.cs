@@ -28,7 +28,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             if (pairedDevices.Count != this.Devices.Count)
             {
                 this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
-                    new BluetoothDevice(x.Name, 0, x.IsPaired)));
+                    new BluetoothDevice(x)));
             }
         }
         else
