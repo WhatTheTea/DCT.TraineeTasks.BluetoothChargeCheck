@@ -18,13 +18,6 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice
 
     private InTheHand.Bluetooth.BluetoothDevice device;
 
-    public BluetoothDevice(string name, double charge, bool connected)
-    {
-        this.name = name;
-        this.charge = charge;
-        this.connected = connected;
-    }
-
     public BluetoothDevice(InTheHand.Bluetooth.BluetoothDevice device)
     {
         Task.Run(async () =>
