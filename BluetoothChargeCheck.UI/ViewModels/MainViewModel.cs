@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -20,24 +21,27 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<DeviceViewModel> deviceViewModels = [];
 
-    private Dictionary<Guid, TaskbarIcon?> taskbarIcons = [];
+    private readonly Dictionary<Guid, TaskbarIcon?> taskbarIcons = [];
 
     public MainViewModel()
     {
         this.BluetoothService = new BluetoothService();
 
-        this.BluetoothService.PropertyChanged += (sender, args) =>
-        {
-            var viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
-            this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
-        };
-
-        WeakReferenceMessenger.Default.Register<TrayIconVisibilityChanged>(this, (r, m) =>
-        {
-            var viewModel = m.Value;
-            this.ToggleTaskbarIconFor(viewModel);
-        });
+        this.BluetoothService.PropertyChanged += this.UpdateDeviceViewModels;
+        WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
+
+    private void UpdateDeviceViewModels(object? sender, PropertyChangedEventArgs args)
+    {
+        var viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
+        this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
+    }
+
+    private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
+    {
+        var viewModel = m.Value;
+        this.ToggleTaskbarIconFor(viewModel);
+    };
 
     private void ToggleTaskbarIconFor(DeviceViewModel viewModel)
     {
