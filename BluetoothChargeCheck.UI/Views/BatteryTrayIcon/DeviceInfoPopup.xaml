@@ -23,7 +23,7 @@
         <StackPanel Grid.Row="1">
             <Label Content="Charge:"
                    Margin="5"/>
-            <ProgressBar Value="{Binding BluetoothDevice.Charge}"
+            <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}"
                          Margin="5"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Connected:"
