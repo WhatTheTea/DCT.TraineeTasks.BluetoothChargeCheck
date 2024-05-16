@@ -27,15 +27,19 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice
     private async Task Initialize()
     {
         this.Name = this.device.Name;
-        this.Connected = this.device.Gatt.IsConnected;
         var gatt = this.device.Gatt;
-
-        gatt.Device.GattServerDisconnected += (_, _)
-            => this.Connected = false;
 
         await gatt.ConnectAsync();
 
+        this.StartListeningConnection(gatt);
         await this.StartListeningBatteryUpdates(gatt);
+    }
+
+    private void StartListeningConnection(RemoteGattServer gatt)
+    {
+        this.Connected = this.device.Gatt.IsConnected;
+        gatt.Device.GattServerDisconnected += (_, _)
+            => this.Connected = false;
     }
 
     private async Task StartListeningBatteryUpdates(RemoteGattServer gatt)
