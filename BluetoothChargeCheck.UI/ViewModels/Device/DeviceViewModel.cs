@@ -13,14 +13,16 @@ using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
-public partial class DeviceViewModel : ObservableObject
+public partial class DeviceViewModel : ObservableObject, IDisposable
 {
+    // Unicode battery symbols in Segoe Fluent Icons: 0,10,20,30,40,50,60,70,80,90,100%
     private static string[] ChargeLevelGlyphs =>
     [
         "\uEBA0", "\uEBA1", "\uEBA2", "\uEBA3", "\uEBA4", "\uEBA5",
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
     ];
 
+    [ObservableProperty] private bool isTrayIconVisible;
     public Guid Id { get; } = Guid.NewGuid();
     [ObservableProperty] private Color? accent;
     [ObservableProperty] private string glyph;
@@ -30,32 +32,38 @@ public partial class DeviceViewModel : ObservableObject
     public DeviceViewModel(IBluetoothDevice device) 
     {
         this.BluetoothDevice = device;
-        this.Glyph = ChargeLevelGlyphs[0];
+
+        this.Glyph = null!;
+        this.UpdateGlyph();
+
         this.Accent = ApplicationAccentColorManager.PrimaryAccent;
         // Subscribe to charge updates
         this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
-
-    [ObservableProperty]
-    private bool isTrayIconVisible;
 
     partial void OnIsTrayIconVisibleChanged(bool value)
     {
         WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
     }
 
-    [RelayCommand]
-    private void CreateTrayIcon() => this.IsTrayIconVisible = true;
-
-    [RelayCommand]
-    private void RemoveTrayIcon() => this.IsTrayIconVisible = false;
-
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
         if (args.PropertyName == nameof(IBluetoothDevice.Charge))
         {
-            // Debug.Assert(this.trayIcon is not null);
-            this.Glyph = ChargeLevelGlyphs[(int)(this.BluetoothDevice.Charge / 10)];
+            this.UpdateGlyph();
         }
+    }
+
+    private void UpdateGlyph()
+    {
+        // Tens of charge used as index for glyphs array
+        int index = (int)(this.BluetoothDevice.Charge / 10);
+        this.Glyph = ChargeLevelGlyphs[index];
+    }
+
+    public void Dispose()
+    {
+        this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
+        (this.BluetoothDevice as IDisposable)?.Dispose();
     }
 }
