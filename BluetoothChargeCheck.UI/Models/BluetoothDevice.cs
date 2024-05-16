@@ -9,7 +9,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisposable
 {
-    public double Charge => this.DeviceCharge.Value[0];
+    public double Charge => this.DeviceCharge?.Value?[0] ?? 0;
     [ObservableProperty]
     private string name = string.Empty;
     [ObservableProperty]
@@ -51,8 +51,8 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (batteryService is not null)
         {
-            var battery = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
-            battery.CharacteristicValueChanged += this.OnBatteryChargeChanged;
+            this.DeviceCharge = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
+            this.DeviceCharge.CharacteristicValueChanged += this.OnBatteryChargeChanged;
         }
     }
 
