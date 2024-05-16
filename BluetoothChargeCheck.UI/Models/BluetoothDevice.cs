@@ -34,7 +34,14 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice
             => this.Connected = false;
 
         await gatt.ConnectAsync();
+
+        await this.StartListeningBatteryUpdates(gatt);
+    }
+
+    private async Task StartListeningBatteryUpdates(RemoteGattServer gatt)
+    {
         var batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (batteryService is not null)
         {
             var battery = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
