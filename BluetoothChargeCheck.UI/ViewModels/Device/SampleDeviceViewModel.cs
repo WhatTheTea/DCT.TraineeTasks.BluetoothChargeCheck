@@ -2,11 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-
-// <copyright file = "TestTrayIconViewModel.cs" company = "Digital Cloud Technologies">
-// Copyright (c) Digital Cloud Technologies.All rights reserved.
-// </copyright>
-
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
