@@ -34,7 +34,16 @@ public partial class MainViewModel : ObservableObject
     private void UpdateDeviceViewModels(object? sender, PropertyChangedEventArgs args)
     {
         var viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
+        this.DisposeDeviceViewModels();
         this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
+    }
+
+    private void DisposeDeviceViewModels()
+    {
+        foreach (var device in this.DeviceViewModels)
+        {
+            device.Dispose();
+        }
     }
 
     private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
