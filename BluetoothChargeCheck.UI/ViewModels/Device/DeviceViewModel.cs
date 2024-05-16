@@ -13,7 +13,7 @@ using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
-public partial class DeviceViewModel : ObservableObject
+public partial class DeviceViewModel : ObservableObject, IDisposable
 {
     // Unicode battery symbols in Segoe Fluent Icons: 0,10,20,30,40,50,60,70,80,90,100%
     private static string[] ChargeLevelGlyphs =>
@@ -22,6 +22,7 @@ public partial class DeviceViewModel : ObservableObject
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
     ];
 
+    [ObservableProperty] private bool isTrayIconVisible;
     public Guid Id { get; } = Guid.NewGuid();
     [ObservableProperty] private Color? accent;
     [ObservableProperty] private string glyph;
@@ -31,14 +32,14 @@ public partial class DeviceViewModel : ObservableObject
     public DeviceViewModel(IBluetoothDevice device) 
     {
         this.BluetoothDevice = device;
+
+        this.Glyph = null!;
         this.UpdateGlyph();
+
         this.Accent = ApplicationAccentColorManager.PrimaryAccent;
         // Subscribe to charge updates
         this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
-
-    [ObservableProperty]
-    private bool isTrayIconVisible;
 
     partial void OnIsTrayIconVisibleChanged(bool value)
     {
@@ -58,5 +59,10 @@ public partial class DeviceViewModel : ObservableObject
         // Tens of charge used as index for glyphs array
         int index = (int)(this.BluetoothDevice.Charge / 10);
         this.Glyph = ChargeLevelGlyphs[index];
+    }
+
+    public void Dispose()
+    {
+        this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
     }
 }
