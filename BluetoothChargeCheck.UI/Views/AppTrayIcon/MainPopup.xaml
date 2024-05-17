@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
-             xmlns:devvm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
+             xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
              mc:Ignorable="d"
              Height="330" Width="600"
              Background="{ui:ThemeResource ApplicationBackgroundBrush}"
@@ -33,32 +33,7 @@
                 Text="by Oleksii 'WhatTheTea' Silchenko"
                 Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
-        <!--DataGrid
-            Grid.Row="1"
-            ItemsSource="{Binding DeviceViewModels}"
-            d:ItemsSource="{d:SampleData}"
-            AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding BluetoothDevice.Name}"
-                                    IsReadOnly="True"
-                                    Header="Device name"/>
-                <DataGridTextColumn Binding="{Binding BluetoothDevice.Charge}"
-                                    IsReadOnly="True"
-                                    Header="Charge %"/>
-                <DataGridCheckBoxColumn Binding="{Binding BluetoothDevice.Connected}"
-                                        IsReadOnly="True"
-                                        Header="Is connected"/>
-                <DataGridTemplateColumn Header="Taskbar">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible,
-                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=800}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid-->
-
+        
         <ui:ListView ItemsSource="{Binding DeviceViewModels}"
                      Grid.Row="1"
                      d:ItemsSource="{d:SampleData}">

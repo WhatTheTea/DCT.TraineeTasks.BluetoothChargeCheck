@@ -24,7 +24,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     {
         if (await Bluetooth.GetAvailabilityAsync())
         {
-            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds :skull:
+            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
             var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
             if (pairedDevices.Count != this.Devices.Count)
             {
