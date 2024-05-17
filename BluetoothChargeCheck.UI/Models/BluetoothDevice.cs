@@ -31,10 +31,11 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
         this.Name = this.device.Name;
         var gatt = this.device.Gatt;
 
-        await gatt.ConnectAsync();
-
         this.StartListeningConnection(gatt);
         await this.StartListeningBatteryUpdates(gatt);
+
+        await gatt.ConnectAsync();
+
     }
 
     private void StartListeningConnection(RemoteGattServer gatt)
@@ -53,6 +54,7 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
         {
             this.DeviceCharge = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
             this.DeviceCharge.CharacteristicValueChanged += this.OnBatteryChargeChanged;
+            this.OnPropertyChanged(nameof(this.Charge));
         }
     }
 

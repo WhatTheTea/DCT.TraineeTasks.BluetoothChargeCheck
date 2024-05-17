@@ -32,13 +32,13 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     public DeviceViewModel(IBluetoothDevice device) 
     {
         this.BluetoothDevice = device;
+        // Subscribe to charge updates
+        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
 
         this.Glyph = null!;
         this.UpdateGlyph();
 
         this.Accent = ApplicationAccentColorManager.PrimaryAccent;
-        // Subscribe to charge updates
-        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
     }
 
     partial void OnIsTrayIconVisibleChanged(bool value)

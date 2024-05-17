@@ -27,6 +27,10 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
             if (pairedDevices.Count != this.Devices.Count)
             {
+                foreach (var device in this.Devices)
+                {
+                    (device as IDisposable)?.Dispose();
+                }
                 this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
                     new BluetoothDevice(x)));
             }
