@@ -24,6 +24,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     {
         if (await Bluetooth.GetAvailabilityAsync())
         {
+            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds :skull:
             var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
             if (pairedDevices.Count != this.Devices.Count)
             {
@@ -41,12 +42,12 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
         }
     }
 
-    private void StartDeviceScanning() => Task.Run(async () =>
+    private void StartDeviceScanning() => Task.Factory.StartNew(async () =>
     {
         while (true)
         {
             await this.ScanDevices();
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
-    });
+    }, TaskCreationOptions.LongRunning);
 }
