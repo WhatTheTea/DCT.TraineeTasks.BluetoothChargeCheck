@@ -5,42 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
+        xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance device:DeviceViewModel}"
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
-        Height="150" Width="250">
+        Height="210" Width="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Label
             Grid.Row="0"
             Grid.Column="0"
+            Margin="2.5"
             Content="{Binding BluetoothDevice.Name, FallbackValue='Name'}"/>
-        <StackPanel Grid.Row="1">
-            <Label Content="Charge:"
-                   Margin="5"/>
-            <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}"
-                         Margin="5"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Connected:"
-                       Padding="5"/>
-                <CheckBox IsChecked="{Binding BluetoothDevice.Connected}"
-                          IsEnabled="False"/>
-            </StackPanel>
-
-            <xctk:ColorPicker
-                Background="{ui:ThemeResource ApplicationBackgroundBrush}"
-                DropDownBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
-                HeaderBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
-                TabBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
-                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                HeaderForeground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                TabForeground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                SelectedColor="{Binding Accent, Mode=TwoWay}"/>
-        </StackPanel>
+        <views:DeviceInfoView DataContext="{Binding}"
+                              Grid.Row="1"/>
     </Grid>
 </UserControl>

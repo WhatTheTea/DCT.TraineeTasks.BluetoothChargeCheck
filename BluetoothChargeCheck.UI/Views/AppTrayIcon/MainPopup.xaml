@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
-             xmlns:devvm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
+             xmlns:devvm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device" xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
              mc:Ignorable="d"
              Height="330" Width="600"
              Background="{ui:ThemeResource ApplicationBackgroundBrush}"
@@ -66,20 +66,7 @@
                 <DataTemplate>
                     <ui:CardExpander Header="{Binding BluetoothDevice.Name}"
                                      d:IsExpanded="True">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Charge:" Margin="5"/>
-                                <Label Content="{Binding BluetoothDevice.Charge}" Margin="5"/>
-                            </StackPanel>
-                            <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
-                            <CheckBox Content="Connected"
-                                      IsChecked="{Binding BluetoothDevice.Connected}"
-                                      IsEnabled="False"
-                                      Margin="5"/>
-                            <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible, Mode=TwoWay, Delay=800}"
-                                             Content="Show in taskbar"
-                                             Margin="5"/>
-                        </StackPanel>
+                        <views:DeviceInfoView DataContext="{Binding}"/>
                     </ui:CardExpander>
                 </DataTemplate>
             </ui:ListView.ItemTemplate>

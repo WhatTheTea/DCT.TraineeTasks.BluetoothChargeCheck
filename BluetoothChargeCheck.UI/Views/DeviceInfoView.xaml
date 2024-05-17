@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.DeviceInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
+             xmlns:dev="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance dev:SampleDeviceViewModel}">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Charge:" Margin="5"/>
+            <Label Content="{Binding BluetoothDevice.Charge}" Margin="5"/>
+        </StackPanel>
+        <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
+        <CheckBox Content="Connected"
+              IsChecked="{Binding BluetoothDevice.Connected}"
+              IsEnabled="False"
+              Margin="5"/>
+        <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible, Mode=TwoWay, Delay=800}"
+                     Content="Show in taskbar"
+                     Margin="5"/>
+        <Label Content="Color: " Margin="5"/>
+        <xctk:ColorPicker Margin="2.5"
+                        Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+                        DropDownBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
+                        HeaderBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
+                        TabBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        HeaderForeground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        TabForeground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        SelectedColor="{Binding Accent, Mode=TwoWay}"/> 
+    </StackPanel>
+</UserControl>
