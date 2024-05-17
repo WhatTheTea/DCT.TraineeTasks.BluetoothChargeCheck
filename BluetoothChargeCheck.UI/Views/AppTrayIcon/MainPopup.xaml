@@ -18,12 +18,24 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Label Content="Bluetooth devices:"/>
+        <StackPanel Orientation="Horizontal">
+            <ui:TextBlock
+                Margin="5"
+                FontSize="24"
+                Text="Bluetooth Charge Check"
+                VerticalAlignment="Bottom"
+                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}" />
+            <ui:TextBlock
+                Margin="5"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Text="by Oleksii 'WhatTheTea' Silchenko"
+                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
         <DataGrid
             Grid.Row="1"
             ItemsSource="{Binding DeviceViewModels}"
+            d:ItemsSource="{d:SampleData}"
             AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding BluetoothDevice.Name}"
