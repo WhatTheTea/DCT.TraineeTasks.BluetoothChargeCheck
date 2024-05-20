@@ -7,23 +7,24 @@
              xmlns:dev="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:res="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance dev:SampleDeviceViewModel}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Label Content="Charge:" Margin="5"/>
+            <Label Content="{x:Static res:DeviceInfo.charge}" Margin="5"/>
             <Label Content="{Binding BluetoothDevice.Charge}" Margin="5"/>
         </StackPanel>
         <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
-        <CheckBox Content="Connected"
+        <CheckBox Content="{x:Static res:DeviceInfo.connected}"
               IsChecked="{Binding BluetoothDevice.Connected}"
               IsEnabled="False"
               Margin="5"/>
         <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible, Mode=TwoWay, Delay=800}"
-                     Content="Show in taskbar"
+                     Content="{x:Static res:DeviceInfo.showInTaskbar}"
                      Margin="5"/>
-        <Label Content="Color: " Margin="5"/>
+        <Label Content="{x:Static res:DeviceInfo.color}" Margin="5"/>
         <xctk:ColorPicker Margin="2.5"
                         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
                         DropDownBackground="{ui:ThemeResource ApplicationBackgroundBrush}"
