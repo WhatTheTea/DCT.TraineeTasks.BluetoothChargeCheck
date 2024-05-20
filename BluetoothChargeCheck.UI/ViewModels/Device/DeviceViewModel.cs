@@ -4,7 +4,6 @@
 
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;

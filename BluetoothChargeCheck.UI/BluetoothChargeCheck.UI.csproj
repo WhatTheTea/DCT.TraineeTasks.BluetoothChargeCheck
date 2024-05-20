@@ -48,14 +48,14 @@
 	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\DeviceInfo.uk-ua.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\MainPopup.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\MainPopup.uk-ua.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
 
