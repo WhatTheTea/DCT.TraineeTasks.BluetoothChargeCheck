@@ -21,7 +21,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<DeviceViewModel> deviceViewModels = [];
 
-    private readonly Dictionary<Guid, TaskbarIcon?> taskbarIcons = [];
+    private readonly Dictionary<Guid, TaskbarIcon> taskbarIcons = [];
 
     public MainViewModel()
     {
@@ -60,7 +60,7 @@ public partial class MainViewModel : ObservableObject
         }
         else
         {
-            this.taskbarIcons[viewModel.Id]!.Dispose();
+            this.taskbarIcons[viewModel.Id].Dispose();
             this.taskbarIcons.Remove(viewModel.Id);
         }
     }
