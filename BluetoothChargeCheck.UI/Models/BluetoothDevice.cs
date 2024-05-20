@@ -15,9 +15,6 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
     [ObservableProperty]
     private bool connected;
 
-    private readonly InTheHand.Bluetooth.BluetoothDevice device;
-    private GattCharacteristic DeviceCharge { get; set; }
-
     public BluetoothDevice(InTheHand.Bluetooth.BluetoothDevice device)
     {
         this.device = device;
@@ -25,6 +22,10 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
 
         Task.Run(this.Initialize);
     }
+
+    private readonly InTheHand.Bluetooth.BluetoothDevice device;
+
+    private GattCharacteristic DeviceCharge { get; set; }
 
     private async Task Initialize()
     {
@@ -49,7 +50,7 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
     private async Task StartListeningBatteryUpdates(RemoteGattServer gatt)
     {
         var batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+
         if (batteryService is not null)
         {
             this.DeviceCharge = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));

@@ -65,14 +65,14 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    private readonly DataTemplate iconDataTemplate = (Application.Current.Resources["BatteryTrayIcon"] as DataTemplate)!;
+    private readonly DataTemplate iconDataTemplate = (DataTemplate)Application.Current.Resources["BatteryTrayIcon"];
 
     private TaskbarIcon CreateTaskbarIcon(DeviceViewModel device)
     {
-        var trayIcon = this.iconDataTemplate.LoadContent() as TaskbarIcon ??
-                        throw new InvalidOperationException("Can't load tray icon from template");
+        var trayIcon = (TaskbarIcon)this.iconDataTemplate.LoadContent();
         trayIcon.DataContext = device;
         trayIcon.ForceCreate(false);
+
         return trayIcon;
     }
 }

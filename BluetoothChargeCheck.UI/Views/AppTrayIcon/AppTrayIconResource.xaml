@@ -33,8 +33,8 @@
             <vm:MainViewModel/>
         </tb:TaskbarIcon.DataContext>
 
+        <!-- Default font size is invalid, 96 looks fine -->
         <tb:TaskbarIcon.IconSource>
-            <!-- idk why, but 96 it is xD -->
             <tb:GeneratedIconSource
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"

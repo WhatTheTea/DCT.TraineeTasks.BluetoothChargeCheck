@@ -19,29 +19,6 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     {
         this.StartDeviceScanning();
     }
-
-    private async Task ScanDevices()
-    {
-        if (await Bluetooth.GetAvailabilityAsync())
-        {
-            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
-            var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
-            if (pairedDevices.Count != this.Devices.Count)
-            {
-                foreach (var device in this.Devices)
-                {
-                    (device as IDisposable)?.Dispose();
-                }
-                this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
-                    new BluetoothDevice(x)));
-            }
-        }
-        else
-        {
-            this.Devices = [];
-        }
-    }
-
     private void StartDeviceScanning() => Task.Factory.StartNew(async () =>
     {
         while (true)
@@ -50,4 +27,27 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
     }, TaskCreationOptions.LongRunning);
+
+    private async Task ScanDevices()
+    {
+        if (await Bluetooth.GetAvailabilityAsync())
+        {
+            // ScanForDevicesAsync returns more devices at time cost
+            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
+            var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
+
+            foreach (var device in this.Devices)
+            {
+                (device as IDisposable)?.Dispose();
+            }
+
+            this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
+                new BluetoothDevice(x)));
+        }
+        else
+        {
+            this.Devices = [];
+        }
+    }
+
 }
