@@ -3,13 +3,11 @@
 // </copyright>
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon;
+
 /// <summary>
-/// Interaction logic for DeviceInfoPopup.xaml
+///     Interaction logic for DeviceInfoPopup.xaml
 /// </summary>
 public partial class DeviceInfoPopup
 {
-    public DeviceInfoPopup()
-    {
-        this.InitializeComponent();
-    }
+    public DeviceInfoPopup() => this.InitializeComponent();
 }

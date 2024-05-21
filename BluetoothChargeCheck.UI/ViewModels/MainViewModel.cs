@@ -16,12 +16,13 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    public IBluetoothService BluetoothService { get; set; }
+    private readonly DataTemplate iconDataTemplate = Application.Current.FindResource("BatteryTrayIcon") as DataTemplate
+                                                     ?? throw new InvalidOperationException("Can't load BatteryTrayIcon resource");
+
+    private readonly Dictionary<Guid, TaskbarIcon> taskbarIcons = [];
 
     [ObservableProperty]
     private ObservableCollection<DeviceViewModel> deviceViewModels = [];
-
-    private readonly Dictionary<Guid, TaskbarIcon> taskbarIcons = [];
 
     public MainViewModel()
     {
@@ -31,26 +32,28 @@ public partial class MainViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
 
+    public IBluetoothService BluetoothService { get; set; }
+
+    private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
+    {
+        DeviceViewModel viewModel = m.Value;
+        this.ToggleTaskbarIconFor(viewModel);
+    };
+
     private void UpdateDeviceViewModels(object? sender, PropertyChangedEventArgs args)
     {
-        var viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
+        IEnumerable<DeviceViewModel> viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
         this.DisposeDeviceViewModels();
         this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
     }
 
     private void DisposeDeviceViewModels()
     {
-        foreach (var device in this.DeviceViewModels)
+        foreach (DeviceViewModel device in this.DeviceViewModels)
         {
             device.Dispose();
         }
     }
-
-    private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
-    {
-        var viewModel = m.Value;
-        this.ToggleTaskbarIconFor(viewModel);
-    };
 
     private void ToggleTaskbarIconFor(DeviceViewModel viewModel)
     {
@@ -64,8 +67,6 @@ public partial class MainViewModel : ObservableObject
             this.taskbarIcons.Remove(viewModel.Id);
         }
     }
-
-    private readonly DataTemplate iconDataTemplate = (DataTemplate)Application.Current.Resources["BatteryTrayIcon"];
 
     private TaskbarIcon CreateTaskbarIcon(DeviceViewModel device)
     {

@@ -12,16 +12,18 @@ internal class SampleBluetoothService : ObservableObject, IBluetoothService
 {
     private readonly ObservableCollection<IBluetoothDevice> devices = [];
 
-    public ObservableCollection<IBluetoothDevice> Devices { get; init; }
-    public ObservableCollection<IBluetoothDevice> Connected { get; init; }
-
     public SampleBluetoothService()
     {
         for (int i = 0; i < 5; i++)
         {
             this.devices.Add(new SampleBluetoothDevice());
         }
+
         this.Devices = this.devices;
         this.Connected = this.Devices;
     }
+
+    public ObservableCollection<IBluetoothDevice> Connected { get; init; }
+
+    public ObservableCollection<IBluetoothDevice> Devices { get; init; }
 }

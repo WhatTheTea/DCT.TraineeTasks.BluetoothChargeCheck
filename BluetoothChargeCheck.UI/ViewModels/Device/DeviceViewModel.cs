@@ -14,6 +14,29 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
 public partial class DeviceViewModel : ObservableObject, IDisposable
 {
+    [ObservableProperty]
+    private Color? accent;
+
+    [ObservableProperty]
+    private IBluetoothDevice bluetoothDevice;
+
+    [ObservableProperty]
+    private string glyph = string.Empty;
+
+    [ObservableProperty]
+    private bool isTrayIconVisible;
+
+    public DeviceViewModel(IBluetoothDevice device)
+    {
+        this.BluetoothDevice = device;
+        // Subscribe to charge updates
+        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
+
+        this.UpdateGlyph();
+
+        this.Accent = ApplicationAccentColorManager.PrimaryAccent;
+    }
+
     // Unicode battery symbols in Segoe Fluent Icons: 0,10,20,30,40,50,60,70,80,90,100%
     private static string[] ChargeLevelGlyphs =>
     [
@@ -21,29 +44,16 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
     ];
 
-    [ObservableProperty] private bool isTrayIconVisible;
     public Guid Id { get; } = Guid.NewGuid();
-    [ObservableProperty] private Color? accent;
-    [ObservableProperty] private string glyph;
 
-    [ObservableProperty] private IBluetoothDevice bluetoothDevice;
-
-    public DeviceViewModel(IBluetoothDevice device) 
+    public void Dispose()
     {
-        this.BluetoothDevice = device;
-        // Subscribe to charge updates
-        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
-
-        this.Glyph = null!;
-        this.UpdateGlyph();
-
-        this.Accent = ApplicationAccentColorManager.PrimaryAccent;
+        this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
+        (this.BluetoothDevice as IDisposable)?.Dispose();
     }
 
-    partial void OnIsTrayIconVisibleChanged(bool value)
-    {
+    partial void OnIsTrayIconVisibleChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
-    }
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
@@ -58,11 +68,5 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         // Tens of charge used as index for glyphs array
         int index = (int)(this.BluetoothDevice.Charge / 10);
         this.Glyph = ChargeLevelGlyphs[index];
-    }
-
-    public void Dispose()
-    {
-        this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
-        (this.BluetoothDevice as IDisposable)?.Dispose();
     }
 }

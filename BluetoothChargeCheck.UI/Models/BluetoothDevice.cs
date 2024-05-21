@@ -9,11 +9,13 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisposable
 {
-    public double Charge => this.DeviceCharge?.Value?[0] ?? 0;
-    [ObservableProperty]
-    private string name = string.Empty;
+    private readonly InTheHand.Bluetooth.BluetoothDevice device;
+
     [ObservableProperty]
     private bool connected;
+
+    [ObservableProperty]
+    private string name = string.Empty;
 
     public BluetoothDevice(InTheHand.Bluetooth.BluetoothDevice device)
     {
@@ -23,20 +25,24 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
         Task.Run(this.Initialize);
     }
 
-    private readonly InTheHand.Bluetooth.BluetoothDevice device;
-
     private GattCharacteristic DeviceCharge { get; set; }
+    public double Charge => this.DeviceCharge?.Value?[0] ?? 0;
+
+    public void Dispose()
+    {
+        this.device.Gatt.Device.GattServerDisconnected -= this.OnDeviceDisconnected;
+        this.DeviceCharge.CharacteristicValueChanged -= this.OnBatteryChargeChanged;
+    }
 
     private async Task Initialize()
     {
         this.Name = this.device.Name;
-        var gatt = this.device.Gatt;
+        RemoteGattServer gatt = this.device.Gatt;
 
         this.StartListeningConnection(gatt);
         await this.StartListeningBatteryUpdates(gatt);
 
         await gatt.ConnectAsync();
-
     }
 
     private void StartListeningConnection(RemoteGattServer gatt)
@@ -49,11 +55,12 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
 
     private async Task StartListeningBatteryUpdates(RemoteGattServer gatt)
     {
-        var batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
+        GattService? batteryService = await gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
 
         if (batteryService is not null)
         {
-            this.DeviceCharge = await batteryService.GetCharacteristicAsync(BluetoothUuid.GetCharacteristic("battery_level"));
+            var characteristicUuid = BluetoothUuid.GetCharacteristic("battery_level");
+            this.DeviceCharge = await batteryService.GetCharacteristicAsync(characteristicUuid);
             this.DeviceCharge.CharacteristicValueChanged += this.OnBatteryChargeChanged;
             this.OnPropertyChanged(nameof(this.Charge));
         }
@@ -61,10 +68,4 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
 
     private void OnBatteryChargeChanged(object? _, GattCharacteristicValueChangedEventArgs args)
         => this.OnPropertyChanged(nameof(this.Charge));
-
-    public void Dispose()
-    {
-        this.device.Gatt.Device.GattServerDisconnected -= this.OnDeviceDisconnected;
-        this.DeviceCharge.CharacteristicValueChanged -= this.OnBatteryChargeChanged;
-    }
 }

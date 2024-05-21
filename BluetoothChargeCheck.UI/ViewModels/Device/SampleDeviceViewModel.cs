@@ -9,8 +9,8 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 public class SampleDeviceViewModel : DeviceViewModel
 {
     private CancellationTokenSource source = new();
-    public SampleDeviceViewModel(IBluetoothDevice device) : base(device)
-    {
+
+    public SampleDeviceViewModel(IBluetoothDevice device) : base(device) =>
         this.PropertyChanging += (_, args) =>
         {
             if (args.PropertyName == nameof(this.IsTrayIconVisible))
@@ -21,15 +21,13 @@ public class SampleDeviceViewModel : DeviceViewModel
                 }
                 else
                 {
-                    this.source = new();
+                    this.source = new CancellationTokenSource();
                     Task.Run(
                         () => (this.BluetoothDevice as SampleBluetoothDevice)!.ChargeCyclingAsync(this.source.Token),
                         this.source.Token);
                 }
             }
         };
-
-    }
 
     public SampleDeviceViewModel() : this(new SampleBluetoothDevice())
     {

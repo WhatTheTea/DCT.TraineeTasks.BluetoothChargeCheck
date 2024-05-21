@@ -15,10 +15,8 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     [ObservableProperty]
     private ObservableCollection<IBluetoothDevice> devices = [];
 
-    public BluetoothService()
-    {
-        this.StartDeviceScanning();
-    }
+    public BluetoothService() => this.StartDeviceScanning();
+
     private void StartDeviceScanning() => Task.Factory.StartNew(async () =>
     {
         while (true)
@@ -34,20 +32,19 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
         {
             // ScanForDevicesAsync returns more devices at time cost
             //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
-            var pairedDevices = await Bluetooth.GetPairedDevicesAsync();
+            IReadOnlyCollection<InTheHand.Bluetooth.BluetoothDevice> pairedDevices = await Bluetooth.GetPairedDevicesAsync();
 
-            foreach (var device in this.Devices)
+            foreach (IBluetoothDevice device in this.Devices)
             {
                 (device as IDisposable)?.Dispose();
             }
 
-            this.Devices = new ObservableCollection<IBluetoothDevice>(pairedDevices.Select(x =>
-                new BluetoothDevice(x)));
+            IEnumerable<BluetoothDevice> foundDevices = pairedDevices.Select(x => new BluetoothDevice(x));
+            this.Devices = new ObservableCollection<IBluetoothDevice>(foundDevices);
         }
         else
         {
             this.Devices = [];
         }
     }
-
 }

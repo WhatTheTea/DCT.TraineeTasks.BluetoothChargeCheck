@@ -7,12 +7,9 @@ using System.Windows.Controls;
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
 
 /// <summary>
-/// Interaction logic for DeviceInfoView.xaml
+///     Interaction logic for DeviceInfoView.xaml
 /// </summary>
 public partial class DeviceInfoView : UserControl
 {
-    public DeviceInfoView()
-    {
-        this.InitializeComponent();
-    }
+    public DeviceInfoView() => this.InitializeComponent();
 }

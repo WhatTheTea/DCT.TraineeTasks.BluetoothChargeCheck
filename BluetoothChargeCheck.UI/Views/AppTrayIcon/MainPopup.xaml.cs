@@ -5,13 +5,11 @@
 using System.Windows.Controls;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon;
+
 /// <summary>
-/// Interaction logic for MainPopup.xaml
+///     Interaction logic for MainPopup.xaml
 /// </summary>
 public partial class MainPopup : UserControl
 {
-    public MainPopup()
-    {
-        this.InitializeComponent();
-    }
+    public MainPopup() => this.InitializeComponent();
 }

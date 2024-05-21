@@ -8,9 +8,14 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
 internal partial class SampleBluetoothDevice : ObservableObject, IBluetoothDevice
 {
-    [ObservableProperty] private string name = "Bluetooth Device";
-    [ObservableProperty] private double charge;
-    [ObservableProperty] private bool connected;
+    [ObservableProperty]
+    private double charge;
+
+    [ObservableProperty]
+    private bool connected;
+
+    [ObservableProperty]
+    private string name = "Bluetooth Device";
 
     public async Task ChargeCyclingAsync(CancellationToken token)
     {

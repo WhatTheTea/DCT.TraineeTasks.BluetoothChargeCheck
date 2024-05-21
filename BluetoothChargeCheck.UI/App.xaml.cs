@@ -7,11 +7,10 @@ using H.NotifyIcon;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
-
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI;
 
 /// <summary>
-/// Interaction logic for App.xaml
+///     Interaction logic for App.xaml
 /// </summary>
 public partial class App : Application
 {
@@ -27,7 +26,8 @@ public partial class App : Application
 
     private void CreateAppTrayIcon()
     {
-        this.appTrayIcon = (TaskbarIcon)this.FindResource("AppTrayIcon");
+        this.appTrayIcon = this.FindResource("AppTrayIcon") as TaskbarIcon
+                           ?? throw new InvalidOperationException("Can't load AppTrayIcon resource");
         this.appTrayIcon.ForceCreate();
     }
 
@@ -37,4 +37,3 @@ public partial class App : Application
         base.OnExit(e);
     }
 }
-
