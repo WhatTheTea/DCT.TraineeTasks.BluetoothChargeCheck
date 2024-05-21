@@ -37,8 +37,8 @@ Global
 		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|ARM.Build.0 = Release|Any CPU
 		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|ARM64.ActiveCfg = Release|Any CPU
 		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|ARM64.Build.0 = Release|Any CPU
-		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x64.ActiveCfg = Release|Any CPU
-		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x64.Build.0 = Release|Any CPU
+		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x64.ActiveCfg = Release|x64
+		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x64.Build.0 = Release|x64
 		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x86.ActiveCfg = Release|Any CPU
 		{8904CC61-E942-45CE-9978-8BBFB14C0588}.Release|x86.Build.0 = Release|Any CPU
 		{44D76308-7C59-4AA8-9356-0073854AD2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,5 +74,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4868E22-7BEE-4A70-8DD8-5128FC21F049}
 	EndGlobalSection
 EndGlobal
