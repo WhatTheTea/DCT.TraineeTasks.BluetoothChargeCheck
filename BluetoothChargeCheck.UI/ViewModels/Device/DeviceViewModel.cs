@@ -15,7 +15,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 public partial class DeviceViewModel : ObservableObject, IDisposable
 {
     [ObservableProperty]
-    private Color? accent;
+    private Color accent;
 
     [ObservableProperty]
     private IBluetoothDevice bluetoothDevice;

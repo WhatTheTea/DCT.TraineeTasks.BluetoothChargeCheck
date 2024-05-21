@@ -36,7 +36,7 @@
         <!-- Default font size is invalid, 96 looks fine -->
         <tb:TaskbarIcon.IconSource>
             <tb:GeneratedIconSource
-                                    FontFamily="Segoe Fluent Icons"
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
                                     FontSize="96"
                                     Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
                                     Size="128"
