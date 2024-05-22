@@ -3,28 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
              xmlns:dev="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:res="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Resources"
+             xmlns:p="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance dev:SampleDeviceViewModel}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Label Content="{x:Static res:DeviceInfo.charge}" Margin="5"/>
+            <Label Content="{x:Static p:DeviceInfo.charge}" Margin="5"/>
             <Label Content="{Binding BluetoothDevice.Charge}" Margin="5"/>
         </StackPanel>
         <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
-        <CheckBox Content="{x:Static res:DeviceInfo.connected}"
+        <CheckBox Content="{x:Static p:DeviceInfo.connected}"
               IsChecked="{Binding BluetoothDevice.Connected}"
               IsEnabled="False"
               Margin="5"/>
         <ui:ToggleSwitch IsChecked="{Binding IsTrayIconVisible, Mode=TwoWay, Delay=800}"
-                     Content="{x:Static res:DeviceInfo.showInTaskbar}"
+                     Content="{x:Static p:DeviceInfo.showInTaskbar}"
                      Margin="5"/>
-        <Label Content="{x:Static res:DeviceInfo.color}" Margin="5"/>
+        <Label Content="{x:Static p:DeviceInfo.color}" Margin="5"/>
         <xctk:ColorPicker Margin="2.5"
                         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
                         DropDownBackground="{ui:ThemeResource ApplicationBackgroundBrush}"

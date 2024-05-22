@@ -4,7 +4,6 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-		<WindowsPackageType>None</WindowsPackageType>
 	</PropertyGroup>
 	
 	<PropertyGroup>
@@ -30,12 +29,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\DeviceInfo.Designer.cs">
+	  <Content Include="Fonts\SegoeFluentIcons.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\DeviceInfo.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>DeviceInfo.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Resources\MainPopup.Designer.cs">
+	  <Compile Update="Properties\MainPopup.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>MainPopup.resx</DependentUpon>
@@ -43,18 +48,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\DeviceInfo.resx">
+	  <EmbeddedResource Update="Properties\DeviceInfo.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DeviceInfo.uk-ua.resx">
+	  <EmbeddedResource Update="Properties\DeviceInfo.uk-ua.resx">
 	    <Generator></Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\MainPopup.resx">
+	  <EmbeddedResource Update="Properties\MainPopup.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\MainPopup.uk-ua.resx">
+	  <EmbeddedResource Update="Properties\MainPopup.uk-ua.resx">
 	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>

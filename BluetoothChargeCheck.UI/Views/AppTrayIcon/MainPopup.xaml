@@ -6,7 +6,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
              xmlns:views="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views"
-             xmlns:res="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Resources"
+             xmlns:p="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties"
              mc:Ignorable="d"
              Height="330" Width="600"
              Background="{ui:ThemeResource ApplicationBackgroundBrush}"
@@ -31,7 +31,7 @@
                 Margin="5"
                 VerticalAlignment="Bottom"
                 FontSize="12"
-                Text="{x:Static res:MainPopup.copyright}"
+                Text="{x:Static p:MainPopup.copyright}"
                 Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
         
