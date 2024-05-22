@@ -8,6 +8,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 using H.NotifyIcon;
@@ -28,34 +29,28 @@ public partial class MainViewModel : ObservableObject
     {
         this.BluetoothService = new BluetoothService();
 
-        this.BluetoothService.PropertyChanged += this.UpdateDeviceViewModels;
+        this.BluetoothService.Devices.CollectionChanged += this.UpdateDevices;
         WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
+
 
     public Guid Id { get; } = Guid.NewGuid();
 
     public IBluetoothService BluetoothService { get; set; }
+    private void UpdateDevices(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        var devices = e.NewItems?.Cast<IBluetoothDevice>();
+        foreach (var device in devices ?? [])
+        {
+            this.DeviceViewModels.Add(new DeviceViewModel(device));
+        }
+    }
 
     private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
     {
         DeviceViewModel viewModel = m.Value;
         this.ToggleTaskbarIconFor(viewModel);
     };
-
-    private void UpdateDeviceViewModels(object? sender, PropertyChangedEventArgs args)
-    {
-        IEnumerable<DeviceViewModel> viewModels = this.BluetoothService.Devices.Select(x => new DeviceViewModel(x));
-        this.DisposeDeviceViewModels();
-        this.DeviceViewModels = new ObservableCollection<DeviceViewModel>(viewModels);
-    }
-
-    private void DisposeDeviceViewModels()
-    {
-        foreach (DeviceViewModel device in this.DeviceViewModels)
-        {
-            device.Dispose();
-        }
-    }
 
     private void ToggleTaskbarIconFor(DeviceViewModel viewModel)
     {

@@ -39,12 +39,34 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
                 (device as IDisposable)?.Dispose();
             }
 
-            IEnumerable<BluetoothDevice> foundDevices = pairedDevices.Select(x => new BluetoothDevice(x));
-            this.Devices = new ObservableCollection<IBluetoothDevice>(foundDevices);
+            var currentIds = this.Devices.Select(x => x.Id);
+            var newIds = pairedDevices.Select(x => x.Id);
+
+            this.AddNewDevices(pairedDevices, currentIds);
+            this.RemoveUnpairedDevices(newIds);
         }
         else
         {
             this.Devices = [];
+        }
+    }
+
+    private void RemoveUnpairedDevices(IEnumerable<string> newIds)
+    {
+        var unpairedDevices = this.Devices.Where(x => !newIds.Contains(x.Id));
+        foreach (var device in unpairedDevices)
+        {
+            this.Devices.Remove(device);
+        }
+    }
+
+    private void AddNewDevices(IReadOnlyCollection<InTheHand.Bluetooth.BluetoothDevice> pairedDevices, IEnumerable<string> currentIds)
+    {
+        var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id))
+                        .Select(x => new BluetoothDevice(x));
+        foreach (var device in newDevices)
+        {
+            this.Devices.Add(device);
         }
     }
 }
