@@ -7,6 +7,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
                     xmlns:v="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon"
+                    xmlns:font="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts"
                     mc:Ignorable="d">
 
     <ContextMenu x:Shared="False"
@@ -36,7 +37,7 @@
         <!-- Default font size is invalid, 96 looks fine -->
         <tb:TaskbarIcon.IconSource>
             <tb:GeneratedIconSource
-                                    FontFamily="Segoe Fluent Icons"
+                                    FontFamily="{Binding Source={x:Static font:FluentIcons.FontFamily}, Mode=OneTime}"
                                     FontSize="96"
                                     Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
                                     Size="128"

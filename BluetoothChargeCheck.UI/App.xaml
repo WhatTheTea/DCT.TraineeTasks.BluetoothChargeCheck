@@ -6,6 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <FontFamily x:Key="FluentIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+                </ResourceDictionary>
+                
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
 

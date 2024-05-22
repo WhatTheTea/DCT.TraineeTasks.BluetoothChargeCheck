@@ -28,6 +28,7 @@ public partial class App : Application
     {
         this.appTrayIcon = this.FindResource("AppTrayIcon") as TaskbarIcon
                            ?? throw new InvalidOperationException("Can't load AppTrayIcon resource");
+        
         this.appTrayIcon.ForceCreate();
     }
 

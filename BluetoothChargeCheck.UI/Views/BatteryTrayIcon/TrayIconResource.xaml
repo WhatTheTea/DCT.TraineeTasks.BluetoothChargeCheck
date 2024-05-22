@@ -6,6 +6,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
                     xmlns:batteryTrayIcon="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon"
+                    xmlns:font="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
@@ -43,7 +44,7 @@
             <tb:TaskbarIcon.IconSource>
                 <!-- idk why, but 96 it is xD -->
                 <tb:GeneratedIconSource
-                                    FontFamily="Segoe Fluent Icons"
+                                    FontFamily="{Binding Source={x:Static font:FluentIcons.FontFamily}, Mode=OneTime}"
                                     FontSize="96"
                                     Size="128"
                                     Text="{Binding Glyph, Mode=OneWay, Delay=800}">
