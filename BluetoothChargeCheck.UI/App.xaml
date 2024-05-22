@@ -6,20 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary>
-                    <FontFamily x:Key="SegoeFluentIcons">
-                        pack://application:,,,/Resources/Fonts/#Segoe Fluent Icons
-                    </FontFamily>
-                </ResourceDictionary>
-
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
 
                 <ResourceDictionary Source="/Views/BatteryTrayIcon/TrayIconResource.xaml"/>
                 <ResourceDictionary Source="/Views/AppTrayIcon/AppTrayIconResource.xaml"/>
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </Application.Resources>
 </Application>

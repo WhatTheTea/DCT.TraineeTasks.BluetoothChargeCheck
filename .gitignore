@@ -36,10 +36,6 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
-# publish
-AppPackages/
-BundleArtifacts/
-
 # Visual Studio 2015
 .vs/
 

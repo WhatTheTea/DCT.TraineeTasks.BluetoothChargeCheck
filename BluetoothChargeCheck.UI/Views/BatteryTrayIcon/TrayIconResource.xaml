@@ -43,7 +43,7 @@
             <tb:TaskbarIcon.IconSource>
                 <!-- idk why, but 96 it is xD -->
                 <tb:GeneratedIconSource
-                                    FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
                                     Size="128"
                                     Text="{Binding Glyph, Mode=OneWay, Delay=800}">

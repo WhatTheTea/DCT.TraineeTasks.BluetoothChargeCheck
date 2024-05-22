@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Windows;
-using System.Windows.Media;
 using H.NotifyIcon;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
