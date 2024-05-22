@@ -20,8 +20,19 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        this.TryAddIconsFont();
+
         SystemThemeWatcher.Watch(null, WindowBackdropType.Auto);
         this.CreateAppTrayIcon();
+    }
+
+    private void TryAddIconsFont()
+    {
+        int result = Fonts.FluentIcons.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
+        if (result == 0)
+        {
+            throw new InvalidOperationException("Failed to install Segoe Fluent Icons");
+        }
     }
 
     private void CreateAppTrayIcon()
