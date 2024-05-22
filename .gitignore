@@ -36,6 +36,9 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+# wapp publish
+AppPackages/
+
 # Visual Studio 2015
 .vs/
 

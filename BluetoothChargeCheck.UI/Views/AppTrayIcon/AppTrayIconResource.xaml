@@ -26,7 +26,7 @@
     <tb:TaskbarIcon x:Key="AppTrayIcon"
                     d:DataContext="{d:DesignInstance vm:MainViewModel}"
                     Visibility="Visible"
-                    Id="AC515764-A0CB-43BB-BF0A-DA7D516DBB69"
+                    Id="{Binding Id, Mode=OneTime}"
                     ContextMenu="{StaticResource AppTrayMenu}"
                     PopupActivation="LeftOrDoubleClick">
 

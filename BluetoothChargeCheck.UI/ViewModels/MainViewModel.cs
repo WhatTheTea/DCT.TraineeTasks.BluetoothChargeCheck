@@ -32,6 +32,8 @@ public partial class MainViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
 
+    public Guid Id { get; } = Guid.Parse("AC515764-A0CB-43BB-BF0A-DA7D516DBB69");
+
     public IBluetoothService BluetoothService { get; set; }
 
     private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>
