@@ -12,6 +12,8 @@
 		<UseWPF>true</UseWPF>
 		<RootNamespace>DCT.TraineeTasks.BluetoothChargeCheck.UI</RootNamespace>
 		<LangVersion>latest</LangVersion>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<AnalysisLevel>latest</AnalysisLevel>
 	</PropertyGroup>
 
 	<ItemGroup>

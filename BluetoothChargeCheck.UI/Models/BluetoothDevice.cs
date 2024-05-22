@@ -27,6 +27,7 @@ public partial class BluetoothDevice : ObservableObject, IBluetoothDevice, IDisp
 
     private GattCharacteristic DeviceCharge { get; set; }
     public double Charge => this.DeviceCharge?.Value?[0] ?? 0;
+    public string Id => this.device.Id;
 
     public void Dispose()
     {

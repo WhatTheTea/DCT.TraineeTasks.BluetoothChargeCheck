@@ -9,6 +9,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 public interface IBluetoothDevice : INotifyPropertyChanged
 {
     string Name { get; }
+    string Id { get; }
     double Charge { get; }
     bool Connected { get; }
 }

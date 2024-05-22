@@ -27,6 +27,8 @@ internal partial class SampleBluetoothDevice : ObservableObject, IBluetoothDevic
         }
     }
 
+    public string Id { get; } = Guid.NewGuid().ToString();
+
     private void NextCharge()
     {
         if (this.Charge < 100)
