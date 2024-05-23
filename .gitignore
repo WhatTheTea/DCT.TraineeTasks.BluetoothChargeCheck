@@ -38,6 +38,7 @@ msbuild.wrn
 
 # wapp publish
 AppPackages/
+BundleArtifacts/
 
 # Visual Studio 2015
 .vs/
