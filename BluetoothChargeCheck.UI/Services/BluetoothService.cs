@@ -18,9 +18,13 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     private ObservableCollection<IBluetoothDevice> devices = [];
 
     public BluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
+
     private static async IAsyncEnumerable<InTheHand.Bluetooth.BluetoothDevice> GetConnectedDevicesAsync()
     {
-        foreach (var device in await DeviceInformation.FindAllAsync(BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected)))
+        var connectedSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
+        var foundDevices = await DeviceInformation.FindAllAsync(connectedSelector);
+
+        foreach (var device in foundDevices)
         {
             yield return await BluetoothLEDevice.FromIdAsync(device.Id);
         }
