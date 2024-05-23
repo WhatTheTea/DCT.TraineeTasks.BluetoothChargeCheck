@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using InTheHand.Bluetooth;
+using Windows.Devices.Bluetooth;
+using Windows.Devices.Enumeration;
 using BluetoothDevice = DCT.TraineeTasks.BluetoothChargeCheck.UI.Models.BluetoothDevice;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
@@ -16,6 +18,13 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     private ObservableCollection<IBluetoothDevice> devices = [];
 
     public BluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
+    private static async IAsyncEnumerable<InTheHand.Bluetooth.BluetoothDevice> GetConnectedDevicesAsync()
+    {
+        foreach (var device in await DeviceInformation.FindAllAsync(BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected)))
+        {
+            yield return await BluetoothLEDevice.FromIdAsync(device.Id);
+        }
+    }
 
     private async Task StartDeviceScanning()
     {
@@ -30,9 +39,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     {
         if (await Bluetooth.GetAvailabilityAsync())
         {
-            // ScanForDevicesAsync returns more devices at time cost
-            //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
-            IReadOnlyCollection<InTheHand.Bluetooth.BluetoothDevice> pairedDevices = await Bluetooth.GetPairedDevicesAsync();
+            var pairedDevices = await GetConnectedDevicesAsync().ToArrayAsync() ?? [];
 
             var currentIds = this.Devices.Select(x => x.Id);
             var newIds = pairedDevices.Select(x => x.Id);
@@ -55,7 +62,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
         }
     }
 
-    private void AddNewDevices(IReadOnlyCollection<InTheHand.Bluetooth.BluetoothDevice> pairedDevices, IEnumerable<string> currentIds)
+    private void AddNewDevices(IEnumerable<InTheHand.Bluetooth.BluetoothDevice> pairedDevices, IEnumerable<string> currentIds)
     {
         var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id))
                         .Select(x => new BluetoothDevice(x));
