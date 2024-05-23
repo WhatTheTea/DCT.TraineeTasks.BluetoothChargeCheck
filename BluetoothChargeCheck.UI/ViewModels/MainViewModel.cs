@@ -33,16 +33,25 @@ public partial class MainViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
 
-
     public Guid Id { get; } = Guid.NewGuid();
 
     public IBluetoothService BluetoothService { get; set; }
     private void UpdateDevices(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        var devices = e.NewItems?.Cast<IBluetoothDevice>();
-        foreach (var device in devices ?? [])
+        var newDevices = e.NewItems?.Cast<IBluetoothDevice>().ToArray() ?? [];
+        var oldDevices = e.OldItems?.Cast<IBluetoothDevice>().ToArray() ?? [];
+        var devicesToRemove = oldDevices.Where(x => !this.BluetoothService.Devices.Contains(x)).ToArray() ?? [];
+        var viewModelsToRemove = this.DeviceViewModels.Where(x => devicesToRemove.Contains(x.BluetoothDevice)).ToArray() ?? [];
+
+        foreach (var device in newDevices)
         {
             this.DeviceViewModels.Add(new DeviceViewModel(device));
+        }
+
+        foreach (var viewModel in viewModelsToRemove)
+        {
+            this.DeviceViewModels.Remove(viewModel);
+            viewModel.Dispose();
         }
     }
 

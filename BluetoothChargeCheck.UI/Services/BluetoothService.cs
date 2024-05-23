@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using InTheHand.Bluetooth;
@@ -15,16 +16,16 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     [ObservableProperty]
     private ObservableCollection<IBluetoothDevice> devices = [];
 
-    public BluetoothService() => this.StartDeviceScanning();
+    public BluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
 
-    private void StartDeviceScanning() => Task.Factory.StartNew(async () =>
+    private async Task StartDeviceScanning()
     {
         while (true)
         {
             await this.ScanDevices();
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
-    }, TaskCreationOptions.LongRunning);
+    }
 
     private async Task ScanDevices()
     {
@@ -33,11 +34,6 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             // ScanForDevicesAsync returns more devices at time cost
             //var pairedDevices = await Bluetooth.ScanForDevicesAsync(); // 10+ seconds 💀
             IReadOnlyCollection<InTheHand.Bluetooth.BluetoothDevice> pairedDevices = await Bluetooth.GetPairedDevicesAsync();
-
-            foreach (IBluetoothDevice device in this.Devices)
-            {
-                (device as IDisposable)?.Dispose();
-            }
 
             var currentIds = this.Devices.Select(x => x.Id);
             var newIds = pairedDevices.Select(x => x.Id);
@@ -53,7 +49,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
 
     private void RemoveUnpairedDevices(IEnumerable<string> newIds)
     {
-        var unpairedDevices = this.Devices.Where(x => !newIds.Contains(x.Id));
+        var unpairedDevices = this.Devices.Where(x => !newIds.Contains(x.Id)).ToArray();
         foreach (var device in unpairedDevices)
         {
             this.Devices.Remove(device);
@@ -64,6 +60,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
     {
         var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id))
                         .Select(x => new BluetoothDevice(x));
+
         foreach (var device in newDevices)
         {
             this.Devices.Add(device);

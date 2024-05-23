@@ -48,6 +48,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
+        this.IsTrayIconVisible = false;
         this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
         (this.BluetoothDevice as IDisposable)?.Dispose();
     }
