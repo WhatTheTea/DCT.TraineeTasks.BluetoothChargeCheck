@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using InTheHand.Bluetooth;

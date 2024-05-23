@@ -1,9 +1,8 @@
-﻿// <copyright file = "FluentIcons.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "FontManager.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
 using System.Runtime.InteropServices;
-using System.Windows.Media;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts;
 
