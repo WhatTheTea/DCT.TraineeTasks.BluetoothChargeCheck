@@ -26,7 +26,12 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
 
         foreach (var device in foundDevices)
         {
-            yield return await BluetoothLEDevice.FromIdAsync(device.Id);
+            var leDevice = await BluetoothLEDevice.FromIdAsync(device.Id);
+
+            if(leDevice is not null)
+            {
+                yield return leDevice;
+            }
         }
     }
 
@@ -51,9 +56,9 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
             this.AddNewDevices(pairedDevices, currentIds);
             this.RemoveUnpairedDevices(newIds);
         }
-        else
+        else if (this.Devices.Count > 0)
         {
-            this.Devices = [];
+            this.Devices.Clear();
         }
     }
 
