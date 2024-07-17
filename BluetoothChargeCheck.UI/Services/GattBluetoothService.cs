@@ -8,7 +8,6 @@ using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using InTheHand.Bluetooth;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
-using BluetoothDevice = DCT.TraineeTasks.BluetoothChargeCheck.UI.Models.GattBluetoothDevice;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 /// <summary>
@@ -79,7 +78,7 @@ public partial class GattBluetoothService : ObservableObject, IBluetoothService
     private void AddNewDevices(IEnumerable<InTheHand.Bluetooth.BluetoothDevice> pairedDevices, IEnumerable<string> currentIds)
     {
         var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id))
-                        .Select(x => new BluetoothDevice(x));
+                        .Select(x => new GattBluetoothDevice(x));
 
         foreach (var device in newDevices)
         {
