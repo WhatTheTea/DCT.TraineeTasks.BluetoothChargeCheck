@@ -11,7 +11,9 @@ using Windows.Devices.Enumeration;
 using BluetoothDevice = DCT.TraineeTasks.BluetoothChargeCheck.UI.Models.GattBluetoothDevice;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
-
+/// <summary>
+/// Service to provide information about Bluetooth LE devices
+/// </summary>
 public partial class GattBluetoothService : ObservableObject, IBluetoothService
 {
     [ObservableProperty]
@@ -19,22 +21,23 @@ public partial class GattBluetoothService : ObservableObject, IBluetoothService
 
     public GattBluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
 
+    // This approach was taken to filter out devices which are not connected
     private static async IAsyncEnumerable<InTheHand.Bluetooth.BluetoothDevice> GetConnectedDevicesAsync()
     {
+        // Get connected device information
         var connectedSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
         var foundDevices = await DeviceInformation.FindAllAsync(connectedSelector);
-
+        // Transorm found device information to bluetooth le information
         foreach (var device in foundDevices)
         {
             var leDevice = await BluetoothLEDevice.FromIdAsync(device.Id);
 
-            if(leDevice is not null)
+            if (leDevice is not null)
             {
                 yield return leDevice;
             }
         }
     }
-
     private async Task StartDeviceScanning()
     {
         while (true)
@@ -43,7 +46,9 @@ public partial class GattBluetoothService : ObservableObject, IBluetoothService
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
     }
-
+    /// <summary>
+    /// Updates devices list appending new and removing disconnected
+    /// </summary>
     private async Task ScanDevices()
     {
         if (await Bluetooth.GetAvailabilityAsync())
