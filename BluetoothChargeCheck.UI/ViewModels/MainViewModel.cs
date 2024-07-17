@@ -26,7 +26,7 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        this.BluetoothService = new BluetoothService();
+        this.BluetoothService = new GattBluetoothService();
 
         this.BluetoothService.Devices.CollectionChanged += this.UpdateDevices;
         WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
