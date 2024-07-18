@@ -11,7 +11,8 @@ using Windows.Devices.Enumeration;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 /// <summary>
-/// Service to provide information about Bluetooth LE devices
+/// Service to provide information about Bluetooth LE devices. <br/>
+/// Instantiating this class begins device scanning in background
 /// </summary>
 public partial class GattBluetoothService : ObservableObject, IBluetoothService
 {
@@ -42,7 +43,7 @@ public partial class GattBluetoothService : ObservableObject, IBluetoothService
         while (true)
         {
             await this.ScanDevices();
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(30));
         }
     }
     /// <summary>
