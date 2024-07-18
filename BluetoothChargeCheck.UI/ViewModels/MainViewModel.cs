@@ -37,8 +37,8 @@ public partial class MainViewModel : ObservableObject
     public IBluetoothService BluetoothService { get; set; }
     private void UpdateDevices(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        var newDevices = e.NewItems?.Cast<IBluetoothDeviceData>().ToArray() ?? [];
-        var oldDevices = e.OldItems?.Cast<IBluetoothDeviceData>().ToArray() ?? [];
+        var newDevices = e.NewItems?.Cast<BluetoothDeviceData>().ToArray() ?? [];
+        var oldDevices = e.OldItems?.Cast<BluetoothDeviceData>().ToArray() ?? [];
         var devicesToRemove = oldDevices.Where(x => !this.BluetoothService.Devices.Contains(x)).ToArray() ?? [];
         var viewModelsToRemove = this.DeviceViewModels.Where(x => devicesToRemove.Contains(x.BluetoothDevice)).ToArray() ?? [];
 

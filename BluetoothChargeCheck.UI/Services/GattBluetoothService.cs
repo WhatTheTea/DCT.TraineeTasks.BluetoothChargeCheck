@@ -17,7 +17,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 public partial class GattBluetoothService : ObservableObject, IBluetoothService
 {
     [ObservableProperty]
-    private ObservableCollection<IBluetoothDeviceData> devices = [];
+    private ObservableCollection<BluetoothDeviceData> devices = [];
 
     public GattBluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
 
@@ -79,7 +79,7 @@ public partial class GattBluetoothService : ObservableObject, IBluetoothService
     private void AddNewDevices(IEnumerable<InTheHand.Bluetooth.BluetoothDevice> pairedDevices, IEnumerable<string> currentIds)
     {
         var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id))
-                        .Select(x => new GattBluetoothDevice(x));
+                        .Select(x => new _GattBluetoothDevice(x));
 
         foreach (var device in newDevices)
         {

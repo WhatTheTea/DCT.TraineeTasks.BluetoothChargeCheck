@@ -14,11 +14,11 @@ using InTheHand.Bluetooth;
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 public partial class BluetoothService : ObservableObject, IBluetoothService
 {
-    public ObservableCollection<IBluetoothDeviceData> Devices => throw new NotImplementedException();
+    public ObservableCollection<BluetoothDeviceData> Devices => throw new NotImplementedException();
 
-    private Func<IAsyncEnumerable<IBluetoothDeviceData>> FetchDevices;
+    private Func<IAsyncEnumerable<BluetoothDeviceData>> FetchDevices;
 
-    public async IAsyncEnumerable<IBluetoothDeviceData> GetValuesAsync(int intervalSeconds = 20)
+    public async IAsyncEnumerable<BluetoothDeviceData> GetValuesAsync(int intervalSeconds = 20)
     {
         while (true)
         {
@@ -54,7 +54,7 @@ public partial class BluetoothService : ObservableObject, IBluetoothService
         }
     }
 
-    private void AddNewDevices(IEnumerable<IBluetoothDeviceData> pairedDevices, IEnumerable<string> currentIds)
+    private void AddNewDevices(IEnumerable<BluetoothDeviceData> pairedDevices, IEnumerable<string> currentIds)
     {
         var newDevices = pairedDevices.Where(x => !currentIds.Contains(x.Id));
 

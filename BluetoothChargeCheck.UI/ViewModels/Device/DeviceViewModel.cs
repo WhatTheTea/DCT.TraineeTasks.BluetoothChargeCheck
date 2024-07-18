@@ -11,13 +11,20 @@ using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
+/// <summary>
+/// ViewModel to contain bluetooth device data and provide data needed for tray icon <br/>
+/// </summary>
+///
+/// <remarks>
+/// lol
+/// </remarks>
 public partial class DeviceViewModel : ObservableObject, IDisposable
 {
     [ObservableProperty]
     private Color? accent;
 
     [ObservableProperty]
-    private IBluetoothDeviceData bluetoothDevice;
+    private BluetoothDeviceData bluetoothDevice;
 
     [ObservableProperty]
     private bool isTrayIconVisible;
@@ -38,7 +45,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         }
     }
 
-    public DeviceViewModel(IBluetoothDeviceData device)
+    public DeviceViewModel(BluetoothDeviceData device)
     {
         this.BluetoothDevice = device;
         this.Accent = ApplicationAccentColorManager.PrimaryAccent;
@@ -50,7 +57,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
 
     // Notify about charge update, if it changed after updating device data
-    partial void OnBluetoothDeviceChanged(IBluetoothDeviceData? oldValue, IBluetoothDeviceData newValue)
+    partial void OnBluetoothDeviceChanged(BluetoothDeviceData? oldValue, BluetoothDeviceData newValue)
     {
         var isChargeChanged = (oldValue is not null) && newValue.Charge != oldValue.Charge;
         if (oldValue is null || isChargeChanged)

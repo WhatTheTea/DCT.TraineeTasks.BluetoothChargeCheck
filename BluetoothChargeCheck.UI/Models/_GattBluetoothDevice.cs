@@ -7,7 +7,7 @@ using InTheHand.Bluetooth;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
-public partial class GattBluetoothDevice : ObservableObject, IBluetoothDeviceData, IDisposable
+public partial class _GattBluetoothDevice : ObservableObject, IDisposable
 {
     private readonly BluetoothDevice device;
 
@@ -17,7 +17,7 @@ public partial class GattBluetoothDevice : ObservableObject, IBluetoothDeviceDat
     [ObservableProperty]
     private string name = string.Empty;
 
-    public GattBluetoothDevice(BluetoothDevice device)
+    public _GattBluetoothDevice(BluetoothDevice device)
     {
         this.device = device;
         this.DeviceCharge = null!;

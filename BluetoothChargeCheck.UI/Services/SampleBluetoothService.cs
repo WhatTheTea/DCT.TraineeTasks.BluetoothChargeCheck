@@ -10,7 +10,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 
 internal class SampleBluetoothService : ObservableObject, IBluetoothService
 {
-    private readonly ObservableCollection<IBluetoothDeviceData> devices = [];
+    private readonly ObservableCollection<BluetoothDeviceData> devices = [];
 
     public SampleBluetoothService()
     {
@@ -23,7 +23,7 @@ internal class SampleBluetoothService : ObservableObject, IBluetoothService
         this.Connected = this.Devices;
     }
 
-    public ObservableCollection<IBluetoothDeviceData> Connected { get; init; }
+    public ObservableCollection<BluetoothDeviceData> Connected { get; init; }
 
-    public ObservableCollection<IBluetoothDeviceData> Devices { get; init; }
+    public ObservableCollection<BluetoothDeviceData> Devices { get; init; }
 }

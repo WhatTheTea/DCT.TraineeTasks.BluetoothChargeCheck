@@ -14,7 +14,7 @@ internal class GattBluetoothDataProvider
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
 
-    public static async IAsyncEnumerable<IBluetoothDeviceData> FetchDevicesAsync()
+    public static async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
     {
         var foundDevices = await DeviceInformation.FindAllAsync(ConnectedDeviceSelector);
         // Transform found device information to IBluetoothDevice
@@ -29,9 +29,9 @@ internal class GattBluetoothDataProvider
         }
     }
     /// <summary>
-    /// Converts windows bluetooth LE device to <see cref="IBluetoothDeviceData"/> and tries to retrieve charge status from GATT server.
+    /// Converts windows bluetooth LE device to <see cref="BluetoothDeviceData"/> and tries to retrieve charge status from GATT server.
     /// </summary>
-    private static async Task<IBluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new BluetoothDeviceData()
+    private static async Task<BluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new BluetoothDeviceData()
     {
         Name = device.Name,
         Id = device.DeviceId,
