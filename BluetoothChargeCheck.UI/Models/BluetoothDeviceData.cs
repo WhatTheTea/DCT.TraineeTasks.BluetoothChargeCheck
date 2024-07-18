@@ -13,7 +13,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 /// The mechanism is a long polling-like, because even if GATT can provide events to update data - RFCOMM doest not. <br/>
 /// Thus, for code simplicity, decision was made to pass data, not GATT services and RFCOMM streams.
 /// </remarks>
-internal record BluetoothDeviceData
+public record BluetoothDeviceData
 {
     public required string Id { get; set; }
 

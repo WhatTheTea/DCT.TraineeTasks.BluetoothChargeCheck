@@ -9,11 +9,11 @@
              xmlns:p="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance dev:SampleDeviceViewModel}">
+             d:DataContext="{d:DesignInstance dev:DeviceViewModel}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{x:Static p:DeviceInfo.charge}" Margin="5"/>
-            <Label Content="{Binding BluetoothDevice.Charge}" Margin="5"/>
+            <Label Content="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
         </StackPanel>
         <ProgressBar Value="{Binding BluetoothDevice.Charge, Mode=OneWay}" Margin="5"/>
         <CheckBox Content="{x:Static p:DeviceInfo.connected}"

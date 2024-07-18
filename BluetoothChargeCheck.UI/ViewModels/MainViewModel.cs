@@ -19,39 +19,18 @@ public partial class MainViewModel : ObservableObject
     private readonly DataTemplate iconDataTemplate = Application.Current.FindResource("BatteryTrayIcon") as DataTemplate
                                                      ?? throw new InvalidOperationException("Can't load BatteryTrayIcon resource");
 
+    /// <summary>
+    /// The key here is Device viewmodel GUID
+    /// </summary>
     private readonly Dictionary<Guid, TaskbarIcon> taskbarIcons = [];
-
-    [ObservableProperty]
-    private ObservableCollection<DeviceViewModel> deviceViewModels = [];
-
-    public MainViewModel()
-    {
-        this.BluetoothService = new GattBluetoothService();
-
-        this.BluetoothService.Devices.CollectionChanged += this.UpdateDevices;
-        WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
-    }
 
     public Guid Id { get; } = Guid.NewGuid();
 
-    public IBluetoothService BluetoothService { get; set; }
-    private void UpdateDevices(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    public DeviceCollectionViewModel DevicesViewModel { get; } = new();
+
+    public MainViewModel()
     {
-        var newDevices = e.NewItems?.Cast<BluetoothDeviceData>().ToArray() ?? [];
-        var oldDevices = e.OldItems?.Cast<BluetoothDeviceData>().ToArray() ?? [];
-        var devicesToRemove = oldDevices.Where(x => !this.BluetoothService.Devices.Contains(x)).ToArray() ?? [];
-        var viewModelsToRemove = this.DeviceViewModels.Where(x => devicesToRemove.Contains(x.BluetoothDevice)).ToArray() ?? [];
-
-        foreach (var device in newDevices)
-        {
-            this.DeviceViewModels.Add(new DeviceViewModel(device));
-        }
-
-        foreach (var viewModel in viewModelsToRemove)
-        {
-            this.DeviceViewModels.Remove(viewModel);
-            viewModel.Dispose();
-        }
+        WeakReferenceMessenger.Default.Register(this, this.TaskbarIconIsVisibleChangedHandler);
     }
 
     private MessageHandler<object, TrayIconVisibilityChanged> TaskbarIconIsVisibleChangedHandler => (r, m) =>

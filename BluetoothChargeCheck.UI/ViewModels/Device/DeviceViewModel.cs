@@ -13,10 +13,11 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
 /// <summary>
 /// ViewModel to contain bluetooth device data and provide data needed for tray icon <br/>
+/// This viewmodel also controls tray icon appearance.
 /// </summary>
 ///
 /// <remarks>
-/// lol
+/// Bluetooth device data meant to be updated externally. 
 /// </remarks>
 public partial class DeviceViewModel : ObservableObject, IDisposable
 {
@@ -51,8 +52,10 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         this.Accent = ApplicationAccentColorManager.PrimaryAccent;
     }
 
+    // Guid here is meant for TrayIcon to prevent battery icons replacing eachother
     public Guid Id { get; } = Guid.NewGuid();
 
+    /// <see cref="TrayIconVisibilityChanged"/>
     partial void OnIsTrayIconVisibleChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
 
