@@ -2,7 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
@@ -21,21 +20,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     private IBluetoothDeviceData bluetoothDevice;
 
     [ObservableProperty]
-    private string glyph = string.Empty;
-
-    [ObservableProperty]
     private bool isTrayIconVisible;
-
-    public DeviceViewModel(IBluetoothDeviceData device)
-    {
-        this.BluetoothDevice = device;
-        // Subscribe to charge updates
-        this.BluetoothDevice.PropertyChanged += this.OnChargeChanged;
-
-        this.UpdateGlyph();
-
-        this.Accent = ApplicationAccentColorManager.PrimaryAccent;
-    }
 
     // Unicode battery symbols in Segoe Fluent Icons: 0,10,20,30,40,50,60,70,80,90,100%
     private static string[] ChargeLevelGlyphs =>
@@ -44,30 +29,41 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
     ];
 
-    public Guid Id { get; } = Guid.NewGuid();
-
-    public void Dispose()
+    public string Glyph
     {
-        this.IsTrayIconVisible = false;
-        this.BluetoothDevice.PropertyChanged -= this.OnChargeChanged;
-        (this.BluetoothDevice as IDisposable)?.Dispose();
+        get
+        {
+            int index = (int)(this.BluetoothDevice.Charge / 10);
+            return ChargeLevelGlyphs[index];
+        }
     }
+
+    public DeviceViewModel(IBluetoothDeviceData device)
+    {
+        this.BluetoothDevice = device;
+        this.Accent = ApplicationAccentColorManager.PrimaryAccent;
+    }
+
+    public Guid Id { get; } = Guid.NewGuid();
 
     partial void OnIsTrayIconVisibleChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
 
-    private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
+    // Notify about charge update, if it changed after updating device data
+    partial void OnBluetoothDeviceChanged(IBluetoothDeviceData? oldValue, IBluetoothDeviceData newValue)
     {
-        if (args.PropertyName == nameof(IBluetoothDeviceData.Charge))
+        var isChargeChanged = (oldValue is not null) && newValue.Charge != oldValue.Charge;
+        if (oldValue is null || isChargeChanged)
         {
-            this.UpdateGlyph();
+            this.OnPropertyChanged(nameof(this.Glyph));
         }
     }
 
-    private void UpdateGlyph()
+    #region IDisposable
+    public void Dispose()
     {
-        // Tens of charge used as index for glyphs array
-        int index = (int)(this.BluetoothDevice.Charge / 10);
-        this.Glyph = ChargeLevelGlyphs[index];
+        this.IsTrayIconVisible = false;
     }
+
+    #endregion
 }
