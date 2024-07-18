@@ -35,7 +35,7 @@
                 Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
         
-        <ui:ListView ItemsSource="{Binding DeviceViewModels}"
+        <ui:ListView ItemsSource="{Binding DevicesViewModel.Devices}"
                      Grid.Row="1"
                      d:ItemsSource="{d:SampleData}">
             <ui:ListView.ItemTemplate>
