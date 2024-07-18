@@ -7,8 +7,6 @@ using System.Collections.ObjectModel;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 
-using H.NotifyIcon;
-
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 /// <summary>
 /// Class to contain all information about bluetooth devices and its view models<br/>
