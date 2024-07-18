@@ -52,7 +52,7 @@ public class DeviceCollectionViewModel
             }
 
             // Remove disconnected
-            var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices);
+            var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
             foreach (var device in devicesToRemove)
             {
                 var viewModelToRemove = viewModels[device.Id];
