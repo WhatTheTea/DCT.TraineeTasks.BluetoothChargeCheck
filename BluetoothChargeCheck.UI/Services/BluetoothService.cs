@@ -18,8 +18,11 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 /// </code>
 /// </example>
 /// </summary>
-public partial class BluetoothService : ObservableObject
+public partial class BluetoothService
 {
+    /// <summary>
+    /// Function must return fetched list of device data
+    /// </summary>
     public Func<IAsyncEnumerable<BluetoothDeviceData>> DeviceFetcher;
 
     public BluetoothService(Func<IAsyncEnumerable<BluetoothDeviceData>> deviceFetcher)
