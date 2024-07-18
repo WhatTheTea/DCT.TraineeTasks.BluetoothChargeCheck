@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
-internal record BluetoothDevice1 : IBluetoothDevice
+internal record BluetoothDeviceData : IBluetoothDeviceData
 {
     public required string Name { get; set; }
 

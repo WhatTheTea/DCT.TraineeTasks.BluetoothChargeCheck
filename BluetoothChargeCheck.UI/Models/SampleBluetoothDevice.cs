@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
-internal partial class SampleBluetoothDevice : ObservableObject, IBluetoothDevice
+internal partial class SampleBluetoothDevice : ObservableObject, IBluetoothDeviceData
 {
     [ObservableProperty]
     private double charge;

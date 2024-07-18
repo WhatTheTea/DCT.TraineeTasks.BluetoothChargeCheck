@@ -10,7 +10,7 @@ public class SampleDeviceViewModel : DeviceViewModel
 {
     private CancellationTokenSource source = new();
 
-    public SampleDeviceViewModel(IBluetoothDevice device) : base(device) =>
+    public SampleDeviceViewModel(IBluetoothDeviceData device) : base(device) =>
         this.PropertyChanging += (_, args) =>
         {
             if (args.PropertyName == nameof(this.IsTrayIconVisible))

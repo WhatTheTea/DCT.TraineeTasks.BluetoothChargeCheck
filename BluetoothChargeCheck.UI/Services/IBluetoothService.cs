@@ -10,5 +10,5 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 
 public interface IBluetoothService : INotifyPropertyChanged
 {
-    ObservableCollection<IBluetoothDevice> Devices { get; }
+    ObservableCollection<IBluetoothDeviceData> Devices { get; }
 }

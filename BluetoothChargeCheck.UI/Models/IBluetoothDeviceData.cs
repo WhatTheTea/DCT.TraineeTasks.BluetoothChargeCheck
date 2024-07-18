@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
-public interface IBluetoothDevice
+public interface IBluetoothDeviceData
 {
     string Name { get; }
     string Id { get; }

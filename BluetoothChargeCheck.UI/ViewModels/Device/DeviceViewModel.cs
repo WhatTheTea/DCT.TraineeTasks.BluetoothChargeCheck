@@ -18,7 +18,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     private Color? accent;
 
     [ObservableProperty]
-    private IBluetoothDevice bluetoothDevice;
+    private IBluetoothDeviceData bluetoothDevice;
 
     [ObservableProperty]
     private string glyph = string.Empty;
@@ -26,7 +26,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private bool isTrayIconVisible;
 
-    public DeviceViewModel(IBluetoothDevice device)
+    public DeviceViewModel(IBluetoothDeviceData device)
     {
         this.BluetoothDevice = device;
         // Subscribe to charge updates
@@ -58,7 +58,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
 
     private void OnChargeChanged(object? _, PropertyChangedEventArgs args)
     {
-        if (args.PropertyName == nameof(IBluetoothDevice.Charge))
+        if (args.PropertyName == nameof(IBluetoothDeviceData.Charge))
         {
             this.UpdateGlyph();
         }

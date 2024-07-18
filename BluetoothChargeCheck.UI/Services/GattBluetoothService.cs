@@ -17,7 +17,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
 public partial class GattBluetoothService : ObservableObject, IBluetoothService
 {
     [ObservableProperty]
-    private ObservableCollection<IBluetoothDevice> devices = [];
+    private ObservableCollection<IBluetoothDeviceData> devices = [];
 
     public GattBluetoothService() => App.Current.Dispatcher.BeginInvoke(this.StartDeviceScanning, System.Windows.Threading.DispatcherPriority.Background);
 
