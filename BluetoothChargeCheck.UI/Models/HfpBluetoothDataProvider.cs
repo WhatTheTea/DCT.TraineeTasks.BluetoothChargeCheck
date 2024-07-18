@@ -10,6 +10,13 @@ using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
+/// <summary>
+/// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
+/// </summary>
+/// <remarks>
+/// There was a way to use 32feet for this task, but their implementation opens a new socket. <br/>
+/// This is a problem, because RFCOMM protocol can't handle multiple sockets.
+/// </remarks>
 internal class HfpBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;

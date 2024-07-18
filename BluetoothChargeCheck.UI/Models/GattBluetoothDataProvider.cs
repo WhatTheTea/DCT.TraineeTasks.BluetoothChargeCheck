@@ -9,7 +9,10 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
-
+/// <summary>
+/// Provides bluetooth low energy devices data using 32feet library.
+/// Provider gets connected devices, battery GATT service from them and reads data.
+/// </summary>
 internal class GattBluetoothDataProvider
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
