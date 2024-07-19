@@ -54,10 +54,6 @@ internal class GattBluetoothDataProvider
             var characteristic = await batteryService.GetCharacteristicAsync(characteristicUuid);
             charge = characteristic?.Value[0] ?? 0;
         }
-        else
-        {
-            charge = 0;
-        }
 
         return charge;
     }
