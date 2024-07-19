@@ -23,7 +23,10 @@ public class DeviceCollectionViewModel
 
     public DeviceCollectionViewModel()
     {
-        this.deviceService = new BluetoothService(GattBluetoothDataProvider.FetchDevicesAsync);
+        var deviceFetcherComposite = () => GattBluetoothDataProvider.FetchDevicesAsync()
+            .Concat(HfpBluetoothDataProvider.FetchDevicesAsync());
+
+        this.deviceService = new BluetoothService(deviceFetcherComposite);
 
         App.Current.Dispatcher.BeginInvoke(this.FetchDevices, System.Windows.Threading.DispatcherPriority.Background);
     }

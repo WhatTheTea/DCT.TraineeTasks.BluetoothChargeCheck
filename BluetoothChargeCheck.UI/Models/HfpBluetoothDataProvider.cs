@@ -13,10 +13,6 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
-/// <remarks>
-/// There was a way to use 32feet for this task, but their implementation opens a new socket. <br/>
-/// This is a problem, because RFCOMM protocol can't handle multiple sockets.
-/// </remarks>
 internal class HfpBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
@@ -39,14 +35,14 @@ internal class HfpBluetoothDataProvider
     }
 
     /// <summary>
-    /// Retrieves open socket from Windows Runtime API in order to get streams for reading/writing AT commands. <br/>
+    /// Retrieves service from Windows Runtime API in order to get streams for reading/writing AT commands. <br/>
     /// This method supports HFP only and expects AT+IPHONEACCEV command in order to read charge.
     /// </summary>
     private static async Task<double> GetChargeFor(BluetoothDevice device)
     {
         double charge = 0;
         StreamSocket socket = new();
-        var deviceServices = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
+        var deviceServices = await device.GetRfcommServicesAsync();
         var handsfreeService = deviceServices?.Services
             .FirstOrDefault(x => x.ServiceId.AsShortId() == HandsFreeShortServiceId);
 
