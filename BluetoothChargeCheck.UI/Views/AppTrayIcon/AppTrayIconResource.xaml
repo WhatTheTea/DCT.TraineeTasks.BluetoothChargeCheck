@@ -5,9 +5,8 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:vm="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels"
-                    xmlns:v="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon"
-                    xmlns:font="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts"
+                    xmlns:vm="clr-namespace:DCT.BluetoothChargeCheck.ViewModels;assembly=BluetoothChargeCheck.ViewModels"
+                    xmlns:appTrayViews="clr-namespace:DCT.BluetoothChargeCheck.Views.AppTrayIcon"
                     mc:Ignorable="d">
 
     <ContextMenu x:Shared="False"
@@ -45,7 +44,7 @@
         </tb:TaskbarIcon.IconSource>
 
         <tb:TaskbarIcon.TrayPopup>
-            <v:MainPopup DataContext="{Binding}"/>
+            <appTrayViews:MainPopup DataContext="{Binding}"/>
         </tb:TaskbarIcon.TrayPopup>
 
     </tb:TaskbarIcon>

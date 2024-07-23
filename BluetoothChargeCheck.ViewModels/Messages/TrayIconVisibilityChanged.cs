@@ -4,7 +4,7 @@
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
+using DCT.BluetoothChargeCheck.ViewModels.Device;
 
 namespace DCT.BluetoothChargeCheck.Messages;
 /// <summary>

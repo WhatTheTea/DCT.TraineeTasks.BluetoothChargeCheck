@@ -4,8 +4,6 @@
 
 using System.Windows;
 
-using DCT.BluetoothChargeCheck.Fonts;
-
 using H.NotifyIcon;
 
 using Wpf.Ui.Appearance;
@@ -24,7 +22,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        TryAddIconsFont();
+        //TryAddIconsFont();
 
         SystemThemeWatcher.Watch(null, WindowBackdropType.Auto);
         this.CreateAppTrayIcon();
@@ -32,18 +30,18 @@ public partial class App : Application
 
     /// H.NotifyIcons tries to convert <see cref="System.Windows.Media.FontFamily"/> to <see cref="System.Drawing.FontFamily"/>
     /// by searching for fonts in system. Thus I forced to install font for Win10.
-    private static void TryAddIconsFont()
-    {
-        if (Environment.OSVersion.Platform == PlatformID.Win32NT
-            && Environment.OSVersion.Version.Major < 11)
-        {
-            int result = FontManager.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
-            if (result == 0)
-            {
-                throw new InvalidOperationException("Failed to install Segoe Fluent Icons");
-            }
-        }
-    }
+    //private static void TryAddIconsFont()
+    //{
+    //    if (Environment.OSVersion.Platform == PlatformID.Win32NT
+    //        && Environment.OSVersion.Version.Major < 11)
+    //    {
+    //        int result = FontManager.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
+    //        if (result == 0)
+    //        {
+    //            throw new InvalidOperationException("Failed to install Segoe Fluent Icons");
+    //        }
+    //    }
+    //}
 
     private void CreateAppTrayIcon()
     {

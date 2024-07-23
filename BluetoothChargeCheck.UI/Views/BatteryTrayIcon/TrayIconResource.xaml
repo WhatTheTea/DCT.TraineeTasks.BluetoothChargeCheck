@@ -4,9 +4,8 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:device="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device"
-                    xmlns:batteryTrayIcon="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.BatteryTrayIcon"
-                    xmlns:font="clr-namespace:DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts"
+                    xmlns:device="clr-namespace:DCT.BluetoothChargeCheck.ViewModels.Device;assembly=BluetoothChargeCheck.ViewModels"
+                    xmlns:batteryTrayIcon="clr-namespace:DCT.BluetoothChargeCheck.Views.BatteryTrayIcon"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"

@@ -15,7 +15,7 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// Provides bluetooth low energy devices data using 32feet library.
 /// Provider gets connected devices, battery GATT service from them and reads data.
 /// </summary>
-internal class GattBluetoothDataProvider
+public class GattBluetoothDataProvider
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
 

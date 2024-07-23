@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using DCT.BluetoothChargeCheck.Messages;
 using DCT.BluetoothChargeCheck.Models;
 
-using Wpf.Ui.Appearance;
+//using Wpf.Ui.Appearance;
 
 using Color = System.Windows.Media.Color;
 
@@ -48,11 +48,16 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
             return ChargeLevelGlyphs[index];
         }
     }
-
-    public DeviceViewModel(BluetoothDeviceData device)
+    public DeviceViewModel(BluetoothDeviceData? device = null)
     {
-        this.BluetoothDevice = device;
-        this.Accent = ApplicationAccentColorManager.PrimaryAccent;
+        this.BluetoothDevice = device ?? new()
+        {
+            Id = "ID",
+            Name = "NAME",
+            Charge = 50,
+            Connected = true,
+        };
+        this.Accent = Color.FromRgb(128, 128, 128);
     }
 
     // Guid here is meant for TrayIcon to prevent battery icons replacing eachother
@@ -73,6 +78,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     }
 
     #region IDisposable
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize")]
     public void Dispose()
     {
         this.IsTrayIconVisible = false;

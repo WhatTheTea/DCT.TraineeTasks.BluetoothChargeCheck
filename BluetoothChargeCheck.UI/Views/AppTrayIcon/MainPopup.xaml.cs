@@ -4,7 +4,7 @@
 
 using System.Windows.Controls;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Views.AppTrayIcon;
+namespace DCT.BluetoothChargeCheck.Views.AppTrayIcon;
 
 /// <summary>
 ///     Interaction logic for MainPopup.xaml

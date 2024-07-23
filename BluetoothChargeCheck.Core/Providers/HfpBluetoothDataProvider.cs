@@ -15,7 +15,7 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
-internal class HfpBluetoothDataProvider
+public class HfpBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
     private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);

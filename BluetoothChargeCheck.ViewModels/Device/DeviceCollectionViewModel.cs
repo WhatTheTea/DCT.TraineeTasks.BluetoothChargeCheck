@@ -4,8 +4,9 @@
 
 using System.Collections.ObjectModel;
 
+using DCT.BluetoothChargeCheck.Core.Providers;
+using DCT.BluetoothChargeCheck.Core.Services;
 using DCT.BluetoothChargeCheck.Models;
-using DCT.BluetoothChargeCheck.Services;
 
 namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// <summary>
@@ -58,7 +59,7 @@ public class DeviceCollectionViewModel
             var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
             foreach (var device in devicesToRemove)
             {
-                var viewModelToRemove = viewModels[device.Id];
+                var viewModelToRemove = this.viewModels[device.Id];
                 // Remove taskbar icon
                 viewModelToRemove.Dispose();
                 // Remove device from collections
