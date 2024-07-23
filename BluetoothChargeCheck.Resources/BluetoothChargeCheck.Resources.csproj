@@ -16,18 +16,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="SegoeFluentIcons.ttf">
+	  <Content Include="Fonts\SegoeFluentIcons.ttf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="DeviceInfo.Designer.cs">
+	  <Compile Update="Locales\DeviceInfo.Designer.cs">
 	    <DependentUpon>DeviceInfo.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
-	  <Compile Update="MainPopup.Designer.cs">
+	  <Compile Update="Locales\MainPopup.Designer.cs">
 	    <DependentUpon>MainPopup.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -35,11 +35,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="DeviceInfo.resx">
+	  <EmbeddedResource Update="Locales\DeviceInfo.resx">
 	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="MainPopup.resx">
+	  <EmbeddedResource Update="Locales\MainPopup.resx">
 	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>

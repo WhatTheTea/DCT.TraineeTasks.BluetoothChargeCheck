@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DCT.BluetoothChargeCheck.Resources {
+namespace DCT.BluetoothChargeCheck.Resources.Locales {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DCT.BluetoothChargeCheck.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DeviceInfo {
+    public class MainPopup {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DeviceInfo() {
+        internal MainPopup() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DCT.BluetoothChargeCheck.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.BluetoothChargeCheck.Resources.DeviceInfo", typeof(DeviceInfo).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.BluetoothChargeCheck.Resources.Locales.MainPopup", typeof(MainPopup).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,11 @@ namespace DCT.BluetoothChargeCheck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Charge (%):.
+        ///   Looks up a localized string similar to by Oleksii &quot;WhatTheTea&quot; Silchenko.
         /// </summary>
-        public static string charge {
+        public static string copyright {
             get {
-                return ResourceManager.GetString("charge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Color.
-        /// </summary>
-        public static string color {
-            get {
-                return ResourceManager.GetString("color", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connected.
-        /// </summary>
-        public static string connected {
-            get {
-                return ResourceManager.GetString("connected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show in taskbar.
-        /// </summary>
-        public static string showInTaskbar {
-            get {
-                return ResourceManager.GetString("showInTaskbar", resourceCulture);
+                return ResourceManager.GetString("copyright", resourceCulture);
             }
         }
     }
