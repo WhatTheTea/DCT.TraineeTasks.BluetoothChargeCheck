@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <FontFamily x:Key="FluentIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+                    <FontFamily x:Key="FluentIcons">pack://application:,,,/BluetoothChargeCheck.Resources;Fonts/#Segoe Fluent Icons</FontFamily>
                 </ResourceDictionary>
                 
                 <ui:ThemesDictionary Theme="Dark" />
