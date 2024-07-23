@@ -9,7 +9,6 @@ using CommunityToolkit.Mvvm.Messaging;
 
 using DCT.BluetoothChargeCheck.Messages;
 using DCT.BluetoothChargeCheck.ViewModels.Device;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
 using H.NotifyIcon;
 

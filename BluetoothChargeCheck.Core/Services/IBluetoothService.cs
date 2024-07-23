@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 using DCT.BluetoothChargeCheck.Models;
 
-namespace DCT.BluetoothChargeCheck.Services;
+namespace DCT.BluetoothChargeCheck.Core.Services;
 
 public interface IBluetoothService : INotifyPropertyChanged
 {

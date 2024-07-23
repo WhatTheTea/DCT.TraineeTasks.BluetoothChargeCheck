@@ -12,7 +12,7 @@ using Wpf.Ui.Appearance;
 
 using Color = System.Windows.Media.Color;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
+namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 
 /// <summary>
 /// ViewModel to contain bluetooth device data and provide data needed for tray icon <br/>
@@ -65,7 +65,7 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     // Notify about charge update, if it changed after updating device data
     partial void OnBluetoothDeviceChanged(BluetoothDeviceData? oldValue, BluetoothDeviceData newValue)
     {
-        var isChargeChanged = (oldValue is not null) && newValue.Charge != oldValue.Charge;
+        var isChargeChanged = oldValue is not null && newValue.Charge != oldValue.Charge;
         if (oldValue is null || isChargeChanged)
         {
             this.OnPropertyChanged(nameof(this.Glyph));

@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 
 using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.Services;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
 namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// <summary>

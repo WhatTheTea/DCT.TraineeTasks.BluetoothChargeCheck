@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DCT.BluetoothChargeCheck.Properties {
+namespace DCT.BluetoothChargeCheck.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DCT.BluetoothChargeCheck.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MainPopup {
+    public class DeviceInfo {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MainPopup() {
+        internal DeviceInfo() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DCT.BluetoothChargeCheck.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.BluetoothChargeCheck.Properties.MainPopup", typeof(MainPopup).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.BluetoothChargeCheck.Resources.DeviceInfo", typeof(DeviceInfo).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,38 @@ namespace DCT.BluetoothChargeCheck.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to by Oleksii &quot;WhatTheTea&quot; Silchenko.
+        ///   Looks up a localized string similar to Charge (%):.
         /// </summary>
-        public static string copyright {
+        public static string charge {
             get {
-                return ResourceManager.GetString("copyright", resourceCulture);
+                return ResourceManager.GetString("charge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string color {
+            get {
+                return ResourceManager.GetString("color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string connected {
+            get {
+                return ResourceManager.GetString("connected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in taskbar.
+        /// </summary>
+        public static string showInTaskbar {
+            get {
+                return ResourceManager.GetString("showInTaskbar", resourceCulture);
             }
         }
     }

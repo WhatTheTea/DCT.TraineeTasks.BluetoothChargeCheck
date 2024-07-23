@@ -11,4 +11,38 @@
 		<RootNamespace>DCT.BluetoothChargeCheck.Resources</RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <None Remove="SegoeFluentIcons.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="SegoeFluentIcons.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="DeviceInfo.Designer.cs">
+	    <DependentUpon>DeviceInfo.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="MainPopup.Designer.cs">
+	    <DependentUpon>MainPopup.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="DeviceInfo.resx">
+	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="MainPopup.resx">
+	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

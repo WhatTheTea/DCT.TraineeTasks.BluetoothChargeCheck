@@ -9,7 +9,7 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
 
-namespace DCT.BluetoothChargeCheck.Models;
+namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>

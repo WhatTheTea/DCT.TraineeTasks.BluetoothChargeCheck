@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 using DCT.BluetoothChargeCheck.Models;
 
-namespace DCT.BluetoothChargeCheck.Services;
+namespace DCT.BluetoothChargeCheck.Core.Services;
 
 /// <summary>
 /// Service to fetch bluetooth devices with certain interval. FetchDevices property must be set in order to use service <br/>

@@ -5,7 +5,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace DCT.BluetoothChargeCheck.Models;
+namespace DCT.BluetoothChargeCheck.Helpers;
 internal static class AtStreamHelper
 {
     /// <summary>

@@ -31,40 +31,4 @@
 	  <Folder Include="Messages\" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Content Include="Fonts\SegoeFluentIcons.ttf">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Properties\DeviceInfo.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DeviceInfo.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Properties\MainPopup.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>MainPopup.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Properties\DeviceInfo.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\DeviceInfo.uk-ua.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\MainPopup.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\MainPopup.uk-ua.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
-	</ItemGroup>
-
 </Project>
