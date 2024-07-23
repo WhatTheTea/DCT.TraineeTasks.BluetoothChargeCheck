@@ -8,7 +8,7 @@ using InTheHand.Bluetooth;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
+namespace DCT.BluetoothChargeCheck.Models;
 /// <summary>
 /// Provides bluetooth low energy devices data using 32feet library.
 /// Provider gets connected devices, battery GATT service from them and reads data.

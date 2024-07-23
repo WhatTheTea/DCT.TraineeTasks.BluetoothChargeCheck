@@ -4,9 +4,12 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
+
+using DCT.BluetoothChargeCheck.Messages;
+using DCT.BluetoothChargeCheck.Models;
+
 using Wpf.Ui.Appearance;
+
 using Color = System.Windows.Media.Color;
 
 namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;

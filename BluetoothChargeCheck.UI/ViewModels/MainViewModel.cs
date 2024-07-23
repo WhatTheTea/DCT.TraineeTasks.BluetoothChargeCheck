@@ -3,13 +3,17 @@
 // </copyright>
 
 using System.Windows;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Messages;
+
+using DCT.BluetoothChargeCheck.Messages;
+using DCT.BluetoothChargeCheck.ViewModels.Device;
 using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
+
 using H.NotifyIcon;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels;
+namespace DCT.BluetoothChargeCheck.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {

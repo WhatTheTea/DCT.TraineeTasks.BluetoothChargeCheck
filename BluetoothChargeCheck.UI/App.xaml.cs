@@ -3,7 +3,11 @@
 // </copyright>
 
 using System.Windows;
+
+using DCT.BluetoothChargeCheck.Fonts;
+
 using H.NotifyIcon;
+
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -33,7 +37,7 @@ public partial class App : Application
         if (Environment.OSVersion.Platform == PlatformID.Win32NT
             && Environment.OSVersion.Version.Major < 11)
         {
-            int result = Fonts.FontManager.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
+            int result = FontManager.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
             if (result == 0)
             {
                 throw new InvalidOperationException("Failed to install Segoe Fluent Icons");

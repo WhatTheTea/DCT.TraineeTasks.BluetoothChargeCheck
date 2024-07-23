@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties {
+namespace DCT.BluetoothChargeCheck.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.TraineeTasks.BluetoothChargeCheck.UI.Properties.DeviceInfo", typeof(DeviceInfo).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCT.BluetoothChargeCheck.Properties.DeviceInfo", typeof(DeviceInfo).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

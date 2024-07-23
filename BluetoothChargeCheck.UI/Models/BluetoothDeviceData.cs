@@ -2,7 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
+namespace DCT.BluetoothChargeCheck.Models;
 
 /// <summary>
 /// Data that is needed for an application. 

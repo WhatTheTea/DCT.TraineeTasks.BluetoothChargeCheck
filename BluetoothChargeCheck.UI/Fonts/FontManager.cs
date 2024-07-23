@@ -4,7 +4,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Fonts;
+namespace DCT.BluetoothChargeCheck.Fonts;
 
 /// <summary>
 /// Used to fix missing fonts in OS

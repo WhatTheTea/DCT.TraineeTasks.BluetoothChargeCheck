@@ -4,9 +4,10 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
+using DCT.BluetoothChargeCheck.Models;
+
+namespace DCT.BluetoothChargeCheck.Services;
 
 public interface IBluetoothService : INotifyPropertyChanged
 {

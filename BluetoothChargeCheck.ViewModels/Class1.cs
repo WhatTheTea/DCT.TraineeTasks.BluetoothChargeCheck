@@ -2,7 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-namespace BluetoothChargeCheck.ViewModels;
+namespace DCT.BluetoothChargeCheck.ViewModels;
 
 public class Class1
 {

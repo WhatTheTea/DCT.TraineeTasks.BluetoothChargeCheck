@@ -4,10 +4,11 @@
 
 using System.Collections.ObjectModel;
 
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Models;
-using DCT.TraineeTasks.BluetoothChargeCheck.UI.Services;
+using DCT.BluetoothChargeCheck.Models;
+using DCT.BluetoothChargeCheck.Services;
+using DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.ViewModels.Device;
+namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// <summary>
 /// Class to contain all information about bluetooth devices and its view models<br/>
 /// On instantiating starts fething devices on dispatcher.
@@ -28,7 +29,7 @@ public class DeviceCollectionViewModel
 
         this.deviceService = new BluetoothService(deviceFetcherComposite);
 
-        App.Current.Dispatcher.BeginInvoke(this.FetchDevices, System.Windows.Threading.DispatcherPriority.Background);
+        System.Windows.Application.Current.Dispatcher.BeginInvoke(this.FetchDevices, System.Windows.Threading.DispatcherPriority.Background);
     }
 
     private async Task FetchDevices()
