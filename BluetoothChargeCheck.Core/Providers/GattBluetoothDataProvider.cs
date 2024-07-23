@@ -3,6 +3,8 @@
 // </copyright>
 
 
+using DCT.BluetoothChargeCheck.Models;
+
 using InTheHand.Bluetooth;
 
 using Windows.Devices.Bluetooth;

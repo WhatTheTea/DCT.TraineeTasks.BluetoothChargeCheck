@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 
 namespace DCT.BluetoothChargeCheck.Helpers;
-internal static class AtStreamHelper
+public static class AtStreamHelper
 {
     /// <summary>
     /// Writes a correctly formatted response to the Handsfree device.

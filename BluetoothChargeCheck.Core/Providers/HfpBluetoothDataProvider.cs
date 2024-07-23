@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
-using System.IO;
+
+using DCT.BluetoothChargeCheck.Models;
+using DCT.BluetoothChargeCheck.Helpers;
 
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
