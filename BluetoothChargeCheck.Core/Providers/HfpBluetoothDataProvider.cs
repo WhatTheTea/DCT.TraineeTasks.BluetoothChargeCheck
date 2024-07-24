@@ -45,7 +45,7 @@ public class HfpBluetoothDataProvider
             {
                 Id = bluetoothDevice.DeviceId,
                 Name = bluetoothDevice.Name,
-                Connected = device.IsEnabled,
+                Connected = bluetoothDevice.ConnectionStatus == BluetoothConnectionStatus.Connected,
                 Charge = charge,
             };
 
