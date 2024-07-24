@@ -29,7 +29,7 @@ public class DeviceCollectionViewModel
 
         this.deviceService = new BluetoothService(deviceFetcherComposite);
 
-        System.Windows.Application.Current.Dispatcher.BeginInvoke(this.FetchDevices, System.Windows.Threading.DispatcherPriority.Background);
+        SynchronizationContext.Current?.Post(async state => await this.FetchDevices(), null);
     }
 
     private async Task FetchDevices()
