@@ -61,6 +61,7 @@ public class HfpBluetoothDataProvider
         }
         else
         {
+            // TODO: exception handling
             await socket.ConnectAsync(handsfreeService.ConnectionHostName, handsfreeService.ConnectionServiceName);
 
             using var inputStream = socket.InputStream.AsStreamForRead();
