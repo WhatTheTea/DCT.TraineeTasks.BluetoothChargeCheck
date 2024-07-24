@@ -4,7 +4,7 @@
 
 using System.Windows.Controls;
 
-namespace DCT.TraineeTasks.BluetoothChargeCheck.UI.Views;
+namespace DCT.BluetoothChargeCheck.Views;
 
 /// <summary>
 ///     Interaction logic for DeviceInfoView.xaml
