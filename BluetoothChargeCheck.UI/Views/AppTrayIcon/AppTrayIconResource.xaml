@@ -25,13 +25,18 @@
     <tb:TaskbarIcon x:Key="AppTrayIcon"
                     d:DataContext="{d:DesignInstance vm:MainViewModel}"
                     Visibility="Visible"
-                    Id="{Binding Id}"
                     ContextMenu="{StaticResource AppTrayMenu}"
                     PopupActivation="LeftOrDoubleClick">
 
         <tb:TaskbarIcon.DataContext>
             <vm:MainViewModel/>
         </tb:TaskbarIcon.DataContext>
+
+        <!-- Setting Id binding from attribute leads to 0x0 GUID :V -->
+        <tb:TaskbarIcon.Id>
+            <Binding Path="Id"/>
+        </tb:TaskbarIcon.Id>
+
 
         <!-- Default font size is invalid, 96 looks fine -->
         <tb:TaskbarIcon.IconSource>
