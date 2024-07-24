@@ -24,6 +24,8 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     private readonly Dictionary<Guid, TaskbarIcon> taskbarIcons = [];
 
+    // https://github.com/HavenDV/H.NotifyIcon/issues/103#issuecomment-1705989614
+    // TLDR: GUID-Path pairs of Taskbar Icons are stored in Registry, if executable is moved - TryCreate fails
     public Guid Id { get; } = Guid.NewGuid();
 
     public DeviceCollectionViewModel DevicesViewModel { get; } = new();
