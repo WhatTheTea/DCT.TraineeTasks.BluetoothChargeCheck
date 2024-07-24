@@ -22,7 +22,7 @@ namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// <remarks>
 /// Bluetooth device data meant to be updated externally. 
 /// </remarks>
-public partial class DeviceViewModel : ObservableObject, IDisposable
+public partial class DeviceViewModel : ObservableObject, IViewModelWithIdentity, IDisposable
 {
     [ObservableProperty]
     private Color? accent;
@@ -63,9 +63,9 @@ public partial class DeviceViewModel : ObservableObject, IDisposable
     // Guid here is meant for TrayIcon to prevent battery icons replacing eachother
     public Guid Id { get; } = Guid.NewGuid();
 
-    /// <see cref="TrayIconVisibilityChanged"/>
+    /// <see cref="ToggleTaskbarIconMessage"/>
     partial void OnIsTrayIconVisibleChanged(bool value) =>
-        WeakReferenceMessenger.Default.Send(new TrayIconVisibilityChanged(this));
+        WeakReferenceMessenger.Default.Send(new ToggleTaskbarIconMessage(this));
 
     // Notify about charge update, if it changed after updating device data
     partial void OnBluetoothDeviceChanged(BluetoothDeviceData? oldValue, BluetoothDeviceData newValue)

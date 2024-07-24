@@ -1,4 +1,4 @@
-﻿// <copyright file = "TrayIconVisibilityChanged.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "ToggleTaskbarIconMessage.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
@@ -11,4 +11,4 @@ namespace DCT.BluetoothChargeCheck.Messages;
 /// Message used to indicate main viewmodel about tray icon visibility updates <br/>
 /// That way device viewmodels notify main viewmodel to create new taskbar icon or to dispose existing one
 /// </summary>
-public class TrayIconVisibilityChanged(DeviceViewModel value) : ValueChangedMessage<DeviceViewModel>(value);
+public class ToggleTaskbarIconMessage(DeviceViewModel value) : ValueChangedMessage<DeviceViewModel>(value);

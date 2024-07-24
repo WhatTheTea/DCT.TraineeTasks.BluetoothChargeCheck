@@ -22,35 +22,37 @@
         </MenuItem>
     </ContextMenu>
 
-    <tb:TaskbarIcon x:Key="AppTrayIcon"
-                    d:DataContext="{d:DesignInstance vm:MainViewModel}"
+    <DataTemplate x:Key="AppTrayIcon">
+
+        <tb:TaskbarIcon d:DataContext="{d:DesignInstance vm:MainViewModel}"
                     Visibility="Visible"
                     ContextMenu="{StaticResource AppTrayMenu}"
                     PopupActivation="LeftOrDoubleClick">
 
-        <tb:TaskbarIcon.DataContext>
-            <vm:MainViewModel/>
-        </tb:TaskbarIcon.DataContext>
+            <tb:TaskbarIcon.DataContext>
+                <vm:MainViewModel/>
+            </tb:TaskbarIcon.DataContext>
 
-        <!-- Setting Id binding from attribute leads to 0x0 GUID :V -->
-        <tb:TaskbarIcon.Id>
-            <Binding Path="Id"/>
-        </tb:TaskbarIcon.Id>
+            <!-- Setting Id binding from attribute leads to 0x0 GUID :V -->
+            <tb:TaskbarIcon.Id>
+                <Binding Path="Id"/>
+            </tb:TaskbarIcon.Id>
 
 
-        <!-- Default font size is invalid, 96 looks fine -->
-        <tb:TaskbarIcon.IconSource>
-            <tb:GeneratedIconSource
+            <!-- Default font size is invalid, 96 looks fine -->
+            <tb:TaskbarIcon.IconSource>
+                <tb:GeneratedIconSource
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
                                     Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
                                     Size="128"
                                     Text="&#xEC6C;" />
-        </tb:TaskbarIcon.IconSource>
+            </tb:TaskbarIcon.IconSource>
 
-        <tb:TaskbarIcon.TrayPopup>
-            <appTrayViews:MainPopup DataContext="{Binding}"/>
-        </tb:TaskbarIcon.TrayPopup>
+            <tb:TaskbarIcon.TrayPopup>
+                <appTrayViews:MainPopup DataContext="{Binding}"/>
+            </tb:TaskbarIcon.TrayPopup>
 
-    </tb:TaskbarIcon>
+        </tb:TaskbarIcon>
+    </DataTemplate>
 </ResourceDictionary>

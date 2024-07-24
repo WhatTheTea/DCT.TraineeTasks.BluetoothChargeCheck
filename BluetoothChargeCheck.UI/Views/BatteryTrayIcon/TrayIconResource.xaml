@@ -37,11 +37,11 @@
             Visibility="Visible"
             ContextMenu="{StaticResource BatteryTrayMenu}"
             PopupActivation="LeftClick"
-            Id="{Binding Id}"
+            Id="{Binding Id, Mode=OneWay}"
             d:DataContext="{d:DesignInstance device:DeviceViewModel}">
 
+            <!-- Default font size is invalid, 96 looks fine -->
             <tb:TaskbarIcon.IconSource>
-                <!-- idk why, but 96 it is xD -->
                 <tb:GeneratedIconSource
                                     FontFamily="Segoe Fluent Icons"
                                     FontSize="96"
