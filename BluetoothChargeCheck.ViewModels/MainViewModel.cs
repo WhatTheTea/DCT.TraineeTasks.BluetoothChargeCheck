@@ -2,15 +2,9 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Windows;
-
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 
-using DCT.BluetoothChargeCheck.Messages;
 using DCT.BluetoothChargeCheck.ViewModels.Device;
-
-using H.NotifyIcon;
 
 namespace DCT.BluetoothChargeCheck.ViewModels;
 

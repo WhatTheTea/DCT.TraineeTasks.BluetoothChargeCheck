@@ -2,7 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Diagnostics;
 using System.IO;
 
 namespace DCT.BluetoothChargeCheck.Helpers;
