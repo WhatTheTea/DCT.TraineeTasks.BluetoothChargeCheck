@@ -18,14 +18,14 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 /// </code>
 /// </example>
 /// </summary>
-public partial class BluetoothService(Func<IAsyncEnumerable<BluetoothDeviceData>> deviceFetcher)
+public class BluetoothService(Func<IAsyncEnumerable<BluetoothDeviceData>> deviceFetcher)
 {
     /// <summary>
     /// Function must return fetched list of device data
     /// </summary>
     public Func<IAsyncEnumerable<BluetoothDeviceData>> DeviceFetcher = deviceFetcher;
 
-    public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(10);
+    public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
     public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync() =>
         Observable.Interval(this.UpdateInterval)

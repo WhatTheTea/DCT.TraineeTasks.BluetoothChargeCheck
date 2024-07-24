@@ -5,11 +5,12 @@
 using System.Diagnostics;
 
 using DCT.BluetoothChargeCheck.Models;
-using DCT.BluetoothChargeCheck.Helpers;
+using DCT.BluetoothChargeCheck.Core.Extensions;
 
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
+using System.Runtime.InteropServices;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
 // NOTE: https://stackoverflow.com/questions/17067971/invoking-powershell-cmdlets-from-c-sharp
@@ -28,13 +29,26 @@ public class HfpBluetoothDataProvider
         foreach (var device in devices)
         {
             var bluetoothDevice = await BluetoothDevice.FromIdAsync(device.Id);
+            double charge = 0;
+
+            try
+            {
+                charge = await GetChargeFor(bluetoothDevice);
+            }
+            catch (Exception ex)
+            when (ex is COMException || ex is IOException)
+            {
+                Debug.WriteLine($"Communication went wrong with {device.Name}");
+            }
+
             var bluetoothData = new BluetoothDeviceData()
             {
                 Id = bluetoothDevice.DeviceId,
                 Name = bluetoothDevice.Name,
                 Connected = device.IsEnabled,
-                Charge = await GetChargeFor(bluetoothDevice)
+                Charge = charge,
             };
+
             // NOTE: Maybe extract validation rules
             if (bluetoothData.Charge > 0)
             {
@@ -61,7 +75,6 @@ public class HfpBluetoothDataProvider
         }
         else
         {
-            // TODO: exception handling
             await socket.ConnectAsync(handsfreeService.ConnectionHostName, handsfreeService.ConnectionServiceName);
 
             using var inputStream = socket.InputStream.AsStreamForRead();
@@ -71,7 +84,7 @@ public class HfpBluetoothDataProvider
             bool isChargeReceived = false;
             for (int i = 0; i < 100 && !isChargeReceived; i++)
             {
-                string[] commands = GetCommandsFromStream(inputStream);
+                string[] commands = inputStream.GetAtCommands();
 
                 if (commands.Length > 0)
                 {
@@ -80,26 +93,15 @@ public class HfpBluetoothDataProvider
                         // parse charge if given any, else - send "ok"
                         if (command.StartsWith("AT+IPHONEACCEV"))
                         {
-                            charge = AtStreamHelper.ParseAppleBatteryPercentage(command);
+                            charge = command.ParseAppleBatteryPercentage();
                             isChargeReceived = true;
                         }
 
-                        outputStream.WriteString("OK");
+                        outputStream.WriteAtResponse("OK");
                     }
                 }
             }
         }
         return charge;
-    }
-
-    private static string[] GetCommandsFromStream(Stream inputStream)
-    {
-        var buffer = new byte[1024];
-        var readBytes = inputStream.Read(buffer, 0, 80);
-        var commandsRaw = System.Text.Encoding.ASCII.GetString(buffer, 0, readBytes);
-
-        return commandsRaw.Split('\r')
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .ToArray();
     }
 }

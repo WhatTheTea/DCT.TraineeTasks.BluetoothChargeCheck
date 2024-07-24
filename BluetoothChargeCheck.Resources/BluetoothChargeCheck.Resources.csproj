@@ -12,10 +12,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="SegoeFluentIcons.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Content Include="Fonts\SegoeFluentIcons.ttf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>

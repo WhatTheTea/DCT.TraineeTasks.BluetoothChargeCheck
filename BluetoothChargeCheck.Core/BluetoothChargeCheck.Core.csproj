@@ -19,7 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BluetoothChargeCheck.Helpers\BluetoothChargeCheck.Helpers.csproj" />
 		<ProjectReference Include="..\BluetoothChargeCheck.Models\BluetoothChargeCheck.Models.csproj" />
 	</ItemGroup>
 
