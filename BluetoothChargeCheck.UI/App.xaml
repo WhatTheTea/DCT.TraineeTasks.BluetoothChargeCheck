@@ -13,8 +13,8 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
 
-                <ResourceDictionary Source="/Views/BatteryTrayIcon/TrayIconResource.xaml"/>
-                <ResourceDictionary Source="/Views/AppTrayIcon/AppTrayIconResource.xaml"/>
+                <ResourceDictionary Source="/TaskbarIcons/DeviceIconResource.xaml"/>
+                <ResourceDictionary Source="/TaskbarIcons/AppIconResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

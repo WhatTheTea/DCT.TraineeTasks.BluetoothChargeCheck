@@ -6,7 +6,7 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:vm="clr-namespace:DCT.BluetoothChargeCheck.ViewModels;assembly=BluetoothChargeCheck.ViewModels"
-                    xmlns:appTrayViews="clr-namespace:DCT.BluetoothChargeCheck.Views.AppTrayIcon"
+                    xmlns:popups="clr-namespace:DCT.BluetoothChargeCheck.Popups"
                     mc:Ignorable="d">
 
     <ContextMenu x:Shared="False"
@@ -29,16 +29,6 @@
                     ContextMenu="{StaticResource AppTrayMenu}"
                     PopupActivation="LeftOrDoubleClick">
 
-            <tb:TaskbarIcon.DataContext>
-                <vm:MainViewModel/>
-            </tb:TaskbarIcon.DataContext>
-
-            <!-- Setting Id binding from attribute leads to 0x0 GUID :V -->
-            <tb:TaskbarIcon.Id>
-                <Binding Path="Id"/>
-            </tb:TaskbarIcon.Id>
-
-
             <!-- Default font size is invalid, 96 looks fine -->
             <tb:TaskbarIcon.IconSource>
                 <tb:GeneratedIconSource
@@ -50,7 +40,7 @@
             </tb:TaskbarIcon.IconSource>
 
             <tb:TaskbarIcon.TrayPopup>
-                <appTrayViews:MainPopup DataContext="{Binding}"/>
+                <popups:MainPopup DataContext="{Binding}"/>
             </tb:TaskbarIcon.TrayPopup>
 
         </tb:TaskbarIcon>

@@ -2,7 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-namespace DCT.BluetoothChargeCheck.Views.BatteryTrayIcon;
+namespace DCT.BluetoothChargeCheck.Popups;
 
 /// <summary>
 ///     Interaction logic for DeviceInfoPopup.xaml

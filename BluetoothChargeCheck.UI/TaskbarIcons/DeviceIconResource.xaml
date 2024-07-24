@@ -5,7 +5,7 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:device="clr-namespace:DCT.BluetoothChargeCheck.ViewModels.Device;assembly=BluetoothChargeCheck.ViewModels"
-                    xmlns:batteryTrayIcon="clr-namespace:DCT.BluetoothChargeCheck.Views.BatteryTrayIcon"
+                    xmlns:popups="clr-namespace:DCT.BluetoothChargeCheck.Popups"
                     mc:Ignorable="d">
     <ContextMenu x:Shared="False"
                  x:Key="BatteryTrayMenu"
@@ -37,7 +37,6 @@
             Visibility="Visible"
             ContextMenu="{StaticResource BatteryTrayMenu}"
             PopupActivation="LeftClick"
-            Id="{Binding Id, Mode=OneWay}"
             d:DataContext="{d:DesignInstance device:DeviceViewModel}">
 
             <!-- Default font size is invalid, 96 looks fine -->
@@ -54,7 +53,7 @@
             </tb:TaskbarIcon.IconSource>
 
             <tb:TaskbarIcon.TrayPopup>
-                <batteryTrayIcon:DeviceInfoPopup DataContext="{Binding}"/>
+                <popups:DeviceInfoPopup DataContext="{Binding}"/>
             </tb:TaskbarIcon.TrayPopup>
 
         </tb:TaskbarIcon>

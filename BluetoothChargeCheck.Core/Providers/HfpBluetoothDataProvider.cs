@@ -12,13 +12,15 @@ using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
+// NOTE: https://stackoverflow.com/questions/17067971/invoking-powershell-cmdlets-from-c-sharp
+
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
 public class HfpBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
-    private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
+    private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromPairingState(true);
 
     public static async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
     {
@@ -26,13 +28,18 @@ public class HfpBluetoothDataProvider
         foreach (var device in devices)
         {
             var bluetoothDevice = await BluetoothDevice.FromIdAsync(device.Id);
-            yield return new BluetoothDeviceData()
+            var bluetoothData = new BluetoothDeviceData()
             {
                 Id = bluetoothDevice.DeviceId,
                 Name = bluetoothDevice.Name,
                 Connected = device.IsEnabled,
                 Charge = await GetChargeFor(bluetoothDevice)
             };
+            // NOTE: Maybe extract validation rules
+            if (bluetoothData.Charge > 0)
+            {
+                yield return bluetoothData;
+            }
         }
     }
 
