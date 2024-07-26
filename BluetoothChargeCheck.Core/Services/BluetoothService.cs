@@ -2,8 +2,12 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 
+using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.Core.Services;
@@ -12,26 +16,29 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 /// Service to fetch bluetooth devices with certain interval. FetchDevices property must be set in order to use service <br/>
 /// <example>
 /// For example:
-/// <code>
-/// var dataProvider = GattBluetoothDataProvider.FetchDevicesAsync;
+/// <code><![CDATA[
 /// var service = new BluetoothService(dataProvider);
+///
+/// await foreach (var newDevices in this.deviceService.GetDevicesAsync())
+/// { /* do something */ }
+/// ]]>
 /// </code>
 /// </example>
 /// </summary>
-public class BluetoothService(Func<IAsyncEnumerable<BluetoothDeviceData>> deviceFetcher)
+public class BluetoothService(IBluetoothDataProvider deviceFetcher)
 {
-    /// <summary>
-    /// Function must return fetched list of device data
-    /// </summary>
-    public Func<IAsyncEnumerable<BluetoothDeviceData>> DeviceFetcher = deviceFetcher;
+    public IBluetoothDataProvider dataProvider { get; } = deviceFetcher;
 
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
     public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync() =>
         Observable.Interval(this.UpdateInterval)
-            .Select(x => Observable.FromAsync(
-                () => this.DeviceFetcher().ToArrayAsync()
-                                          .AsTask()))
+            .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediatly
+            .Select(x => this.dataProvider
+                .FetchDevicesAsync()
+                .ToArrayAsync()
+                .AsTask()
+                .ToObservable())
             .Concat()
             .ToAsyncEnumerable();
 }
