@@ -24,13 +24,14 @@ public class DeviceCollectionViewModel
 
     public DeviceCollectionViewModel()
     {
-        var leDeviceFetcher = new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy).FetchDevicesAsync;
-        var classicDeviceFetcher = new PowershellBluetoothDataProvider(BluetoothKind.Classic).FetchDevicesAsync;
-        var deviceFetcherComposite = () => leDeviceFetcher()
-        .Concat(classicDeviceFetcher())
-        .Concat(HfpBluetoothDataProvider.FetchDevicesAsync());
+        IBluetoothDataProvider[] providers = [
+            new HfpBluetoothDataProvider(),
+            new PowershellBluetoothDataProvider(BluetoothKind.Classic),
+            new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy),
+            ];
+        var composite = new CompositeBluetoothDataProvider(providers);
 
-        this.deviceService = new BluetoothService(deviceFetcherComposite) { UpdateInterval = TimeSpan.FromSeconds(30)};
+        this.deviceService = new BluetoothService(composite) { UpdateInterval = TimeSpan.FromSeconds(30)};
 
         SynchronizationContext.Current?.Post(async state => await this.FetchDevices(), null);
     }
