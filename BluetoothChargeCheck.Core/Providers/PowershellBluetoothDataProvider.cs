@@ -26,9 +26,9 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
     /// <summary>
     /// Should be formatted to use <see cref="BluetoothClassicHardwareId"/> or <see cref="BluetoothLeHardwareId"/>
     /// </summary>
-    private const string GetDeviceDataScriptTemplate =
+    private string DeviceDataScript =>
         "Get-PnpDevice -Class Bluetooth " +
-        "| where HardwareID -like '{0}\\Dev' " + // Bluetooth tech
+        @$"| where HardwareID -like '{this.GetKindAsString()}\Dev*' " + // Bluetooth tech
         "| Get-PnpDeviceProperty -KeyName " +
                 "DEVPKEY_Device_InstanceId, " +                  // Id
                 "DEVPKEY_Device_FriendlyName, " +                // Name
@@ -36,14 +36,8 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
                 "'{83DA6326-97A6-4088-9453-A1923F573B29} 15' " + // Connected
         "| group -Property InstanceId";
 
-    
+
     private InitialSessionState sessionState = InitialSessionState.CreateDefault();
-    private string DataScript => this.BluetoothKind switch
-    {
-        BluetoothKind.Classic => string.Format(GetDeviceDataScriptTemplate, BluetoothClassicHardwareId),
-        BluetoothKind.LowEnergy => string.Format(GetDeviceDataScriptTemplate, BluetoothLeHardwareId),
-        _ => throw new ArgumentOutOfRangeException(),
-    };
 
     public BluetoothKind BluetoothKind { get; set; }
 
@@ -58,18 +52,30 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
     public async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
     {
         using var shell = PowerShell.Create(this.sessionState);
-        shell.AddScript(this.DataScript);
+        shell.AddScript(this.DeviceDataScript);
 
-        foreach (PSObject? obj in await shell.InvokeAsync())
+        var objects = await shell.InvokeAsync();
+
+        if (shell.HadErrors)
+        {
+            throw new InvalidPowerShellStateException("Script had errors:", shell.Streams.Error.FirstOrDefault()?.Exception);
+        }
+
+        foreach (PSObject? obj in objects)
         {
             var group = obj?.Members["Group"]?.Value as Collection<PSObject?> ?? [];
-            yield return new BluetoothDeviceData()
+            var data = new BluetoothDeviceData()
             {
                 Id = GetPowershellValue(group[0]) as string ?? string.Empty,
                 Name = GetPowershellValue(group[1]) as string ?? string.Empty,
-                Charge = GetPowershellValue(group[2]) as int? ?? 0,
+                Charge = GetPowershellValue(group[2]) as byte? ?? 0,
                 Connected = GetPowershellValue(group[3]) as bool? ?? false,
             };
+            // TODO: Move to validation
+            if (data.Connected && data.Charge > 0)
+            {
+                yield return data;
+            }
         }
     }
 
@@ -79,6 +85,13 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
             .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
+
+    private string GetKindAsString() => this.BluetoothKind switch
+    {
+        BluetoothKind.Classic => BluetoothClassicHardwareId,
+        BluetoothKind.LowEnergy => BluetoothLeHardwareId,
+        _ => throw new ArgumentOutOfRangeException(),
+    };
 
     private static object? GetPowershellValue(PSObject? value) =>
         value?.Members["Data"]?.Value;
