@@ -45,6 +45,11 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
     {
         this.sessionState.ExecutionPolicy = Microsoft.PowerShell.ExecutionPolicy.Bypass;
     }
+
+    public PowershellBluetoothDataProvider(BluetoothKind bluetoothKind) : this()
+    {
+        this.BluetoothKind = bluetoothKind;
+    }
     /// <summary>
     /// Starts shell script to return data about bluetooth devices <br/>
     /// Method fetches Bluetooth Classic devices by default

@@ -24,8 +24,8 @@ public class DeviceCollectionViewModel
 
     public DeviceCollectionViewModel()
     {
-        var leDeviceFetcher = new PowershellBluetoothDataProvider() { BluetoothKind = BluetoothKind.LowEnergy }.FetchDevicesAsync;
-        var classicDeviceFetcher = new PowershellBluetoothDataProvider() { BluetoothKind = BluetoothKind.Classic }.FetchDevicesAsync;
+        var leDeviceFetcher = new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy).FetchDevicesAsync;
+        var classicDeviceFetcher = new PowershellBluetoothDataProvider(BluetoothKind.Classic).FetchDevicesAsync;
         var deviceFetcherComposite = () => leDeviceFetcher()
         .Concat(classicDeviceFetcher())
         .Concat(HfpBluetoothDataProvider.FetchDevicesAsync());
