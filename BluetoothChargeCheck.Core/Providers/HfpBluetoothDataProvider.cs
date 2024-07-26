@@ -18,12 +18,12 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
-public class HfpBluetoothDataProvider
+public class HfpBluetoothDataProvider : IBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
     private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromPairingState(true);
 
-    public static async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
+    private static async IAsyncEnumerable<BluetoothDeviceData> fetchDevicesAsync()
     {
         var devices = await DeviceInformation.FindAllAsync(ConnectedDeviceSelector);
         foreach (var device in devices)
@@ -104,4 +104,11 @@ public class HfpBluetoothDataProvider
         }
         return charge;
     }
+
+    public IEnumerable<BluetoothDeviceData> FetchDevices() =>
+        fetchDevicesAsync().ToArrayAsync()
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
+    public IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync() => fetchDevicesAsync();
 }
