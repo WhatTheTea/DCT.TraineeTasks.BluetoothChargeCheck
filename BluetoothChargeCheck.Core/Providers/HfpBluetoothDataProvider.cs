@@ -3,27 +3,25 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
-using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.Core.Extensions;
+using DCT.BluetoothChargeCheck.Models;
 
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
-using System.Runtime.InteropServices;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
-// NOTE: https://stackoverflow.com/questions/17067971/invoking-powershell-cmdlets-from-c-sharp
-
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
-public class HfpBluetoothDataProvider
+public readonly struct HfpBluetoothDataProvider : IBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
     private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromPairingState(true);
 
-    public static async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
+    private static async IAsyncEnumerable<BluetoothDeviceData> fetchDevicesAsync()
     {
         var devices = await DeviceInformation.FindAllAsync(ConnectedDeviceSelector);
         foreach (var device in devices)
@@ -36,20 +34,19 @@ public class HfpBluetoothDataProvider
                 charge = await GetChargeFor(bluetoothDevice);
             }
             catch (Exception ex)
-            when (ex is COMException || ex is IOException)
+            when (ex is COMException or IOException)
             {
                 Debug.WriteLine($"Communication went wrong with {device.Name}");
             }
 
-            var bluetoothData = new BluetoothDeviceData()
+            var bluetoothData = new BluetoothDeviceData
             {
                 Id = bluetoothDevice.DeviceId,
                 Name = bluetoothDevice.Name,
                 Connected = bluetoothDevice.ConnectionStatus == BluetoothConnectionStatus.Connected,
-                Charge = charge,
+                Charge = charge
             };
 
-            // NOTE: Maybe extract validation rules
             if (bluetoothData.Charge > 0)
             {
                 yield return bluetoothData;
@@ -77,8 +74,8 @@ public class HfpBluetoothDataProvider
         {
             await socket.ConnectAsync(handsfreeService.ConnectionHostName, handsfreeService.ConnectionServiceName);
 
-            using var inputStream = socket.InputStream.AsStreamForRead();
-            using var outputStream = socket.OutputStream.AsStreamForWrite();
+            await using var inputStream = socket.InputStream.AsStreamForRead();
+            await using var outputStream = socket.OutputStream.AsStreamForWrite();
 
             // data may not present yet - retry until it is present
             bool isChargeReceived = false;
@@ -104,4 +101,11 @@ public class HfpBluetoothDataProvider
         }
         return charge;
     }
+
+    public IEnumerable<BluetoothDeviceData> FetchDevices() =>
+        fetchDevicesAsync().ToArrayAsync()
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
+    public IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync() => fetchDevicesAsync();
 }

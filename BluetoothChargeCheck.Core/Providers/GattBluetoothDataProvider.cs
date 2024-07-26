@@ -2,7 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-
 using DCT.BluetoothChargeCheck.Models;
 
 using InTheHand.Bluetooth;
@@ -15,11 +14,11 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// Provides bluetooth low energy devices data using 32feet library.
 /// Provider gets connected devices, battery GATT service from them and reads data.
 /// </summary>
-public class GattBluetoothDataProvider
+public readonly struct GattBluetoothDataProvider : IBluetoothDataProvider
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
 
-    public static async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
+    private static async IAsyncEnumerable<BluetoothDeviceData> fetchDevicesAsync()
     {
         var foundDevices = await DeviceInformation.FindAllAsync(ConnectedDeviceSelector);
         // Transform found device information to IBluetoothDevice
@@ -36,7 +35,7 @@ public class GattBluetoothDataProvider
     /// <summary>
     /// Converts windows bluetooth LE device to <see cref="BluetoothDeviceData"/> and tries to retrieve charge status from GATT server.
     /// </summary>
-    private static async Task<BluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new BluetoothDeviceData()
+    private static async Task<BluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new()
     {
         Name = device.Name,
         Id = device.DeviceId,
@@ -59,4 +58,11 @@ public class GattBluetoothDataProvider
 
         return charge;
     }
+
+    public IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync() => fetchDevicesAsync();
+    public IEnumerable<BluetoothDeviceData> FetchDevices() =>
+        fetchDevicesAsync().ToArrayAsync()
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
 }

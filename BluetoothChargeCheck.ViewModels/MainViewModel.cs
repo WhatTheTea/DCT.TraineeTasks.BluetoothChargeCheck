@@ -15,9 +15,4 @@ public partial class MainViewModel : ObservableObject, IViewModelWithIdentity
     public Guid Id { get; } = Guid.NewGuid();
 
     public DeviceCollectionViewModel DevicesViewModel { get; } = new();
-
-    public MainViewModel()
-    {
-        
-    }
 }

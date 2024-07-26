@@ -4,9 +4,8 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-
-using DCT.BluetoothChargeCheck.Messages;
 using DCT.BluetoothChargeCheck.Models;
+using DCT.BluetoothChargeCheck.ViewModels.Messages;
 
 //using Wpf.Ui.Appearance;
 
@@ -20,7 +19,7 @@ namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// </summary>
 ///
 /// <remarks>
-/// Bluetooth device data meant to be updated externally. 
+/// Bluetooth device data meant to be updated externally.
 /// </remarks>
 public partial class DeviceViewModel : ObservableObject, IViewModelWithIdentity, IDisposable
 {
@@ -50,12 +49,12 @@ public partial class DeviceViewModel : ObservableObject, IViewModelWithIdentity,
     }
     public DeviceViewModel(BluetoothDeviceData? device = null)
     {
-        this.BluetoothDevice = device ?? new()
+        this.BluetoothDevice = device ?? new BluetoothDeviceData
         {
             Id = "ID",
             Name = "NAME",
             Charge = 50,
-            Connected = true,
+            Connected = true
         };
         this.Accent = Color.FromRgb(128, 128, 128);
     }

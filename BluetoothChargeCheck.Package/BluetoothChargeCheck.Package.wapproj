@@ -63,7 +63,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
-    <EntryPointProjectUniqueName>..\BluetoothChargeCheck.UI\BluetoothChargeCheck.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\BluetoothChargeCheck\BluetoothChargeCheck.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <AppxBundle>Always</AppxBundle>
@@ -115,6 +115,6 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BluetoothChargeCheck.UI\BluetoothChargeCheck.csproj" />
+    <ProjectReference Include="..\BluetoothChargeCheck\BluetoothChargeCheck.csproj" />
   </ItemGroup>
 </Project>

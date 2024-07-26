@@ -5,6 +5,9 @@
 using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
+/// <summary>
+/// Fetches devices and returns <see cref="BluetoothDeviceData"/> one by one asyncronously or in blocking manner
+/// </summary>
 public interface IBluetoothDataProvider
 {
     IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync();
