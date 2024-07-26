@@ -2,11 +2,11 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using DCT.BluetoothChargeCheck.Models;
-
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+
+using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
 
@@ -37,7 +37,7 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
         "| group -Property InstanceId";
 
 
-    private InitialSessionState sessionState = InitialSessionState.CreateDefault();
+    private readonly InitialSessionState sessionState = InitialSessionState.CreateDefault();
 
     public BluetoothKind BluetoothKind { get; set; }
 
@@ -69,12 +69,12 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
         foreach (PSObject? obj in objects)
         {
             var group = obj?.Members["Group"]?.Value as Collection<PSObject?> ?? [];
-            var data = new BluetoothDeviceData()
+            var data = new BluetoothDeviceData
             {
                 Id = GetPowershellValue(group[0]) as string ?? string.Empty,
                 Name = GetPowershellValue(group[1]) as string ?? string.Empty,
                 Charge = GetPowershellValue(group[2]) as byte? ?? 0,
-                Connected = GetPowershellValue(group[3]) as bool? ?? false,
+                Connected = GetPowershellValue(group[3]) as bool? ?? false
             };
             // TODO: Move to validation
             if (data.Connected && data.Charge > 0)
@@ -95,7 +95,7 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
     {
         BluetoothKind.Classic => BluetoothClassicHardwareId,
         BluetoothKind.LowEnergy => BluetoothLeHardwareId,
-        _ => throw new ArgumentOutOfRangeException(),
+        _ => throw new ArgumentOutOfRangeException()
     };
 
     private static object? GetPowershellValue(PSObject? value) =>

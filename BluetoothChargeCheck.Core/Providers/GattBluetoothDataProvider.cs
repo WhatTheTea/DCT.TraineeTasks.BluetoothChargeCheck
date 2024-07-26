@@ -2,7 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-
 using DCT.BluetoothChargeCheck.Models;
 
 using InTheHand.Bluetooth;
@@ -15,7 +14,7 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// Provides bluetooth low energy devices data using 32feet library.
 /// Provider gets connected devices, battery GATT service from them and reads data.
 /// </summary>
-public class GattBluetoothDataProvider : IBluetoothDataProvider
+public readonly struct GattBluetoothDataProvider : IBluetoothDataProvider
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
 
@@ -36,7 +35,7 @@ public class GattBluetoothDataProvider : IBluetoothDataProvider
     /// <summary>
     /// Converts windows bluetooth LE device to <see cref="BluetoothDeviceData"/> and tries to retrieve charge status from GATT server.
     /// </summary>
-    private static async Task<BluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new BluetoothDeviceData()
+    private static async Task<BluetoothDeviceData> ToBluetoothDevice(BluetoothLEDevice device) => new()
     {
         Name = device.Name,
         Id = device.DeviceId,

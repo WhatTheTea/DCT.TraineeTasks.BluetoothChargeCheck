@@ -43,7 +43,7 @@ public partial class App : Application
         base.OnExit(e);
     }
 
-    void OnToggleTaskbarIconMessage(object recipient,  ToggleTaskbarIconMessage message)
+    void OnToggleTaskbarIconMessage(object recipient, ToggleTaskbarIconMessage message)
     {
         var deviceViewModel = message.Value;
 

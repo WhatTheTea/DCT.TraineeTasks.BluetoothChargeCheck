@@ -27,13 +27,13 @@ public class DeviceCollectionViewModel
         IBluetoothDataProvider[] providers = [
             new HfpBluetoothDataProvider(),
             new PowershellBluetoothDataProvider(BluetoothKind.Classic),
-            new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy),
-            ];
+            new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy)
+        ];
         var composite = new CompositeBluetoothDataProvider(providers);
 
-        this.deviceService = new BluetoothService(composite) { UpdateInterval = TimeSpan.FromSeconds(30)};
+        this.deviceService = new BluetoothService(composite) { UpdateInterval = TimeSpan.FromSeconds(30) };
 
-        SynchronizationContext.Current?.Post(async state => await this.FetchDevices(), null);
+        SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
     }
 
     private async Task FetchDevices()

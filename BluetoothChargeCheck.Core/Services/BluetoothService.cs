@@ -2,8 +2,6 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
@@ -27,14 +25,14 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 /// </summary>
 public class BluetoothService(IBluetoothDataProvider deviceFetcher)
 {
-    public IBluetoothDataProvider dataProvider { get; } = deviceFetcher;
+    private IBluetoothDataProvider DataProvider { get; } = deviceFetcher;
 
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
     public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync() =>
         Observable.Interval(this.UpdateInterval)
             .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediatly
-            .Select(x => this.dataProvider
+            .Select(_ => this.DataProvider
                 .FetchDevicesAsync()
                 .ToArrayAsync()
                 .AsTask()

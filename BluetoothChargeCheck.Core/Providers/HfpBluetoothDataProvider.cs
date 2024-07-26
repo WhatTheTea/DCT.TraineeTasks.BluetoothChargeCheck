@@ -3,22 +3,20 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
-using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.Core.Extensions;
+using DCT.BluetoothChargeCheck.Models;
 
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 using Windows.Networking.Sockets;
-using System.Runtime.InteropServices;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
-// NOTE: https://stackoverflow.com/questions/17067971/invoking-powershell-cmdlets-from-c-sharp
-
 /// <summary>
 /// Provides bluetooth handsfree device data using RFCOMM and AT commands by retrieving open sockets in Windows.
 /// </summary>
-public class HfpBluetoothDataProvider : IBluetoothDataProvider
+public readonly struct HfpBluetoothDataProvider : IBluetoothDataProvider
 {
     private const int HandsFreeShortServiceId = 0x111e;
     private static readonly string ConnectedDeviceSelector = BluetoothDevice.GetDeviceSelectorFromPairingState(true);
@@ -36,20 +34,19 @@ public class HfpBluetoothDataProvider : IBluetoothDataProvider
                 charge = await GetChargeFor(bluetoothDevice);
             }
             catch (Exception ex)
-            when (ex is COMException || ex is IOException)
+            when (ex is COMException or IOException)
             {
                 Debug.WriteLine($"Communication went wrong with {device.Name}");
             }
 
-            var bluetoothData = new BluetoothDeviceData()
+            var bluetoothData = new BluetoothDeviceData
             {
                 Id = bluetoothDevice.DeviceId,
                 Name = bluetoothDevice.Name,
                 Connected = bluetoothDevice.ConnectionStatus == BluetoothConnectionStatus.Connected,
-                Charge = charge,
+                Charge = charge
             };
 
-            // NOTE: Maybe extract validation rules
             if (bluetoothData.Charge > 0)
             {
                 yield return bluetoothData;
@@ -77,8 +74,8 @@ public class HfpBluetoothDataProvider : IBluetoothDataProvider
         {
             await socket.ConnectAsync(handsfreeService.ConnectionHostName, handsfreeService.ConnectionServiceName);
 
-            using var inputStream = socket.InputStream.AsStreamForRead();
-            using var outputStream = socket.OutputStream.AsStreamForWrite();
+            await using var inputStream = socket.InputStream.AsStreamForRead();
+            await using var outputStream = socket.OutputStream.AsStreamForWrite();
 
             // data may not present yet - retry until it is present
             bool isChargeReceived = false;

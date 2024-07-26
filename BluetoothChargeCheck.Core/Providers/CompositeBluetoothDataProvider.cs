@@ -1,22 +1,19 @@
-﻿// <copyright file = "BluetoothDataProviderComposite.cs" company = "Digital Cloud Technologies">
+﻿// <copyright file = "CompositeBluetoothDataProvider.cs" company = "Digital Cloud Technologies">
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;
+/// <summary>
+/// Class to use several providers simultaneously
+/// </summary>
 public class CompositeBluetoothDataProvider(IEnumerable<IBluetoothDataProvider> dataProviders) : IBluetoothDataProvider
 {
     public IEnumerable<IBluetoothDataProvider> DataProviders { get; set; } = dataProviders;
 
     public IEnumerable<BluetoothDeviceData> FetchDevices() =>
-        FetchDevicesAsync().ToArrayAsync()
+        this.FetchDevicesAsync().ToArrayAsync()
             .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
