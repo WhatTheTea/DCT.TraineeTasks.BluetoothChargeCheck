@@ -6,7 +6,7 @@ using System.Windows;
 
 using CommunityToolkit.Mvvm.Messaging;
 
-using DCT.BluetoothChargeCheck.Messages;
+using DCT.BluetoothChargeCheck.ViewModels.Messages;
 using DCT.BluetoothChargeCheck.ViewModels;
 
 using Wpf.Ui.Appearance;
