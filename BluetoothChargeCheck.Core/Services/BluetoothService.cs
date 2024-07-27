@@ -12,7 +12,8 @@ using DCT.BluetoothChargeCheck.Models;
 namespace DCT.BluetoothChargeCheck.Core.Services;
 
 /// <summary>
-/// Service to fetch bluetooth devices with certain interval. FetchDevices property must be set in order to use service <br/>
+/// Service to fetch bluetooth devices with certain interval. <see cref="DataProvider"/> property must be set in order to use service <br/>
+/// Update interval of 20 seconds is default.
 /// <example>
 /// For example:
 /// <code><![CDATA[
@@ -30,9 +31,13 @@ public class BluetoothService(IBluetoothDataProvider deviceFetcher)
 
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
+    /// <summary>
+    /// Returns collections of device data on specified interval.<br/>
+    /// Runs indefinitely until stopped, can be supplied with scheduler.
+    /// </summary>
     public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync(IScheduler? scheduler = null) =>
         Observable.Interval(this.UpdateInterval, scheduler ?? Scheduler.Default)
-            .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediatly
+            .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediately
             .Select(_ => this.DataProvider
                 .FetchDevicesAsync()
                 .ToArrayAsync()
