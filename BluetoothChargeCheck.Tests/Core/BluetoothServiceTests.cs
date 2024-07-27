@@ -16,7 +16,7 @@ using FluentAssertions;
 
 namespace DCT.BluetoothChargeCheck.Tests.Core;
 
-public class BluetoothServiceTests
+public class BluetoothServiceTests : IDisposable
 {
     private const int DeviceDataCount = 5;
     private BluetoothService BluetoothService { get; }
@@ -42,9 +42,9 @@ public class BluetoothServiceTests
             .ToObservable()
             .ObserveOn(this.Scheduler)
             .Subscribe(x => data = x.ToArray());
-        this.Scheduler.Start();
-        subscription.Dispose();
 
+        this.Scheduler.Schedule(subscription.Dispose);
+        this.Scheduler.Start();
         data.Should().HaveCount(DeviceDataCount);
     }
 
@@ -63,4 +63,6 @@ public class BluetoothServiceTests
 
         observableCount.Should().Be(2);
     }
+
+    public void Dispose() => this.Scheduler.Stop();
 }
