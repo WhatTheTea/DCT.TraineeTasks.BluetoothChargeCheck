@@ -38,7 +38,7 @@ public class BluetoothServiceTests
     {
         var data = Array.Empty<BluetoothDeviceData>();
 
-        var subscription = this.BluetoothService.GetDevicesAsync()
+        var subscription = this.BluetoothService.GetDevicesAsync(this.Scheduler)
             .ToObservable()
             .ObserveOn(this.Scheduler)
             .Subscribe(x => data = x.ToArray());

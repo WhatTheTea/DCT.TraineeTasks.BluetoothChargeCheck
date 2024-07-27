@@ -4,10 +4,9 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+
 using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.ViewModels.Messages;
-
-//using Wpf.Ui.Appearance;
 
 using Color = System.Windows.Media.Color;
 
