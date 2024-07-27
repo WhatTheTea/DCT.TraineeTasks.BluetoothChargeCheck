@@ -2,6 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
@@ -29,8 +30,8 @@ public class BluetoothService(IBluetoothDataProvider deviceFetcher)
 
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
-    public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync() =>
-        Observable.Interval(this.UpdateInterval)
+    public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync(IScheduler? scheduler = null) =>
+        Observable.Interval(this.UpdateInterval, scheduler ?? Scheduler.Default)
             .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediatly
             .Select(_ => this.DataProvider
                 .FetchDevicesAsync()

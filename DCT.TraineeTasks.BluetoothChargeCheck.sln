@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothChargeCheck.Resour
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothChargeCheck.Core", "BluetoothChargeCheck.Core\BluetoothChargeCheck.Core.csproj", "{7AFA07E0-9D11-41AC-B061-0E20180713A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothChargeCheck.Tests", "BluetoothChargeCheck.Tests\BluetoothChargeCheck.Tests.csproj", "{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +166,26 @@ Global
 		{7AFA07E0-9D11-41AC-B061-0E20180713A1}.Release|x64.Build.0 = Release|Any CPU
 		{7AFA07E0-9D11-41AC-B061-0E20180713A1}.Release|x86.ActiveCfg = Release|Any CPU
 		{7AFA07E0-9D11-41AC-B061-0E20180713A1}.Release|x86.Build.0 = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|x64.Build.0 = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|ARM.Build.0 = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|ARM64.Build.0 = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|x64.Build.0 = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
