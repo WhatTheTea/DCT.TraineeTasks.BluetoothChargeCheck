@@ -11,6 +11,7 @@ using DCT.BluetoothChargeCheck.ViewModels;
 
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using DCT.BluetoothChargeCheck.TaskbarIcons;
 
 namespace DCT.BluetoothChargeCheck;
 
