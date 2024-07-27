@@ -4,12 +4,11 @@
 
 using System.Diagnostics;
 using System.Windows;
-
 using DCT.BluetoothChargeCheck.ViewModels;
 
 using H.NotifyIcon;
 
-namespace DCT.BluetoothChargeCheck;
+namespace DCT.BluetoothChargeCheck.TaskbarIcons;
 
 /// <summary>
 /// Class to contain and manage lifetime of taskbar icons
