@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file = "BluetoothServiceTests.cs" company = "Digital Cloud Technologies">
+// Copyright (c) Digital Cloud Technologies.All rights reserved.
+// </copyright>
 
-using Moq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Core.Services;
 using DCT.BluetoothChargeCheck.Models;
-using System.Reactive.Linq;
-using System.Reactive.Concurrency;
-using Microsoft.Reactive.Testing;
+
 using FluentAssertions;
+
+using Microsoft.Reactive.Testing;
+
+using Moq;
 
 namespace DCT.BluetoothChargeCheck.Tests.Core;
 
@@ -60,7 +61,7 @@ public class BluetoothServiceTests : IDisposable
     public void ServiceFiresOnSpecifiedInterval()
     {
         int observableCount = 0;
- 
+
         var subscription = this.BluetoothService.GetDevicesObservable(TimeSpan.FromSeconds(2), this.Scheduler)
             .Subscribe(x => observableCount++);
 
@@ -71,7 +72,7 @@ public class BluetoothServiceTests : IDisposable
     }
 
     [Theory]
-    [InlineData("",null, null, null)]
+    [InlineData("", null, null, null)]
     [InlineData(null, "", null, null)]
     [InlineData(null, null, -1.0, null)]
     [InlineData(null, null, 101.0, null)]

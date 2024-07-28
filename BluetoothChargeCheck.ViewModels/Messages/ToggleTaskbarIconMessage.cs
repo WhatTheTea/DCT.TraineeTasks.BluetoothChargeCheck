@@ -3,6 +3,7 @@
 // </copyright>
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
+
 using DCT.BluetoothChargeCheck.ViewModels.Device;
 
 namespace DCT.BluetoothChargeCheck.ViewModels.Messages;

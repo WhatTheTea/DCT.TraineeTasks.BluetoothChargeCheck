@@ -4,6 +4,7 @@
 
 using System.Diagnostics;
 using System.Windows;
+
 using DCT.BluetoothChargeCheck.ViewModels;
 
 using H.NotifyIcon;

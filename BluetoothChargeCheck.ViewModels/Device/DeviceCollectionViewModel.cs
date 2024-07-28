@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
 using DCT.BluetoothChargeCheck.Core.Providers;
@@ -46,35 +45,35 @@ public class DeviceCollectionViewModel
         //// never ends, async enumerable returns new lists of devices in specified interval
         //await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
         //{
-            // Update or add devices
-            foreach (var device in newDevices)
+        // Update or add devices
+        foreach (var device in newDevices)
+        {
+            if (this.viewModels.TryGetValue(device.Id, out var viewModel))
             {
-                if (this.viewModels.TryGetValue(device.Id, out var viewModel))
+                if (viewModel.BluetoothDevice != device)
                 {
-                    if (viewModel.BluetoothDevice != device)
-                    {
-                        viewModel.BluetoothDevice = device;
-                    }
-                }
-                else
-                {
-                    var newViewModel = new DeviceViewModel(device);
-                    this.Devices.Add(newViewModel);
-                    this.viewModels.Add(device.Id, newViewModel);
+                    viewModel.BluetoothDevice = device;
                 }
             }
+            else
+            {
+                var newViewModel = new DeviceViewModel(device);
+                this.Devices.Add(newViewModel);
+                this.viewModels.Add(device.Id, newViewModel);
+            }
+        }
 
-            // Remove disconnected
-            var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
-            foreach (var device in devicesToRemove)
-            {
-                var viewModelToRemove = this.viewModels[device.Id];
-                // Remove taskbar icon
-                viewModelToRemove.Dispose();
-                // Remove device from collections
-                this.Devices.Remove(viewModelToRemove);
-                this.viewModels.Remove(device.Id);
-            }
+        // Remove disconnected
+        var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
+        foreach (var device in devicesToRemove)
+        {
+            var viewModelToRemove = this.viewModels[device.Id];
+            // Remove taskbar icon
+            viewModelToRemove.Dispose();
+            // Remove device from collections
+            this.Devices.Remove(viewModelToRemove);
+            this.viewModels.Remove(device.Id);
+        }
         //}
         //// unreachable!
     }

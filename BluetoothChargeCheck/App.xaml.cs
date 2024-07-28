@@ -6,12 +6,12 @@ using System.Windows;
 
 using CommunityToolkit.Mvvm.Messaging;
 
-using DCT.BluetoothChargeCheck.ViewModels.Messages;
+using DCT.BluetoothChargeCheck.TaskbarIcons;
 using DCT.BluetoothChargeCheck.ViewModels;
+using DCT.BluetoothChargeCheck.ViewModels.Messages;
 
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using DCT.BluetoothChargeCheck.TaskbarIcons;
 
 namespace DCT.BluetoothChargeCheck;
 
