@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothChargeCheck.Core",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothChargeCheck.Tests", "BluetoothChargeCheck.Tests\BluetoothChargeCheck.Tests.csproj", "{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothChargeCheck.Validation", "BluetoothChargeCheck.Validation\BluetoothChargeCheck.Validation.csproj", "{482EC0A2-CE38-466B-ADA9-499691A5DEFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -246,6 +248,36 @@ Global
 		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.TestWithoutPackage|x64.Build.0 = Debug|Any CPU
 		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.TestWithoutPackage|x86.ActiveCfg = Debug|Any CPU
 		{5B2D12D4-02B4-4499-A775-0DC21E7F6CF8}.TestWithoutPackage|x86.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|ARM.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|x64.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Debug|x86.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|ARM.ActiveCfg = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|ARM.Build.0 = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|ARM64.Build.0 = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|x64.ActiveCfg = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|x64.Build.0 = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|x86.ActiveCfg = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.Release|x86.Build.0 = Release|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|Any CPU.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|Any CPU.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|ARM.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|ARM.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|ARM64.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|ARM64.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|x64.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|x64.Build.0 = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|x86.ActiveCfg = Debug|Any CPU
+		{482EC0A2-CE38-466B-ADA9-499691A5DEFA}.TestWithoutPackage|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\BluetoothChargeCheck.Models\BluetoothChargeCheck.Models.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.Validation\BluetoothChargeCheck.Validation.csproj" />
 	</ItemGroup>
 
 </Project>
