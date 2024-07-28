@@ -3,6 +3,8 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Core.Services;
@@ -31,16 +33,19 @@ public class DeviceCollectionViewModel
         ];
         var composite = new CompositeBluetoothDataProvider(providers);
 
-        this.deviceService = new BluetoothService(composite) { UpdateInterval = TimeSpan.FromSeconds(30) };
+        this.deviceService = new BluetoothService(composite);
 
-        SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
+        //SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
+        this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
+            .ObserveOnDispatcher()
+            .Subscribe(this.UpdateDevices);
     }
 
-    private async Task FetchDevices()
+    private void UpdateDevices(IEnumerable<BluetoothDeviceData> newDevices)
     {
-        // never ends, async enumerable returns new lists of devices in specified interval
-        await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
-        {
+        //// never ends, async enumerable returns new lists of devices in specified interval
+        //await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
+        //{
             // Update or add devices
             foreach (var device in newDevices)
             {
@@ -70,7 +75,7 @@ public class DeviceCollectionViewModel
                 this.Devices.Remove(viewModelToRemove);
                 this.viewModels.Remove(device.Id);
             }
-        }
-        // unreachable!
+        //}
+        //// unreachable!
     }
 }

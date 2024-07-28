@@ -48,9 +48,7 @@ public class BluetoothServiceTests : IDisposable
     {
         var data = Array.Empty<BluetoothDeviceData>();
 
-        var subscription = this.BluetoothService.GetDevicesAsync(this.Scheduler)
-            .ToObservable()
-            .ObserveOn(this.Scheduler)
+        var subscription = this.BluetoothService.GetDevicesObservable(TimeSpan.FromSeconds(2), this.Scheduler)
             .Subscribe(x => data = x.ToArray());
 
         this.Scheduler.Schedule(subscription.Dispose);
@@ -62,12 +60,10 @@ public class BluetoothServiceTests : IDisposable
     public void ServiceFiresOnSpecifiedInterval()
     {
         int observableCount = 0;
-        this.BluetoothService.UpdateInterval = TimeSpan.FromSeconds(2);
  
-        var subscription = this.BluetoothService.GetDevicesAsync(this.Scheduler)
-            .ToObservable()
-            .ObserveOn(this.Scheduler)
+        var subscription = this.BluetoothService.GetDevicesObservable(TimeSpan.FromSeconds(2), this.Scheduler)
             .Subscribe(x => observableCount++);
+
         this.Scheduler.Schedule(TimeSpan.FromSeconds(2.1), x => subscription.Dispose());
         this.Scheduler.Start();
 
@@ -99,9 +95,7 @@ public class BluetoothServiceTests : IDisposable
         var service = new BluetoothService(providerMock.Object);
         int returnedDataCount = 0;
 
-        var subscription = service.GetDevicesAsync(this.Scheduler)
-            .ToObservable()
-            .ObserveOn(this.Scheduler)
+        var subscription = service.GetDevicesObservable(TimeSpan.FromSeconds(2), this.Scheduler)
             .Subscribe(x => returnedDataCount = x.Count());
         this.Scheduler.Schedule(subscription.Dispose);
         this.Scheduler.Start();
