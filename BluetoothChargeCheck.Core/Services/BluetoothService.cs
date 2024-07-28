@@ -8,6 +8,7 @@ using System.Reactive.Threading.Tasks;
 
 using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Models;
+using DCT.BluetoothChargeCheck.Validation;
 
 namespace DCT.BluetoothChargeCheck.Core.Services;
 
@@ -28,6 +29,7 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 public class BluetoothService(IBluetoothDataProvider deviceFetcher)
 {
     private IBluetoothDataProvider DataProvider { get; } = deviceFetcher;
+    private BluetoothDataValidator BluetoothValidator { get; } = new(enforceConnection: true);
 
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
 
@@ -44,5 +46,6 @@ public class BluetoothService(IBluetoothDataProvider deviceFetcher)
                 .AsTask()
                 .ToObservable())
             .Concat()
+            .Where(x => x.All(device => this.BluetoothValidator.Validate(device).IsValid))
             .ToAsyncEnumerable();
 }
