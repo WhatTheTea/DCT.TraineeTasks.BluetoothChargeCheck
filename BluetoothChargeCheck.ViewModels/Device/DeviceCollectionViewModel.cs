@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 
 using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Core.Services;
@@ -31,46 +32,49 @@ public class DeviceCollectionViewModel
         ];
         var composite = new CompositeBluetoothDataProvider(providers);
 
-        this.deviceService = new BluetoothService(composite) { UpdateInterval = TimeSpan.FromSeconds(30) };
+        this.deviceService = new BluetoothService(composite);
 
-        SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
+        //SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
+        this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
+            .ObserveOnDispatcher()
+            .Subscribe(this.UpdateDevices);
     }
 
-    private async Task FetchDevices()
+    private void UpdateDevices(IEnumerable<BluetoothDeviceData> newDevices)
     {
-        // never ends, async enumerable returns new lists of devices in specified interval
-        await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
+        //// never ends, async enumerable returns new lists of devices in specified interval
+        //await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
+        //{
+        // Update or add devices
+        foreach (var device in newDevices)
         {
-            // Update or add devices
-            foreach (var device in newDevices)
+            if (this.viewModels.TryGetValue(device.Id, out var viewModel))
             {
-                if (this.viewModels.TryGetValue(device.Id, out var viewModel))
+                if (viewModel.BluetoothDevice != device)
                 {
-                    if (viewModel.BluetoothDevice != device)
-                    {
-                        viewModel.BluetoothDevice = device;
-                    }
-                }
-                else
-                {
-                    var newViewModel = new DeviceViewModel(device);
-                    this.Devices.Add(newViewModel);
-                    this.viewModels.Add(device.Id, newViewModel);
+                    viewModel.BluetoothDevice = device;
                 }
             }
-
-            // Remove disconnected
-            var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
-            foreach (var device in devicesToRemove)
+            else
             {
-                var viewModelToRemove = this.viewModels[device.Id];
-                // Remove taskbar icon
-                viewModelToRemove.Dispose();
-                // Remove device from collections
-                this.Devices.Remove(viewModelToRemove);
-                this.viewModels.Remove(device.Id);
+                var newViewModel = new DeviceViewModel(device);
+                this.Devices.Add(newViewModel);
+                this.viewModels.Add(device.Id, newViewModel);
             }
         }
-        // unreachable!
+
+        // Remove disconnected
+        var devicesToRemove = this.Devices.Select(x => x.BluetoothDevice).Except(newDevices).ToArray();
+        foreach (var device in devicesToRemove)
+        {
+            var viewModelToRemove = this.viewModels[device.Id];
+            // Remove taskbar icon
+            viewModelToRemove.Dispose();
+            // Remove device from collections
+            this.Devices.Remove(viewModelToRemove);
+            this.viewModels.Remove(device.Id);
+        }
+        //}
+        //// unreachable!
     }
 }

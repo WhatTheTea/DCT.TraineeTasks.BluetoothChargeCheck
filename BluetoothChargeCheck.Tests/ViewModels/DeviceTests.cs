@@ -34,7 +34,7 @@ public class DeviceTests
         "\uEBA6", "\uEBA7", "\uEBA8", "\uEBA9", "\uEBAA"
         ];
 
-        var realGlyphs = Enumerable.Range(0, 100+1)
+        var realGlyphs = Enumerable.Range(0, 100 + 1)
             .Where(x => x % 10 == 0)
             .Select(x =>
             {
@@ -43,6 +43,6 @@ public class DeviceTests
             })
             .ToArray();
 
-        realGlyphs.Should().BeEquivalentTo(expectedGlyphs); 
+        realGlyphs.Should().BeEquivalentTo(expectedGlyphs);
     }
 }
