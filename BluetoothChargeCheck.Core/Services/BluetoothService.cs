@@ -13,7 +13,7 @@ using DCT.BluetoothChargeCheck.Validation;
 namespace DCT.BluetoothChargeCheck.Core.Services;
 
 /// <summary>
-/// Service to fetch bluetooth devices with certain interval. <see cref="DataProvider"/> property must be set in order to use service <br/>
+/// Service to fetch bluetooth devices with certain interval. <see cref="dataProvider"/> property must be set in order to use service <br/>
 /// Update interval of 20 seconds is default.
 /// <example>
 /// For example:
@@ -26,26 +26,27 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 /// </code>
 /// </example>
 /// </summary>
-public class BluetoothService(IBluetoothDataProvider deviceFetcher)
+public class BluetoothService(IBluetoothDataProvider bluetoothProvider)
 {
-    private IBluetoothDataProvider DataProvider { get; } = deviceFetcher;
-    private BluetoothDataValidator BluetoothValidator { get; } = new(enforceConnection: true);
 
-    public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(20);
+    private readonly IBluetoothDataProvider dataProvider = bluetoothProvider;
+
+    private readonly BluetoothDataValidator bluetoothValidator = new(enforceConnection: true);
 
     /// <summary>
     /// Returns collections of device data on specified interval.<br/>
     /// Runs indefinitely until stopped, can be supplied with scheduler.
     /// </summary>
-    public IAsyncEnumerable<IEnumerable<BluetoothDeviceData>> GetDevicesAsync(IScheduler? scheduler = null) =>
-        Observable.Interval(this.UpdateInterval, scheduler ?? Scheduler.Default)
-            .Prepend(this.UpdateInterval.Ticks) // Prepend value to trigger select immediately
-            .Select(_ => this.DataProvider
-                .FetchDevicesAsync()
-                .ToArrayAsync()
-                .AsTask()
-                .ToObservable())
+    public IObservable<IEnumerable<BluetoothDeviceData>> GetDevicesObservable(TimeSpan updateInterval, IScheduler? scheduler = null) =>
+        Observable.Interval(updateInterval, scheduler ?? Scheduler.Default)
+            // Prepend tick to fire immediately
+            .Prepend(updateInterval.Ticks)
+            // On each tick get bluetooth data, validate and gather it into array
+            .Select(_ => this.dataProvider.FetchDevicesAsync()
+                .ToObservable()
+                .Where(x => this.bluetoothValidator.Validate(x).IsValid)
+                .Aggregate(Array.Empty<BluetoothDeviceData>() as IEnumerable<BluetoothDeviceData>,
+                (data, device) => data.Append(device)))
             .Concat()
-            .Where(x => x.All(device => this.BluetoothValidator.Validate(device).IsValid))
-            .ToAsyncEnumerable();
+            .Publish().RefCount();
 }
