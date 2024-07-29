@@ -49,4 +49,11 @@ public class BluetoothService(IBluetoothDataProvider bluetoothProvider)
                 (data, device) => data.Append(device)))
             .Concat()
             .Publish().RefCount();
+
+    public static async Task<bool> CheckBluetoothAvailability()
+    {
+        var radios = await Windows.Devices.Radios.Radio.GetRadiosAsync();
+        var bluetoothAdapter = radios.FirstOrDefault(x => x.Kind == Windows.Devices.Radios.RadioKind.Bluetooth);
+        return bluetoothAdapter is not null && bluetoothAdapter.State == Windows.Devices.Radios.RadioState.On;
+    }
 }
