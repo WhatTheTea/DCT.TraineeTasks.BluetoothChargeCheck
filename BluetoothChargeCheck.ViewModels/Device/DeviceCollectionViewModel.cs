@@ -16,11 +16,13 @@ namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// </summary>
 public class DeviceCollectionViewModel
 {
+    // Collection of devices used for binding
     public ObservableCollection<DeviceViewModel> Devices { get; } = [];
-    /// <summary>
-    /// The key here is bluetooth device ID
-    /// </summary>
+
+    // The key here is bluetooth device ID
+    // It is used to keep device viewmodels alive until there is no data about device
     private readonly Dictionary<string, DeviceViewModel> viewModels = [];
+
     private readonly BluetoothService deviceService;
 
     public DeviceCollectionViewModel()
