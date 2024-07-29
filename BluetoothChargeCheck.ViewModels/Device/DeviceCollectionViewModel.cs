@@ -16,11 +16,13 @@ namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 /// </summary>
 public class DeviceCollectionViewModel
 {
+    // Collection of devices used for binding
     public ObservableCollection<DeviceViewModel> Devices { get; } = [];
-    /// <summary>
-    /// The key here is bluetooth device ID
-    /// </summary>
+
+    // The key here is bluetooth device ID
+    // It is used to keep device viewmodels alive until there is no data about device
     private readonly Dictionary<string, DeviceViewModel> viewModels = [];
+
     private readonly BluetoothService deviceService;
 
     public DeviceCollectionViewModel()
@@ -34,7 +36,6 @@ public class DeviceCollectionViewModel
 
         this.deviceService = new BluetoothService(composite);
 
-        //SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
         this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
             .ObserveOnDispatcher()
             .Subscribe(this.UpdateDevices);
@@ -42,9 +43,6 @@ public class DeviceCollectionViewModel
 
     private void UpdateDevices(IEnumerable<BluetoothDeviceData> newDevices)
     {
-        //// never ends, async enumerable returns new lists of devices in specified interval
-        //await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
-        //{
         // Update or add devices
         foreach (var device in newDevices)
         {
@@ -74,7 +72,5 @@ public class DeviceCollectionViewModel
             this.Devices.Remove(viewModelToRemove);
             this.viewModels.Remove(device.Id);
         }
-        //}
-        //// unreachable!
     }
 }

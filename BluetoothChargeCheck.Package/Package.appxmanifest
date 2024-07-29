@@ -9,7 +9,7 @@
   <Identity
     Name="d96fb227-2801-4aa9-a3e7-188bae572fd7"
     Publisher="CN=WhatTheTea"
-    Version="0.2.0.0" />
+    Version="0.3.2.0" />
 
   <Properties>
     <DisplayName>BluetoothChargeCheck</DisplayName>
