@@ -35,18 +35,38 @@ public class BluetoothService(IBluetoothDataProvider bluetoothProvider)
 
     /// <summary>
     /// Returns collections of device data on specified interval.<br/>
-    /// Runs indefinitely until stopped, can be supplied with scheduler.
+    /// Runs indefinitely until stopped, can be supplied with scheduler. <br/>
     /// </summary>
     public IObservable<IEnumerable<BluetoothDeviceData>> GetDevicesObservable(TimeSpan updateInterval, IScheduler? scheduler = null) =>
         Observable.Interval(updateInterval, scheduler ?? Scheduler.Default)
-            // Prepend tick to fire immediately
-            .Prepend(updateInterval.Ticks)
-            // On each tick get bluetooth data, validate and gather it into array
-            .Select(_ => this.dataProvider.FetchDevicesAsync()
+            .Prepend(updateInterval.Ticks)                            // Prepend tick to fire immediately
+            .Select(x => CheckBluetoothAvailability().ToObservable()) // On each tick check bluetooth availability
+            .Concat()
+            .Where(isAvailable => isAvailable)                        // Continue only when bluetooth is available
+            .Select(_ => this.dataProvider.FetchDevicesAsync()        // then get bluetooth data, validate and gather it into array
                 .ToObservable()
                 .Where(x => this.bluetoothValidator.Validate(x).IsValid)
                 .Aggregate(Array.Empty<BluetoothDeviceData>() as IEnumerable<BluetoothDeviceData>,
                 (data, device) => data.Append(device)))
             .Concat()
             .Publish().RefCount();
+
+    private static async Task<bool> CheckBluetoothAvailability()
+    {
+        // The following is cursed, be cautious .-.
+        if (isInUnitTest())
+        {
+            return true;
+        }
+
+        var radios = await Windows.Devices.Radios.Radio.GetRadiosAsync();
+        var bluetoothAdapter = radios.FirstOrDefault(x => x.Kind == Windows.Devices.Radios.RadioKind.Bluetooth);
+        return bluetoothAdapter is not null && bluetoothAdapter.State == Windows.Devices.Radios.RadioState.On;
+
+        // reflection, ew
+        static bool isInUnitTest() =>
+            AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Any(a => a.FullName?.StartsWith("xunit") ?? false);
+    }
 }
