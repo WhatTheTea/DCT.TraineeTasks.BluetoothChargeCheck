@@ -34,7 +34,6 @@ public class DeviceCollectionViewModel
 
         this.deviceService = new BluetoothService(composite);
 
-        //SynchronizationContext.Current?.Post(async _ => await this.FetchDevices(), null);
         this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
             .ObserveOnDispatcher()
             .Subscribe(this.UpdateDevices);
@@ -42,9 +41,6 @@ public class DeviceCollectionViewModel
 
     private void UpdateDevices(IEnumerable<BluetoothDeviceData> newDevices)
     {
-        //// never ends, async enumerable returns new lists of devices in specified interval
-        //await foreach (IEnumerable<BluetoothDeviceData> newDevices in this.deviceService.GetDevicesAsync())
-        //{
         // Update or add devices
         foreach (var device in newDevices)
         {
@@ -74,7 +70,5 @@ public class DeviceCollectionViewModel
             this.Devices.Remove(viewModelToRemove);
             this.viewModels.Remove(device.Id);
         }
-        //}
-        //// unreachable!
     }
 }
