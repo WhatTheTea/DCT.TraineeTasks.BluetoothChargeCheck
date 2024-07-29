@@ -55,7 +55,6 @@ public partial class DeviceViewModel : ObservableObject, IViewModelWithIdentity,
             Charge = 50,
             Connected = true
         };
-        this.Accent = Color.FromRgb(128, 128, 128);
     }
 
     // Guid here is meant for TrayIcon to prevent battery icons replacing eachother
