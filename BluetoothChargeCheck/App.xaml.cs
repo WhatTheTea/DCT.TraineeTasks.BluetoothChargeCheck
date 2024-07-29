@@ -2,6 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using System.Diagnostics;
 using System.Windows;
 
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,6 +11,9 @@ using DCT.BluetoothChargeCheck.TaskbarIcons;
 using DCT.BluetoothChargeCheck.ViewModels;
 using DCT.BluetoothChargeCheck.ViewModels.Messages;
 
+using Microsoft.Win32;
+
+using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -26,14 +30,15 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        ApplicationThemeManager.ApplySystemTheme();
+
         this.taskbarIconManager = new TaskbarIconManager();
         this.mainViewModel = new MainViewModel();
 
         WeakReferenceMessenger.Default.Register(this,
             new MessageHandler<object, ToggleTaskbarIconMessage>(this.OnToggleTaskbarIconMessage));
 
-        // TODO: Fix updating UI
-        SystemThemeWatcher.Watch(null, WindowBackdropType.Auto);
 
         this.taskbarIconManager.CreateAppIcon(this.mainViewModel);
     }
