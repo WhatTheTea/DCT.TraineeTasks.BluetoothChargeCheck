@@ -2,20 +2,15 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-using System.Diagnostics;
 using System.Windows;
 
 using CommunityToolkit.Mvvm.Messaging;
 
+using DCT.BluetoothChargeCheck.Resources.Fonts;
 using DCT.BluetoothChargeCheck.TaskbarIcons;
 using DCT.BluetoothChargeCheck.ViewModels;
 using DCT.BluetoothChargeCheck.ViewModels.Messages;
-
-using Microsoft.Win32;
-
-using Wpf.Ui;
 using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls;
 
 namespace DCT.BluetoothChargeCheck;
 
@@ -32,6 +27,7 @@ public partial class App : Application
         base.OnStartup(e);
 
         ApplicationThemeManager.ApplySystemTheme();
+        TryAddIconsFont();
 
         this.taskbarIconManager = new TaskbarIconManager();
         this.mainViewModel = new MainViewModel();
@@ -48,6 +44,22 @@ public partial class App : Application
         this.taskbarIconManager.Remove(this.mainViewModel.Id);
         base.OnExit(e);
     }
+
+    /// H.NotifyIcons tries to convert <see cref="System.Windows.Media.FontFamily"/> to <see cref="System.Drawing.FontFamily"/>
+    /// by searching for fonts in system. Thus I forced to install font for Win10.
+    private static void TryAddIconsFont()
+    {
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT
+            && Environment.OSVersion.Version.Build < 22000) // System is older than Windows 11
+        {
+            int result = WinGdiInterop.AddFontResource("Fonts\\SegoeFluentIcons.ttf");
+            if (result == 0)
+            {
+                throw new InvalidOperationException("Failed to install Segoe Fluent Icons");
+            }
+        }
+    }
+
 
     void OnToggleTaskbarIconMessage(object recipient, ToggleTaskbarIconMessage message)
     {
