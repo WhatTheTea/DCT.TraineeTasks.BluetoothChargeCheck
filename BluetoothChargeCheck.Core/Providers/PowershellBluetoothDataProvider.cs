@@ -76,11 +76,8 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
                 Charge = GetPowershellValue(group[2]) as byte? ?? 0,
                 Connected = GetPowershellValue(group[3]) as bool? ?? false
             };
-            // TODO: Move to validation
-            if (data.Connected && data.Charge > 0)
-            {
-                yield return data;
-            }
+
+            yield return data;
         }
     }
 

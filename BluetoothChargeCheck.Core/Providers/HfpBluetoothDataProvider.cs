@@ -47,10 +47,7 @@ public readonly struct HfpBluetoothDataProvider : IBluetoothDataProvider
                 Charge = charge
             };
 
-            if (bluetoothData.Charge > 0)
-            {
-                yield return bluetoothData;
-            }
+            yield return bluetoothData;
         }
     }
 
