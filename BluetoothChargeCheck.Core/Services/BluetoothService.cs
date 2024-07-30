@@ -18,10 +18,10 @@ namespace DCT.BluetoothChargeCheck.Core.Services;
 /// <example>
 /// For example:
 /// <code><![CDATA[
-/// var service = new BluetoothService(dataProvider);
-///
-/// await foreach (var newDevices in this.deviceService.GetDevicesAsync())
-/// { /* do something */ }
+///  this.deviceService = new BluetoothService(provider);
+///  
+///  this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
+///                    .Subscribe(x => /*do something*/ );
 /// ]]>
 /// </code>
 /// </example>
