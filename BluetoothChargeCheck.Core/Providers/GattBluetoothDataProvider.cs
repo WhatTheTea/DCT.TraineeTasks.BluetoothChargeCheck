@@ -14,12 +14,17 @@ namespace DCT.BluetoothChargeCheck.Core.Providers;
 /// Provides bluetooth low energy devices data using 32feet library.
 /// Provider gets connected devices, battery GATT service from them and reads data.
 /// </summary>
-public readonly struct GattBluetoothDataProvider : IBluetoothDataProvider
+public sealed class GattBluetoothDataProvider : BluetoothDataProviderBase
 {
     static readonly string ConnectedDeviceSelector = BluetoothLEDevice.GetDeviceSelectorFromConnectionStatus(BluetoothConnectionStatus.Connected);
 
     private static async IAsyncEnumerable<BluetoothDeviceData> fetchDevicesAsync()
     {
+        if (!await CheckBluetoothAvailability())
+        {
+            yield break;
+        }
+
         var foundDevices = await DeviceInformation.FindAllAsync(ConnectedDeviceSelector);
         // Transform found device information to IBluetoothDevice
         foreach (var device in foundDevices)
@@ -59,10 +64,5 @@ public readonly struct GattBluetoothDataProvider : IBluetoothDataProvider
         return charge;
     }
 
-    public IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync() => fetchDevicesAsync();
-    public IEnumerable<BluetoothDeviceData> FetchDevices() =>
-        fetchDevicesAsync().ToArrayAsync()
-            .ConfigureAwait(false)
-            .GetAwaiter()
-            .GetResult();
+    public override IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync() => fetchDevicesAsync();
 }

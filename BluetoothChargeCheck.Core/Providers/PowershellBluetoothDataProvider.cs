@@ -19,7 +19,7 @@ public enum BluetoothKind
 /// <summary>
 /// Retrieves data about bluetooth devices from Windows by powershell using PnpDevice module
 /// </summary>
-public class PowershellBluetoothDataProvider : IBluetoothDataProvider
+public class PowershellBluetoothDataProvider : BluetoothDataProviderBase
 {
     private const string BluetoothClassicHardwareId = "BTHENUM";
     private const string BluetoothLeHardwareId = "BTHLE";
@@ -54,8 +54,13 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
     /// Starts shell script to return data about bluetooth devices <br/>
     /// Method fetches Bluetooth Classic devices by default
     /// </summary>
-    public async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
+    public override async IAsyncEnumerable<BluetoothDeviceData> FetchDevicesAsync()
     {
+        if (!await CheckBluetoothAvailability())
+        {
+            yield break;
+        }
+
         using var shell = PowerShell.Create(this.sessionState);
         shell.AddScript(this.DeviceDataScript);
 
@@ -80,13 +85,6 @@ public class PowershellBluetoothDataProvider : IBluetoothDataProvider
             yield return data;
         }
     }
-
-    public IEnumerable<BluetoothDeviceData> FetchDevices() =>
-        this.FetchDevicesAsync()
-            .ToArrayAsync()
-            .ConfigureAwait(false)
-            .GetAwaiter()
-            .GetResult();
 
     private string GetKindAsString() => this.BluetoothKind switch
     {
