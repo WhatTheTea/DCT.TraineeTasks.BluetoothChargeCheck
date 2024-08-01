@@ -30,7 +30,7 @@ public class DeviceCollectionViewModel
         this.deviceService = bluetoothService;
 
         this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
-            .ObserveOn(Scheduler.Default)
+            .ObserveOn(SynchronizationContext.Current ?? new SynchronizationContext())
             .Subscribe(this.UpdateDevices);
     }
 
