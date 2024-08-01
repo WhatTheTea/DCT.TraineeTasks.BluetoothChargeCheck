@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Platforms>AnyCPU;x64</Platforms>
+
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
 
 	<PropertyGroup>
 		<RootNamespace>DCT.BluetoothChargeCheck.Resources</RootNamespace>
@@ -14,33 +16,33 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="Fonts\SegoeFluentIcons.ttf">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="Fonts\SegoeFluentIcons.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Locales\DeviceInfo.Designer.cs">
-	    <DependentUpon>DeviceInfo.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Locales\MainPopup.Designer.cs">
-	    <DependentUpon>MainPopup.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
+		<Compile Update="Locales\DeviceInfo.Designer.cs">
+			<DependentUpon>DeviceInfo.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Locales\MainPopup.Designer.cs">
+			<DependentUpon>MainPopup.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Locales\DeviceInfo.resx">
-	    <LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Locales\MainPopup.resx">
-	    <LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Locales\DeviceInfo.resx">
+			<LastGenOutput>DeviceInfo.Designer.cs</LastGenOutput>
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Locales\MainPopup.resx">
+			<LastGenOutput>MainPopup.Designer.cs</LastGenOutput>
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

@@ -4,6 +4,8 @@
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<Platforms>AnyCPU;x64</Platforms>
+
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -18,8 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BluetoothChargeCheck.Abstractions\BluetoothChargeCheck.Abstractions.csproj" />
-	  <ProjectReference Include="..\BluetoothChargeCheck.Models\BluetoothChargeCheck.Models.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.Abstractions\BluetoothChargeCheck.Abstractions.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.Models\BluetoothChargeCheck.Models.csproj" />
 	</ItemGroup>
 
 </Project>
