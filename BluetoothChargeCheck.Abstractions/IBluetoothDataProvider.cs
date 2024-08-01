@@ -4,7 +4,7 @@
 
 using DCT.BluetoothChargeCheck.Models;
 
-namespace DCT.BluetoothChargeCheck.Core.Providers;
+namespace DCT.BluetoothChargeCheck.Abstractions;
 /// <summary>
 /// Fetches devices and returns <see cref="BluetoothDeviceData"/> one by one asyncronously or in blocking manner
 /// </summary>

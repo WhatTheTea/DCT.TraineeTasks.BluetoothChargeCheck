@@ -5,8 +5,8 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
-using DCT.BluetoothChargeCheck.Core.Providers;
-using DCT.BluetoothChargeCheck.Core.Services;
+using DCT.BluetoothChargeCheck.Abstractions;
+using DCT.BluetoothChargeCheck.Core;
 using DCT.BluetoothChargeCheck.Models;
 
 using FluentAssertions;

@@ -2,7 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
-namespace DCT.BluetoothChargeCheck.ViewModels;
+namespace DCT.BluetoothChargeCheck.Abstractions;
 
 /// <summary>
 /// This identity is used for taskbar icons to not overlap

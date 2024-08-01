@@ -2,6 +2,7 @@
 // Copyright (c) Digital Cloud Technologies.All rights reserved.
 // </copyright>
 
+using DCT.BluetoothChargeCheck.Abstractions;
 using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.Core.Providers;

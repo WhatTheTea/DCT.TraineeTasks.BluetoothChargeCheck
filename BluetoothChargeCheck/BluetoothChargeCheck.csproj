@@ -5,8 +5,10 @@
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<Platforms>AnyCPU;x64</Platforms>
+
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -25,14 +27,15 @@
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
 		<PackageReference Include="WPF-UI" Version="3.0.5" />
 		<PackageReference Include="WpfAnalyzers" Version="4.1.1">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BluetoothChargeCheck.Resources\BluetoothChargeCheck.Resources.csproj" />
-	  <ProjectReference Include="..\BluetoothChargeCheck.ViewModels\BluetoothChargeCheck.ViewModels.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.Providers.Windows\BluetoothChargeCheck.Providers.Windows.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.Resources\BluetoothChargeCheck.Resources.csproj" />
+		<ProjectReference Include="..\BluetoothChargeCheck.ViewModels\BluetoothChargeCheck.ViewModels.csproj" />
 	</ItemGroup>
 
 </Project>
