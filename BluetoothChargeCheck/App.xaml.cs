@@ -6,10 +6,14 @@ using System.Windows;
 
 using CommunityToolkit.Mvvm.Messaging;
 
+using DCT.BluetoothChargeCheck.Abstractions;
+using DCT.BluetoothChargeCheck.Core;
+using DCT.BluetoothChargeCheck.Core.Providers;
 using DCT.BluetoothChargeCheck.Resources.Fonts;
 using DCT.BluetoothChargeCheck.TaskbarIcons;
 using DCT.BluetoothChargeCheck.ViewModels;
 using DCT.BluetoothChargeCheck.ViewModels.Messages;
+
 using Wpf.Ui.Appearance;
 
 namespace DCT.BluetoothChargeCheck;
@@ -30,7 +34,15 @@ public partial class App : Application
         TryAddIconsFont();
 
         this.taskbarIconManager = new TaskbarIconManager();
-        this.mainViewModel = new MainViewModel();
+
+        IBluetoothDataProvider[] providers = [
+            new HfpBluetoothDataProvider(),
+            new PowershellBluetoothDataProvider(BluetoothKind.Classic),
+            new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy)
+        ];
+        var composite = new CompositeBluetoothDataProvider(providers);
+        var service = new BluetoothService(composite);
+        this.mainViewModel = new MainViewModel(service);
 
         WeakReferenceMessenger.Default.Register(this,
             new MessageHandler<object, ToggleTaskbarIconMessage>(this.OnToggleTaskbarIconMessage));

@@ -7,4 +7,8 @@
 		<RootNamespace>DCT.BluetoothChargeCheck.Abstractions</RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\BluetoothChargeCheck.Models\BluetoothChargeCheck.Models.csproj" />
+	</ItemGroup>
+
 </Project>

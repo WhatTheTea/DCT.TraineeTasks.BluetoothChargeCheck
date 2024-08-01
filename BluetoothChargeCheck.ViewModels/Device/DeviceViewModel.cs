@@ -5,10 +5,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 
+using DCT.BluetoothChargeCheck.Abstractions;
 using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.ViewModels.Messages;
-
-using Color = System.Windows.Media.Color;
 
 namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 
@@ -23,7 +22,7 @@ namespace DCT.BluetoothChargeCheck.ViewModels.Device;
 public partial class DeviceViewModel : ObservableObject, IViewModelWithIdentity, IDisposable
 {
     [ObservableProperty]
-    private Color? accent;
+    private string accent = string.Empty;
 
     [ObservableProperty]
     private BluetoothDeviceData bluetoothDevice;

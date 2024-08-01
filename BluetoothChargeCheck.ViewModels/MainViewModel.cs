@@ -4,15 +4,17 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
+using DCT.BluetoothChargeCheck.Abstractions;
+using DCT.BluetoothChargeCheck.Core;
 using DCT.BluetoothChargeCheck.ViewModels.Device;
 
 namespace DCT.BluetoothChargeCheck.ViewModels;
 
-public partial class MainViewModel : ObservableObject, IViewModelWithIdentity
+public partial class MainViewModel(BluetoothService bluetoothService) : ObservableObject, IViewModelWithIdentity
 {
     // https://github.com/HavenDV/H.NotifyIcon/issues/103#issuecomment-1705989614
     // TLDR: GUID-Path pairs of Taskbar Icons are stored in Registry, if executable is moved - TryCreate fails
     public Guid Id { get; } = Guid.NewGuid();
 
-    public DeviceCollectionViewModel DevicesViewModel { get; } = new();
+    public DeviceCollectionViewModel DevicesViewModel { get; } = new(bluetoothService);
 }

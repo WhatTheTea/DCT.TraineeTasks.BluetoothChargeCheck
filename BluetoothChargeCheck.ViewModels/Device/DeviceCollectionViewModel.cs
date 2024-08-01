@@ -3,10 +3,10 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 
-using DCT.BluetoothChargeCheck.Core.Providers;
-using DCT.BluetoothChargeCheck.Core.Services;
+using DCT.BluetoothChargeCheck.Core;
 using DCT.BluetoothChargeCheck.Models;
 
 namespace DCT.BluetoothChargeCheck.ViewModels.Device;
@@ -25,19 +25,12 @@ public class DeviceCollectionViewModel
 
     private readonly BluetoothService deviceService;
 
-    public DeviceCollectionViewModel()
+    public DeviceCollectionViewModel(BluetoothService bluetoothService)
     {
-        IBluetoothDataProvider[] providers = [
-            new HfpBluetoothDataProvider(),
-            new PowershellBluetoothDataProvider(BluetoothKind.Classic),
-            new PowershellBluetoothDataProvider(BluetoothKind.LowEnergy)
-        ];
-        var composite = new CompositeBluetoothDataProvider(providers);
-
-        this.deviceService = new BluetoothService(composite);
+        this.deviceService = bluetoothService;
 
         this.deviceService.GetDevicesObservable(TimeSpan.FromSeconds(60))
-            .ObserveOnDispatcher()
+            .ObserveOn(Scheduler.Default)
             .Subscribe(this.UpdateDevices);
     }
 

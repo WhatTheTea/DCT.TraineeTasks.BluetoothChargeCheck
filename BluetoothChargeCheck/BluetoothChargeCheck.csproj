@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\BluetoothChargeCheck.Providers.Windows\BluetoothChargeCheck.Providers.Windows.csproj" />
 	  <ProjectReference Include="..\BluetoothChargeCheck.Resources\BluetoothChargeCheck.Resources.csproj" />
 	  <ProjectReference Include="..\BluetoothChargeCheck.ViewModels\BluetoothChargeCheck.ViewModels.csproj" />
 	</ItemGroup>

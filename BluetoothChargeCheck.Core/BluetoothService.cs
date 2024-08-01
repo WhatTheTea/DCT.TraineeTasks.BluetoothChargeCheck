@@ -4,13 +4,12 @@
 
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 
-using DCT.BluetoothChargeCheck.Core.Providers;
+using DCT.BluetoothChargeCheck.Abstractions;
 using DCT.BluetoothChargeCheck.Models;
 using DCT.BluetoothChargeCheck.Validation;
 
-namespace DCT.BluetoothChargeCheck.Core.Services;
+namespace DCT.BluetoothChargeCheck.Core;
 
 /// <summary>
 /// Service to fetch bluetooth devices with certain interval. <see cref="dataProvider"/> property must be set in order to use service <br/>
